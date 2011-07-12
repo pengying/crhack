@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/ejohn.Class.js"></script>
+    <script src="/js/cb.ui.js"></script>
+    <link rel="stylesheet" href="/css/cb.ui.css" />
+    <style>
+      .menuitem:hover {
+        background: #36b;
+        color: #fff;
+      }
+      #toolbarMenuParent {
+        border: 1px solid #ccc;
+      }
+      #toolbarMenuParent span {
+        display: inline-block;
+        padding: 6px 3px;
+        margin: 0px;
+      }
+      h1 {
+        margin: 0;
+        padding: 20px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <a id="linkPopup01" href="javascript:void(0);">Open Modal Popup</a><br />
+    <a id="linkPopup02" href="javascript:void(0);">Open Pointing Popup</a><br />
+    <a id="linkPopup03" href="javascript:void(0);">Open Progress Popup</a>
+    <ul>
+      <li>Item 1</li>
+      <li><span id="target01">Item 2</span></li>
+      <li>Item 3</li>
+    </ul>
+    <div id="menu">
+      <h1>Pointing popup</h1>
+      <p>This popup will point at DOM</p>
+      <div class="menuitem">Item 1</div>
+      <div class="menuitem">Item 2</div>
+    </div>
+    
+    <div id="toolbarMenu01">
+      <div class="menuitem">Item 1</div>
+      <div class="menuitem">Item 2</div>
+    </div>
+    
+    <div id="toolbarMenu02">
+      <div class="menuitem">Item 1</div>
+      <div class="menuitem">Item 2</div>
+    </div>
+    
+    <div id="toolbarMenuParent"></div>
+    <script>
+      var modalPopup = new cb.ui.ModalPopup('<h1>This is popup content</h1>', {closeable:true});
+      document.getElementById('linkPopup01').addEventListener('click', function() {
+        modalPopup.show();
+      }, false);
+      
+      var pointingPopup = new cb.ui.PointingPopup('#menu', {closeable:false, autoclose:true});
+      pointingPopup.setTarget('#target01');
+      document.getElementById('linkPopup02').addEventListener('click', function() {
+        pointingPopup.show();
+      }, false);
+      
+      var toolbarMenu = new cb.ui.Menu();
+      toolbarMenu.addEntry('<span>Link 1</span>', new cb.ui.PointingPopup('#toolbarMenu01'));
+      toolbarMenu.addEntry('<span>Link 2</span>', new cb.ui.PointingPopup('#toolbarMenu02'));
+      toolbarMenu.appendTo('#toolbarMenuParent');
+      
+      var progressPopup = new cb.ui.ProgressPopup('', {closeable:false});
+      var progress = 0;
+      function incrementProgress() {
+        progress += 1;
+        progressPopup.setProgress(progress);
+        if (progress < 100) {
+          setTimeout(incrementProgress, 10);
+        } else {
+          progress = 0;
+        }
+      }
+      document.getElementById('linkPopup03').addEventListener('click', function() {
+        incrementProgress();
+      });
+    </script>
+  </body>
+</html>

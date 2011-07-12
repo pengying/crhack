@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<!--
+  Copyright 2010 Google Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!-- $Revision$ -->
+<html>
+  <head>
+    <title>Chromabrush</title>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/ejohn.Class.js"></script>
+    <script src="js/cb.util.js"></script>
+    <script src="js/cb.layer.js"></script>
+    <script src="js/cb.brush.js"></script>
+    <script src="js/cb.control.js"></script>
+    <script src="js/cb.presenter.js"></script>
+    <script src="js/cb.sound.js"></script>
+    <script src="js/cb.ui.js"></script>
+    <script src="js/cb.filters.js"></script>
+    <script src="js/modernizr-1.1.min.js"></script>
+    <link rel="stylesheet" href="css/hbox.vbox.css" />
+    <link rel="stylesheet" href="css/cb.editor.css" />
+    <link rel="stylesheet" href="css/cb.ui.css" />
+    <script>
+      function browserSupported() {
+        if (/skipbrowsercheck=1/.test(window.location.href)) {
+          return true;
+        }
+        Modernizr.addTest('notifications',function(){
+          return window.webkitNotifications &&
+              typeof window.webkitNotifications.checkPermission == "function" ? 
+                  true : false;
+        });
+        
+        // Note: Modernizr.fontface unreliable on webkit
+        
+        return Modernizr.canvas &&
+               Modernizr.audio &&
+               Modernizr.video &&
+               Modernizr.rgba &&
+               Modernizr.borderradius &&
+               Modernizr.boxshadow &&
+               Modernizr.cssanimations &&
+               Modernizr.webworkers &&
+               Modernizr.notifications;
+      };
+      
+      function init() {
+        if (!browserSupported()) {
+          if ($.browser.msie) {
+            CFInstall.check({ mode: "overlay" });
+          } else {
+            $(document.body).append($('#note-browsersupport'));
+          }
+          return;
+        }
+        
+        var presenter = new cb.Presenter();
+        presenter.addLayer();
+        
+        var sound = new cb.Sound();
+        $(presenter).bind('import', function(){
+            sound.play('/audio/bloop03.ogg'); });
+        $(presenter).bind('controlchange', function(){
+            sound.play('/audio/click01.ogg'); });
+        $(presenter).bind('layerorderchange', function(){
+            sound.play('/audio/bloop03.ogg'); });
+        
+        var icon = new cb.ui.Icon('/img/brush-pen.png', 50, 50);
+        presenter.addBrush('pen', icon, new cb.PenBrush());
+        icon.select();
+        icon = new cb.ui.Icon('/img/brush-eraser.png', 50, 50);
+        presenter.addBrush('eraser', icon, new cb.EraserBrush());
+        icon = new cb.ui.Icon('/img/brush-line.png', 50, 50);
+        presenter.addBrush('line', icon, new cb.LineBrush());
+        icon = new cb.ui.Icon('/img/brush-fill.png', 50, 50);
+        presenter.addBrush('fill', icon, new cb.FillBrush());
+        icon = new cb.ui.Icon('/img/brush-move.png', 50, 50);
+        presenter.addBrush('move', icon, new cb.MoveTool());
+        icon = new cb.ui.Icon('/img/brush-move.png', 50, 50);
+        presenter.addBrush('view', icon, new cb.ViewTool());
+
+        var progressBar = new cb.ui.ProgressPopup('', {closeable:false});
+        var showNotifications = false;
+        
+        function showFinishedNotification() {
+          if (window.webkitNotifications.checkPermission() == 0) {
+            var notification = window.webkitNotifications.createNotification(
+                '/img/icon-notification.png', 
+                'Completed', 
+                'The filter you ran has finished!');
+            notification.show();
+          }
+        };
+        
+        function toggleNotifications() {
+          showNotifications = !showNotifications;
+          if (showNotifications) {
+            $('#filter-notifications').text('Disable notifications');
+            if (window.webkitNotifications.checkPermission() != 0) {
+              window.webkitNotifications.requestPermission();
+            } 
+          } else {
+            $('#filter-notifications').text('Show notifications');
+          }
+        };
+        
+        function getBlurHandler(level) {
+          return function() {
+            var progress = 0;
+            var blur = new cb.filters.Blur(level);
+            $(blur).bind('progress', function(evt, progress) {
+              progressBar.setProgress(progress);
+              if (progress == 100 && showNotifications == true) {
+                showFinishedNotification();
+              }
+            });
+            blur.filter(presenter.getCurrentLayer());            
+          };
+        };
+        
+        $('#filter-blur').click(getBlurHandler(1));
+        $('#filter-blurmore').click(getBlurHandler(4));
+        $('#filter-notifications').click(toggleNotifications);
+        
+        $('#file-new').click($.proxy(presenter, 'newImage'));
+        $('#edit-undo').click($.proxy(presenter, 'undo'));
+        $(presenter).bind('historychanged', function(evt, length, type) {
+          if (length > 0) { 
+            $('#edit-undo')
+                .removeClass('disabled')
+                .text('Undo ' + type + ' (' + length + ')');
+          } else {
+            $('#edit-undo').addClass('disabled').text('Can\'t undo');
+          }
+        });
+        
+        var popupAbout = new cb.ui.ModalPopup('#popup-about', {closeable:true});
+        $('#system-about').click(function() {
+          popupAbout.show();
+        });
+        
+        var popupHelpPaint = new cb.ui.ModalPopup('#popup-help-paint', {closeable:true});
+        $('#help-paint').click(function() {
+          var vid = $('#popup-help-paint video').get(0);
+          vid.src = "/video/help-paint.mp4";
+          popupHelpPaint.show();
+        });
+        
+        var toolbar = new cb.ui.Menu();
+        toolbar.addEntry('#menuitem-system', new cb.ui.PointingPopup('#menu-system'));
+        toolbar.addEntry('#menuitem-file', new cb.ui.PointingPopup('#menu-file'));
+        toolbar.addEntry('#menuitem-edit', new cb.ui.PointingPopup('#menu-edit'));
+        toolbar.addEntry('#menuitem-filter', new cb.ui.PointingPopup('#menu-filter'));
+        toolbar.addEntry('#menuitem-help', new cb.ui.PointingPopup('#menu-help'));
+        
+        presenter.addToolbar(toolbar);
+      };
+      $(window).load(init);
+    </script>
+  </head>
+  <body>
+    <div id="templates">
+      <img src='/img/brush-fill.png' id="icon-fill" />
+      <img src='/img/brush-eraser.png' id="icon-eraser" />
+      <img src='/img/brush-line.png' id="icon-line" />
+      <img src='/img/brush-move.png' id="icon-move" />
+      <img src='/img/brush-pen.png' id="icon-pen" />
+      <img src='/img/icon-plus.png' id="icon-plus" />
+      <img src='/img/icon-minus.png' id="icon-minus" />
+      
+      <span id="menuitem-system"><span class="symbol">&#9824;</span></span>
+      <div id="menu-system" class="menu">
+        <ul>
+          <li id="system-about">About Chromabrush</li>
+        </ul>
+      </div>
+      <span id="menuitem-file">File</span>
+      <div id="menu-file" class="menu">
+        <ul>
+          <li id="file-new">New</li>
+        </ul>
+      </div>
+      <span id="menuitem-edit">Edit</span>
+      <div id="menu-edit" class="menu">
+        <ul>
+          <li id="edit-undo" class="disabled">Can't undo</li>
+        </ul>
+      </div>
+      <span id="menuitem-filter">Filter</span>
+      <div id="menu-filter" class="menu">
+        <ul>
+          <li id="filter-blur">Blur (JavaScript)</li>
+          <li id="filter-blurmore">Blur More (JavaScript)</li>
+        </ul>
+        <hr />
+        <ul>
+          <li id="filter-notifications">Show notifications</li>
+        </ul>
+      </div>
+      <span id="menuitem-help">Help</span>
+      <div id="menu-help" class="menu">
+        <ul>
+          <li id="help-paint">How to paint</li>
+        </ul>
+      </div>
+      <div id="popup-help-paint">
+        <div class="popupcontent">
+          <div class="centeredtext">
+            <video class="helpvideo" autoplay controls width="548" height="308"></video>
+          </div>
+          <h1>How to paint</h1>
+          <p>
+            Painting in Chromabrush is accomplished by selecting the 
+            <strong>paint brush tool</strong> from the toolbar on the bottom 
+            of the screen and drawing
+            on the canvas in the middle of the screen.
+          </p>
+          <p>
+            Select <strong>colors and brush thicknesses</strong> from the color 
+            and size controls
+            on the left hand side of the screen.
+          </p>
+          <p>
+            To draw <strong>straight lines</strong>, select the 
+            <strong>line tool</strong> from 
+            the toolbar on 
+            the bottom of the screen.  Click once on the canvas to start a line
+            and click again to draw.  If you hold down shift for your second
+            click, a new line will be started from the endpoint of the line
+            you just drew.
+          </p>
+        </div>
+      </div>
+      <div id="popup-about">
+        <div class="popupcontent">
+          <div class="centeredtext">
+            <img src="/img/hello.png" />
+          </div>
+          <h1>About Chromabrush</h1>
+          <p>
+            Chromabrush is an online paint application written using HTML5.  
+          </p>
+          <p>
+            Originally written as a demo application for the 2010 Google I/O
+            developer conference, Chromabrush is released under an open source
+            license.  The source code for this project is hosted at 
+            <a href="http://chromabrush.googlecode.com">chromabrush.googlecode.com</a>.
+          </p>
+          <p>
+            The "official" version of Chromabrush is hosted on Google App Engine
+            and is available at
+            <a href="http://www.chromabrush.com">www.chromabrush.com</a> 
+          </p>
+        </div>
+      </div>
+      <div id="note-browsersupport" class="">
+        <h1>Chromabrush has not been tested with your browser</h1>
+        <p>
+          Chromabrush is written using the latest HTML5 technologies, many
+          of which are not fully supported by every popular browser available
+          today.  Because this is a technical demonstration of what is possible
+          to create when using cutting-edge features, less effort has been put
+          into making the application work on all available browsers.
+        </p>
+        <p>
+          To get the full functionality of this application, we suggest you use
+          a
+          <a href="http://www.chromium.org/getting-involved/dev-channel">
+            Dev Channel release of Google Chrome</a>.  No other browser has
+          been tested with this version of Chromabrush.  
+        </p>
+        <p>
+          We hope to add additional browser support over time.  If you would 
+          like to test how Chromabrush behaves in your browser, please
+          <a href="?skipbrowsercheck=1">click here to disable this check</a>.
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

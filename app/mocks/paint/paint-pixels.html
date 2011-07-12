@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<!--
+  Copyright 2010 Google Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<html>
+  <head>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+    <style>
+      body {
+      }
+      canvas {
+        cursor: crosshair; 
+      }
+      .color {
+        width: 48px;
+        height: 48px;
+        display: inline-block;
+        border: 3px solid #000;
+        margin: 5px;
+        -webkit-box-shadow: 3px 3px 3px #666;
+      }
+      .color.selected {
+        border: 3px dotted #fff;
+        -webkit-box-shadow: none;
+      }
+    </style>
+    <script>
+      // Fix dragging cursor issue;
+      document.onselectstart = function () { return false; };
+      
+      function paintPixel(context, x, y) {
+        var block_x = Math.floor(x / step);
+        var block_y = Math.floor(y / step);
+        context.fillStyle = fillcolor;
+        context.fillRect(Math.round(block_x * step), Math.round(block_y * step), step, step);
+      };
+      
+      function paintLine(context, x1, y1, x2, y2) {
+        //var oldfill = fillcolor;
+        //fillcolor = "#f00";
+        var slope = (x2 == x1) ? null : (y2 - y1) / (x2 - x1);
+        var x = 0;
+        var y = 0;
+        
+        if (x2 == x1) {
+          if (y2 < y1) {
+            y1 ^= y2;
+            y2 ^= y1;
+            y1 ^= y2;
+          }
+          for (var y = y1; y <= y2; y++) {
+            paintPixel(context, x1, y);
+          }
+        } else if (y2 == y1) {
+          if (x2 < x1) {
+            x1 ^= x2;
+            x2 ^= x1;
+            x1 ^= x2;
+          }
+          for (var x = x1; x <= x2; x++) {
+            paintPixel(context, x, y1);
+          }
+        } else if (Math.abs(slope) < 1) {
+          if (x2 < x1) {
+            x1 ^= x2;
+            x2 ^= x1;
+            x1 ^= x2;
+            y1 ^= y2;
+            y2 ^= y1;
+            y1 ^= y2;
+            slope = (x2 == x1) ? null : (y2 - y1) / (x2 - x1);
+          }
+          var c = y1 - (slope * x1);
+          for (var x = x1; x <= x2; x += 1) {
+            y = slope * x + c;
+            paintPixel(context, x, y);
+          }
+        } else {
+          if (y2 < y1) {
+            y1 ^= y2;
+            y2 ^= y1;
+            y1 ^= y2;
+            x1 ^= x2;
+            x2 ^= x1;
+            x1 ^= x2;
+            slope = (x2 == x1) ? null : (y2 - y1) / (x2 - x1);
+          }
+          var c = y1 - (slope * x1);
+          for (var y = y1; y <= y2; y += 1) {
+            x = (y - c) / slope;
+            paintPixel(context, x, y);
+          }
+        }
+        //fillcolor = oldfill;
+      };
+      
+      function drawGrid(context, w, h) {
+        for (var x = 0.5; x <= w; x += step) {
+          context.moveTo(x, 0);
+          context.lineTo(x, h);
+        }
+        for (var y = 0.5; y <= h; y += step) {
+          context.moveTo(0, y);
+          context.lineTo(w, y);
+        }
+        context.strokeStyle = "#eee";
+        context.stroke();
+      };
+      
+      function onMouseMove(evt) {
+        var x = evt.offsetX || evt.pageX - canvas.offsetLeft;
+        var y = evt.offsetY || evt.pageY - canvas.offsetTop;
+        output.innerText = JSON.stringify({
+          'x' : x,
+          'y' : y
+        });
+        if (drawing) {
+          if (lastpoint) {
+            paintLine(context, lastpoint.x, lastpoint.y, x, y);
+          }
+          paintPixel(context, x, y);
+          lastpoint = {
+            'x' : x,
+            'y' : y
+          };
+        }
+      };
+      
+      function onMouseDown(evt) {
+        /*
+        if (lastpoint) {
+          paintLine(context, lastpoint.x, lastpoint.y, evt.offsetX, evt.offsetY);
+        }
+        paintPixel(context, evt.offsetX, evt.offsetY);
+        lastpoint = {
+          'x' : evt.offsetX,
+          'y' : evt.offsetY
+        };
+        */
+        drawing = true;
+        onMouseMove(evt);
+      };
+      
+      function onMouseUp(evt) {
+        drawing = false;
+        lastpoint = null;
+      };
+      
+      var lastpoint = null;
+      var step = 5;
+      var canvas;
+      var output;
+      var context;
+      var drawing = false;
+      var fillcolor = '#000';
+      
+      function init() {
+        $('.color').click(function() {
+          fillcolor = $(this).css('background-color');
+          $('.color.selected').removeClass('selected');
+          $(this).addClass('selected');
+        });
+        canvas = document.getElementById('dom_canvas');
+        output = document.getElementById('dom_output');
+        canvas.width = 501;
+        canvas.height = 381;
+        context = canvas.getContext("2d");
+        drawGrid(context, canvas.width, canvas.height);
+        canvas.addEventListener('mousemove', onMouseMove, false);
+        canvas.addEventListener('mousedown', onMouseDown, false);
+        window.addEventListener('mouseup', onMouseUp, false);
+      };
+      
+    </script>
+  </head>
+  <body onload="init();">
+    <canvas id="dom_canvas" ></canvas>
+    <div id="dom_palette">
+      <div class="color" style="background: #36b;"></div>
+      <div class="color selected" style="background: #000;"></div>
+      <div class="color" style="background: #666;"></div>
+      <div class="color" style="background: #fffeee;"></div>  
+      <div class="color" style="background: #d00;"></div>  
+      <div class="color" style="background: #0d0;"></div>  
+      <div class="color" style="background: #00d;"></div>  
+    </div>
+    <div id="dom_output"></div>
+  </body>
+</html>

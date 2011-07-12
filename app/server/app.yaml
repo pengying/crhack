@@ -1,0 +1,39 @@
+application: chromabrush-2
+version: 1
+runtime: python
+api_version: 1
+
+handlers:
+- url: /image.*
+  script: image.py
+
+- url: /mocks/
+  static_dir: mocks
+
+- url: /audio/
+  static_dir: frontend/audio
+  mime_type: audio/ogg
+  expiration: "7d"
+  
+- url: /css/
+  static_dir: frontend/css
+  expiration: "7d"
+
+- url: /js/
+  static_dir: frontend/js
+  expiration: "7d"
+
+- url: /img/
+  static_dir: frontend/img
+  expiration: "7d"
+
+- url: /video/
+  static_dir: frontend/video
+  expiration: "7d"
+
+- url: /favicon.ico
+  static_files: frontend/img/favicon.png
+  upload: frontend/img/favicon.png
+
+- url: /
+  script: server.py

@@ -1,0 +1,35 @@
+License
+--------------------------------------------------------------------------------
+JQUERY:
+The jQuery library included in this software is originally by John Resig
+and is released under an MIT license. jQuery can be found at http://jquery.com/.
+
+MODERNIZR:
+The Modernizr library included in this software is originally by Faruk Ateş
+and Paul Irish and is released under an MIT license.  Modernizr can be 
+found at http://www.modernizr.com/
+
+SIMPLE JAVASCRIPT INHERITANCE:
+The JavaScript inheritance code located in js/ejohn.Class.js is originally 
+by John Resig and can be located here: 
+http://ejohn.org/blog/simple-javascript-inheritance/
+
+CSS3 HBOX/VBOX CODE:
+The CSS code located in css/hbox.vbox.css is originally by Alex Russel and 
+can be located here:
+http://alex.dojotoolkit.org/2009/08/css-3-progress/
+
+HTML5LIB:
+The Python HTML5 parser included in this software is released under an 
+MIT license and can be found at http://code.google.com/p/html5lib/
+
+SOURCE CODE:
+Except where othwerwise noted, the source code of this project is released 
+under the Apache 2 license, as described in the LICENSE file.
+
+FONTS:
+This project uses the following fonts:
+ * Raleway made by Matt McInerney
+   Available at http://www.theleagueofmoveabletype.com/fonts/14-raleway
+   Released under the Open Font License:
+   http://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL

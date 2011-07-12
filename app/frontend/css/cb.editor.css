@@ -1,0 +1,185 @@
+/* TODO: Remove */
+.box {
+  padding: 4px;
+}
+
+/* Fonts */
+@font-face {
+  font-family: 'Josefin';
+  src: url('JosefinSansStd-Light.otf') format('opentype');
+}
+
+/* Styles */
+html {
+  height: 100%;
+}
+body {
+  background: #aaa;
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  font: 14px Arial;
+}
+hr {
+  border: 0;
+  border-bottom: 1px solid #666;
+}
+
+.helpvideo {
+  -webkit-box-shadow: 2px 2px 4px #000;
+}
+
+#layer_box {
+  min-width: 120px;
+}
+.layer {
+  cursor: move;
+  padding: 7px;
+  border-radius: 5px;
+  background: #ddd;
+}
+.layer span {
+  vertical-align: middle;
+}
+.layer img {
+  display: block;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  margin-right: 4px;
+  border: 1px solid #aaa;
+  background: #fff;
+}
+.layer.selected {
+  padding: 4px;
+  border: 3px solid #36b;
+}
+
+.canvas-wrap {
+  background: #aaa;
+}
+.canvas-wrap canvas {
+  cursor: none !important;
+}
+
+.menu {
+  margin: 0;
+  padding: 7px 0 !important;
+}
+.menu ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+.menu li {
+  margin: 0;
+  padding: 3px 10px;
+  text-shadow: 1px 1px 1px #aaa;
+}
+.menu li:hover {
+  background: #36b;
+  color: #fff;
+  text-shadow: none;
+}
+.menu .disabled {
+  color: #666 !important;
+  cursor: default;
+}
+.menu .disabled:hover {
+  background: transparent !important;
+  text-shadow: 1px 1px 1px #aaa;
+}
+
+.popupcontent {
+  max-width: 600px;
+  text-align: left;
+}
+
+.centeredtext {
+  text-align: center;
+}
+
+#logo {
+  font: 30px 'Josefin';
+  color: #333;
+  cursor: default;
+  position: absolute;
+  right: 15px;
+  bottom: 0px;
+  text-shadow: 1px 1px 1px #fff;
+}
+.symbol {
+  font-size: 14px;
+  font-family: 'Josefin';
+  display: inline-block;
+  vertical-align: bottom;
+  line-height: 16px;
+}
+
+#templates {
+  position: absolute;
+  visibility: hidden;
+  z-index: -1;
+}
+
+.button {
+  border: 2px solid #ff0000;
+  padding: 3px;
+  cursor: pointer;
+}
+
+#menu_box,
+#control_box,
+#brush_box,
+#panel_box {
+  position: relative;
+  background: #ddd;
+  -webkit-box-shadow: 0px 1px 4px rgba(0,0,0,0.5);
+}
+#menu_box {
+  z-index: 3;
+  padding: 0px 5px;
+  margin-bottom: 10px;
+}
+
+#control_box {
+  z-index: 2;
+  margin: 0 10px 0 0;
+  border-radius: 0 10px 0 0;
+}
+
+#brush_box {
+  margin: 10px 0 0 0;
+  border-radius: 10px 10px 0 0;
+  padding: 5px;
+}
+
+#panel_box {
+  margin: 0 0 0 10px;
+  border-radius: 10px 0 0 0;
+  padding: 10px
+}
+
+#note-browsersupport {
+  width: 50%;
+  background: #fff;
+  margin: 50px auto;
+  padding: 20px;
+  -moz-box-shadow: 2px 2px 6px #000;
+  -webkit-box-shadow: 2px 2px 6px #000;
+  box-shadow: 2px 2px 6px #000;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}
+
+.cb_ui_menuitem {
+  font: 16px Arial;
+  padding: 5px;
+  display: inline-block;
+  cursor: pointer;
+  color: #000;
+  text-shadow: 1px 1px 1px #aaa;
+}
+

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<!--
+  Copyright 2010 Google Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<html>
+  <head>
+    <style>
+      audio {
+        width: 0;
+        height: 0;
+      }
+      .target {
+        display: block;
+        width: 100px;
+        height: 100px;
+        background: #36b;
+        margin: 20px;
+      }
+    </style>
+    <script>
+      var audioclips = {};
+      function log() {
+        var out = [];
+        for (var name in audioclips) {
+          if (audioclips.hasOwnProperty(name)) {
+            out.push(name + ":" + audioclips[name].ended);
+          }
+        }
+        console.log('{' + out.join(', ') + '}');
+      };
+      
+      function play(id) {
+        if (audioclips.hasOwnProperty(id)) {
+          if (audioclips[id].paused == false) {
+            audioclips[id].pause();
+          }
+          delete audioclips[id];
+        }
+        audioclips[id] = new Audio(id + '.ogg');
+        audioclips[id].play();
+        log();
+        /*
+        audiotag.addEventListener('play', function () { 
+            window.setTimeout(function () {
+              audiotag.parentElement.removeChild(audiotag);
+              audioclips[id] = false;
+              log();
+            }, audiotag.duration * 1000 + 500);
+        }, true);
+        */
+      };
+    </script>
+  </head>
+  <body>
+    <button onclick="play('bloop01');">Bloop 01</button>
+    <button onclick="play('bloop02');">Bloop 02</button>
+    <button onclick="play('click01');">Click 01</button>
+    <button onclick="play('click02');">Click 02</button>
+    <div draggable="true" class="target" id="div01">Click me</div>
+    <div class="target" id="div02">Click me</div>
+    <script>
+      var div01 = document.getElementById('div01');
+      div01.addEventListener('dragstart', function() { return true; }, false);
+      div01.addEventListener('dragend', function() { return false; }, false);
+      
+      var div02 = document.getElementById('div02');
+      div02.addEventListener('dragenter', function() { 
+        this.innerText = "enter";
+        return false; 
+      }, false);
+      div02.addEventListener('dragleave', function() { 
+        this.innerText = "leave";
+        return false; 
+      }, false);
+      div02.addEventListener('dragover', function() { 
+        this.innerText = "over";
+        return false; 
+      }, false);
+      div02.addEventListener('drop', function() { 
+        this.innerText = "drop";
+        play('bloop01');
+        return false; 
+      }, false);
+      
+    </script>
+  </body>
+</html>
