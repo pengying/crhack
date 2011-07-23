@@ -1,0 +1,22 @@
+@-webkit-keyframes glowGreen {
+  from {
+    -webkit-box-shadow: rgba(0, 255, 0, 0) 0 0 0 0;
+  }
+  50% {
+    -webkit-box-shadow: rgba(0, 255, 0, 1) 0 0 5px 1px;
+  }
+  to {
+    -webkit-box-shadow: rgba(0, 255, 0, 0) 0 0 0 0;
+  }
+}
+@-webkit-keyframes glowRed {
+  from {
+    -webkit-box-shadow: rgba(255, 0, 0, 0) 0 0 0;
+  }
+  50% {
+    -webkit-box-shadow: rgba(255, 0, 0, 1) 0 0 5px 1px;
+  }
+  to {
+    -webkit-box-shadow: rgba(255, 0, 0, 0) 0 0 0;
+  }
+}

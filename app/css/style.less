@@ -1,0 +1,504 @@
+.border-radius(@radius: 10px) {
+  -webkit-border-radius: @radius;
+  -moz-border-radius: @radius;
+  -o-border-radius: @radius;
+  border-radius: @radius;
+}
+
+.box-sizing(@type: border-box) {
+  -webkit-box-sizing: @type;
+  -moz-box-sizing: @type;
+  box-sizing: @type;
+}
+
+.user-select(@val) {
+  -moz-user-select: @val;
+  -khtml-user-select: @val;
+  -webkit-user-select: @val;
+  user-select: @val;
+}
+
+.display-box() {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -o-box;
+  display: -ms-box;
+  display: box;
+}
+
+.box-align(@val) {
+  -webkit-box-align: @val;
+  -moz-box-align: @val;
+  -o-box-align: @val;
+  box-align: @val;
+}
+
+.box-pack(@val) {
+  -webkit-box-pack: @val;
+  -moz-box-pack: @val;
+  -o-box-pack: @val;
+  box-pack: @val;
+}
+
+/* ----- */
+
+html {
+  overflow: hidden;
+}
+body {
+  background-color: #000;
+  -webkit-font-smoothing: antialiased; /* Fix for webkit rendering */
+  -webkit-text-size-adjust: 100%;
+}
+
+#container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0px;
+  background-image: url("../img/wood-cheap.jpg");
+  background-repeat: repeat;
+
+  > header {
+    background: -webkit-linear-gradient(left, black 6%, transparent 10%),
+                -webkit-linear-gradient(rgba(0, 0, 0, 0.7) 55%, black);
+    color: white;
+    font-family: 'Luckiest Guy', cursive;
+    box-shadow: 0 2px 10px black;
+    text-shadow: 1px 3px 5px black;
+    .display-box();
+
+    > * {
+      -webkit-box-align: center;
+      display: -webkit-box;
+    }
+
+    img#logo {
+      height: 80px;
+    }
+
+    img.profile-img {
+      height: 35px;
+      width: 35px;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+    }
+
+    h1 {
+      font-size: 28pt;
+      margin-left: 10px;
+      letter-spacing: 1px;
+      line-height: 0;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+  
+    #share {
+      margin-left: 2em;
+    }
+  }
+}
+
+nav {
+  font-size: 18px;
+  -webkit-box-flex: 1;
+  -webkit-box-pack: end;
+
+  > * {
+    margin-right: 10px;
+  }
+}
+
+
+.control-window {
+  position: fixed;
+  bottom: 0px;
+  color: #bbb;
+  border-radius: 25px 25px 0px 0px;
+  font-size: 1.4em;
+}
+
+@bottomPanelPosition: -225px;
+.bottom-panel {
+  box-shadow: 0 -2px 10px black;
+  position: fixed;
+  width: 49%;
+  height: 300px;
+  bottom: @bottomPanelPosition;
+  -webkit-transition: all 0.5s ease-in-out;
+  -webkit-transform: translateZ(0);
+  color: #bbb;
+  border-radius: 15px 15px 0px 0px;
+  font-size: 1.4em;
+  background-color: black;
+  background: url(../img/pane-vert-sizer.png) no-repeat 50% 4px,
+              -webkit-linear-gradient(rgba(0, 0, 0, 0.7) 25%, black);
+
+  /*&:hover {
+    bottom: @bottomPanelPosition + 20px;
+  }*/
+
+  &.show {
+    bottom: 0;
+  }
+
+  div.panel-header {
+    /*background: -webkit-linear-gradient(top, #7d7e7d 0%,#0e0e0e 100%);*/
+    border-radius: inherit;
+    height: 65px;
+    padding: 15px;
+  }
+}
+
+#queue-window {
+  left: 8px;
+
+  input {
+    width: 40%;
+
+    &[type="file"].hidden-input {
+      /* display:none on the input won't trigger the click event in WebKit.
+         Setting visibility to hidden and width 0 works.*/
+      visibility: hidden;
+      width: 0;
+      height: 0;
+      position: absolute;
+    }
+  }
+}
+
+#chat-window {
+  right: 9px;
+
+  iframe {
+    width: 100%;
+    height: 325px;
+    border-radius: 15px 15px 0px 0px;
+    border: none;
+    padding: 15px;
+    .box-sizing(border-box);
+  }
+}
+
+#drop-file-area {
+  /*border: 1px dashed #CCC;*/
+
+  /* display: inline-block;
+   position:relative;
+   height:50px;
+   top:-15px;
+   width:40%
+  */
+}
+
+#dj-booth {
+  width: 650px;
+  height: 280px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  text-align: center;
+  .user-select(none);
+  pointer-events: none;
+
+  header {
+    background: #222;
+    color: white;
+    font-family: 'Luckiest Guy', cursive;
+    height: 65px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 2px 10px black;
+  }
+}
+
+[draggable] {
+  .user-select(none);
+  cursor: move;
+}
+
+#dance-floor {
+  position: absolute;
+  width: 100%;
+  top: 0;
+
+  img {
+    border-radius: 4px;
+    box-shadow: 3px 3px 10px black;
+    -webkit-transform-origin: 50% 100%;
+  }
+
+  .dudes-container img {
+    position: absolute;
+  }
+}
+
+#select-song {
+  border-radius:1em;
+}
+
+a.expando {
+  position: absolute;
+  right: 15px;
+  font-weight: 600;
+  font-size: 16pt;
+  color: white;
+  text-decoration: none;
+}
+
+.ul-scroller {
+  overflow-y: auto;
+  height: 235px;
+  width: 100%;
+}
+
+ul#song-list {
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+  font-size: 0.8em;
+}
+
+ul#song-list li {
+  background: -webkit-linear-gradient(top, #000 0%,#333 100%);
+  border-bottom: 1px solid #555;
+  padding: 5px;
+}
+
+span.queue-title {
+  color: #ccc;
+  display: block;
+  font-weight: bold;
+}
+
+span.queue-artist {
+}
+
+
+#not-supported {
+  text-align: center;
+  font: 20px "Terminal Dosis Light", Arial, Helvetica, Tahoma;
+  font-weight: bold;
+  text-shadow: 1px 0 3px #999;
+  position: absolute;
+  z-index: 100;
+  width: 100%;
+  height: 100%;
+  background: rgba(255,255,255,0.6);
+  .display-box();
+  .box-align(center);
+  .box-pack(center);
+
+  > article {
+    background: url('../img/chrome_logo_256_trans.png') no-repeat -25% 125%, #F1F1F2;
+    border-radius: 5px;
+    display: inline-block;
+    box-shadow: 0 0 20px 5px rgba(0,0,0,0.7);
+    width: 415px;
+    padding: 1.5em;
+
+    h1 {
+      padding: 10px 0;
+      margin: 0 0 0 0;
+      background: #E8E8E8;
+      border-bottom: 1px solid #fff;
+      border-top: 1px solid #dddddf;
+    }
+
+    div {
+      margin: 15px 0 0 0;
+    }
+  }
+  
+  img {
+    border-radius: 5px;
+    width: 80%;
+  }
+}
+
+.chat-popup {
+  /*background-color: white;
+  border: 4px solid red;
+  border-radius: 25px;
+  width: 250px;
+  padding: 10px;
+  margin: 5px;*/
+
+  padding: 10px;
+  margin: 5px;
+  color: #fff;
+  background:#075698; /* default background for browsers without gradient support */
+  /* css3 */
+  background:-webkit-gradient(linear, 0 0, 0 100%, from(#2e88c4), to(#075698));
+  background:-moz-linear-gradient(#2e88c4, #075698);
+  background:-o-linear-gradient(#2e88c4, #075698);
+  background:linear-gradient(#2e88c4, #075698);
+  .border-radius(10px);
+  width: 250px;
+  position: absolute;
+  top: -50px;
+  left: -50px;
+  z-index: 100;
+
+  -webkit-transition: all 0.2s ease-in-out;
+  /*-webkit-transition-delay: 0.4s;*/
+  
+  &:after {
+    content:"";
+    position:absolute;
+    bottom: -15px; /* value = - border-top-width - border-bottom-width */
+    left: 40px; /* controls horizontal position */
+    border-width:20px 0 0 20px; /* vary these values to change the angle of the vertex */
+    border-style:solid;
+    border-color:#075698 transparent;
+    /* reduce the damage in FF3.0 */
+    display: block;
+    width: 0;
+  }
+  
+  &.show {
+    opacity: 1;
+  }
+}
+
+
+/*
+.speaker {
+  -webkit-transition-property: -webkit-transform;
+  -webkit-transition-duration: 3.5s;
+  -webkit-transition-timing-function: ease;
+  -webkit-transition-delay: initial;
+  -webkit-transform-origin-x: 18%;
+  -webkit-transform-origin-y: 0%;
+  -webkit-transform: scale(0.85) rotateX(360deg) rotateY(0deg) translate(40px, 0px) skew(0deg, 0deg) scaleZ(1) rotateZ(0deg) translateZ(0px);
+}*/
+
+.left-speaker {
+  position: absolute;
+  -webkit-transform: scale(0.8);
+  top: -4px;
+  left: 15px;
+}
+
+.right-speaker {
+  position: absolute;
+  -webkit-transform: scale(0.8);
+  top: 0;
+  right: 12px;
+}
+
+.booth-header {
+  text-align: center;
+  vertical-align: middle;
+  border-bottom-left-radius: 150px 125px;
+  border-bottom-right-radius: 150px 125px;
+
+  [data-song-title] {
+    margin-top: 1em;
+    font-size: 12pt;
+  }
+}
+
+#share-it {
+  background-image: url(../img/share-icon-64x64.png);
+  background-repeat: no-repeat;
+  width: 64px;
+  height: 64px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+#dj-booth .visualizer-container {
+  position: relative;
+  display: inline-block;
+  background: -webkit-linear-gradient(top, transparent, rgba(0, 0, 0, 0.75));
+  top: -53px;
+}
+#dj-booth #visualizer {
+  position: relative;
+  top: 3px;
+  left: 0;
+  /*-webkit-box-reflect: below 1px -webkit-linear-gradient(transparent, transparent 70%, white);*/
+  -webkit-box-reflect: below -12px -webkit-linear-gradient(transparent, transparent 79%, white);
+  /*-webkit-mask-image: url(../img/circle2.svg);
+  -webkit-mask-position: 50% 100%;
+  -webkit-mask-size: 225% 100%;
+  -webkit-mask-repeat: no-repeat;*/
+}
+
+#volume-control {
+  position: absolute;
+  top: 100px;
+  left: 15px;
+}
+
+input[type="range"] {
+  -webkit-appearance: none !important;
+  background-color: #555;
+  box-shadow: 0 -1px 1px rgba(255,255,255,0.5) inset;
+  border-radius: 10px;
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none !important;
+    width: 20px;
+    height: 8px;
+    box-shadow: 1px 1px 5px rgba(0,0,0,1);
+    cursor: pointer;
+    border-top: 1px solid #fff;
+    background: #ccc -webkit-linear-gradient(top, rgb(240, 240, 240), rgb(210, 210, 210));
+  }
+}
+
+
+button {
+  display: inline-block;
+  background: -webkit-gradient(linear, 0% 40%, 0% 70%, from(#F9F9F9), to(#E3E3E3));
+  background: -webkit-linear-gradient(#F9F9F9 40%, #E3E3E3 70%);
+  background: -moz-linear-gradient(#F9F9F9 40%, #E3E3E3 70%);
+  background: -ms-linear-gradient(#F9F9F9 40%, #E3E3E3 70%);
+  background: -o-linear-gradient(#F9F9F9 40%, #E3E3E3 70%);
+  background: linear-gradient(#F9F9F9 40%, #E3E3E3 70%);
+  border: 1px solid #999;
+  border-radius: 3px;
+  padding: 5px 8px;
+  outline: none;
+  white-space: nowrap;
+  .user-select(none);
+  cursor: pointer;
+  text-shadow: 1px 1px #fff;
+  font-size: 11px;
+  font-weight: bold;
+
+  &:disabled {
+    color: #ccc;
+  }
+
+  &:not(:disabled):hover {
+    border-color: black;
+  }
+
+  &:not(:disabled):active {
+    background: -webkit-gradient(linear, 0% 40%, 0% 70%, from(#E3E3E3), to(#F9F9F9));
+    background: -webkit-linear-gradient(#E3E3E3 40%, #F9F9F9 70%);
+    background: -moz-linear-gradient(#E3E3E3 40%, #F9F9F9 70%);
+    background: -ms-linear-gradient(#E3E3E3 40%, #F9F9F9 70%);
+    background: -o-linear-gradient(#E3E3E3 40%, #F9F9F9 70%);
+    background: linear-gradient(#E3E3E3 40%, #F9F9F9 70%);
+  }
+}
+
+/* Unfortunate go/shackathon hack to make the iframe fill the screen */
+#googleShareIFrameDiv iframe {
+  height: 100%;
+  vertical-align: bottom;
+  width: 100%;
+}
+
+/* Size the GShare button */
+#share img {
+  width: 60px;
+  height: 21px;
+}

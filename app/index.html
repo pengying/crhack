@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>DJ Breakpoint</title>
+  <meta name="description" content="Socail music tool">
+  <meta name="author" content="Chrome DevRel">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Place favicon.ico and apple-touch-icon.png in the root directory: mathiasbynens.be/notes/touch-icons -->
+
+  <link href='http://fonts.googleapis.com/css?family=Luckiest+Guy|Terminal+Dosis+Light&v2' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" media="all" href="css/reset.css">
+  <link rel="stylesheet" type="text/css" media="all" href="css/style.less">
+
+  <script id="upload-worker" type="javascript/worker">
+     self.onmessage = function(e) {
+       var data = e.data;
+       // Upload entire song.
+       var formData = new FormData();
+       formData.append('file', data.file);
+
+       var xhr = new XMLHttpRequest();
+       xhr.open('POST', '/upload', false);
+       xhr.send(formData);
+       self.postMessage({msg:'Uploading complete.'});
+     };
+  </script>
+</head>
+<body>
+
+<div id="container">
+
+  <div id="not-supported" class="hidden">
+    <article>
+      <h1>Time for an upgrade!</h1>
+      <div>
+        <img src="img/8track.jpg" alt="8 Track Player"/>
+        <p>I don't mean to be a <em>prima donna</em>, but if you're going to spin da tunes,
+        at least spin em with a better browser.</p>
+        You need Google Chrome 14+
+      </div>
+    </article>
+  </div>
+
+  <header>
+    <img src="img/dj-working.png" alt="logo" id="logo" />
+    <h1><a href="/">DJ Breakpoint</a></h1>
+
+    <nav>
+      <!-- temporary play pause button for toggling playback -->
+      <!--<button id="playpause" style="float: right;" onclick="player.loadUrl('theme.mp3'); player.play();">play</button>-->
+      <button id="change-floor" disabled onclick="$('#container').css('background-image', 'url(img/wood-cheap.jpg)'); $(this).attr('disabled', 'disabled'); $('#change-floor2').removeAttr('disabled'); ">
+           1st floor</button>
+      <button id="change-floor2" onclick="$('#container').css('background-image', 'url(img/wood-floor2.jpg)'); $(this).attr('disabled', 'disabled'); $('#change-floor').removeAttr('disabled');">
+           2nd floor</button>
+      <button id="login" onclick="alert('Not implemented yet');">Login</button>
+    </nav>
+  </header>
+
+  <div id="dj-booth">
+    <header class="booth-header">
+      <div data-song-title></div>
+    </header>
+    <img src="img/speaker.png" alt="speaker" class="left-speaker" />
+    <div class="visualizer-container">
+      <canvas id="visualizer" width="255" height="190"></canvas>
+    </div>
+    <img src="img/speaker.png" alt="speaker" class="right-speaker" />
+  </div>
+
+  <input id="volume-control" type="range" min="0" max="1" value="1" step="0.1" alt="Volume" title="Volume">
+
+  <div id="dance-floor">
+    <div class="dudes-container"></div>
+  </div>
+
+  <footer>
+    <div id="queue-window" class="bottom-panel" onclick="this.classList.toggle('show')">
+      <div id="drop-file-area" class="panel-header">
+        <!--<a href="javascript:" class="expando" onclick="$('#queue-window').toggleClass('show');">
+          <img src="img/arrow_updown.gif" alt="arrows" />
+        </a>-->
+        <input type="file" id="choose-file" class="hidden-input" multiple accept="audio/*"/>
+        <button id="directory-upload" onclick="document.querySelector('#choose-file').click();">Select a song</button>
+      </div>
+      <ul id="song-list" class="ul-scroller"></ul>
+    </div>
+    <div id="chat-window" class="bottom-panel" onclick="this.classList.toggle('show')">
+      <!--<a href="javascript:" class="expando" onclick="$('#chat-window').toggleClass('show');">
+        <img src="img/arrow_updown.gif" alt="arrows" />-->
+      </a>
+      <iframe src="/chat.html"></iframe>
+    </div>
+  </footer>
+</div> <!--! end of #container -->
+
+<!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="js/libs/jquery-1.6.2.min.js"><\/script>')</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/jquery-ui.min.js"></script>
+
+<!-- Share box hack. See go/shackathon -->
+<script src="https://ssl.gstatic.com/gb/js/gcm_c9b8b86db30d53b8c2fed7ad45ae4c46.js"></script>
+<script src="http://shackathon.googleplex.com/shackathon.js"></script>
+
+
+<!-- scripts concatenated and minified via ant build script-->
+<!--<script src="js/plugins.js"></script>-->
+<script src="/socket.io/socket.io.js"></script>
+<script src="js/script.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/audio_streamer.js"></script>
+<script src="js/BeatDetektor.js"></script>
+<script src="js/visualizer.js"></script>
+
+<!-- mathiasbynens.be/notes/async-analytics-snippet Change UA-XXXXX-X to be your site's ID -->
+<script>
+  var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview'],['_trackPageLoadTime']];
+  (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.async=1;
+    g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+    s.parentNode.insertBefore(g,s)}(document,'script'));
+</script>
+
+<!-- Prompt IE 6 users to install Chrome Frame. Remove this if you want to support IE 6.
+     chromium.org/developers/how-tos/chrome-frame-getting-started -->
+<!--[if lt IE 7 ]>
+  <script src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.3/CFInstall.min.js"></script>
+  <script>window.attachEvent('onload',function(){CFInstall.check({mode:'overlay'})})</script>
+<![endif]-->
+
+</body>
+</html>
