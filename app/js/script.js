@@ -301,9 +301,8 @@ exports.addEventListener('message', function(e) {
 // Needs to be onload and not DOMContentLoaded b/c need to wait for chat iframe
 // to fully load.
 exports.addEventListener('load', function(e) {
-  // Setup Google+ login.
   if (window.location.hash) {
-    plus.authorize(onAuthorized);
+    
   } else if (localStorage.profile) {
     onAuthorized(JSON.parse(localStorage.profile));
   }
