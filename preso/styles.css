@@ -96,9 +96,9 @@ body {
 
 .slides > article:not(.nobackground):not(.biglogo) {
   background: url(images/colorbar.png) 0 615px repeat-x,
-              url(images/googleio-logo.png) 640px 635px no-repeat;
+              url(images/google_logo.png) 98% 98% no-repeat;
 
-  background-size: 100%, 225px;  
+  background-size: 100%, 15%;
 
   background-color: white;  
 }
@@ -110,12 +110,7 @@ body {
 /* Slide styles */
 
 article.biglogo {
-  background: url(images/googleio-logo.png) 50% 50% no-repeat,
-              url(images/colorbar.png) 0 615px repeat-x;
-              
-  
-  background-color:white;
-  background-size: 600px;
+  background: white url(images/google_logo.png) 50% 50% no-repeat;
 }
 
 .s2s {
