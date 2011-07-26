@@ -131,6 +131,86 @@ Author: Eric Bidelman (ericbidelman@chromium.org),
 	</div>
   </article>
 
+  <!-- ACCOUNT INFO -->
+  <article class="">
+	<h3>
+	  Before Integrating
+	</h3>
+	<table class="noborder">
+	  <tbody><tr>
+		<td>
+	<p>
+	  </p><ul>
+		<li>Sign up as a seller</li>
+		<li>Get your <strong>Seller Id</strong></li>
+		<li>Get your <strong>Seller Key</strong></li>
+		<li>Configure your postback URL</li>
+	  </ul>
+	<p></p>
+	</td>
+	<td>
+	 <img style="margin-top:15%" src="./images/accountinfo.png" width="450px" class="boxshadow">
+	</td>
+  </tr></tbody></table>
+  </article>
+  
+    <!-- ITEM JWT -->
+    <article class="">
+      <h3>
+        Define Item
+      </h3>
+      <section style="margin-top:5%">
+      <pre class="prettyprint"><span class="pun">{</span><span class="pln">
+  </span><span class="str">"iss"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="lit">1337133713371337</span><span class="pun">,</span><span class="pln">
+  </span><span class="str">"aud"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"Google"</span><span class="pln">
+  </span><span class="str">"typ"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"google/payments/inapp/item/v1"</span><span class="pun">,</span><span class="pln">
+  </span><span class="str">"exp"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"1392348430"</span><span class="pun">,</span><span class="pln">
+  </span><span class="str">"iat"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"1392282180"</span><span class="pun">,</span><span class="pln">
+  </span><span class="str">"request"</span><span class="pln"> </span><span class="pun">:{</span><span class="pln">
+    </span><span class="str">"name"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"Piece of Cake"</span><span class="pun">,</span><span class="pln">
+    </span><span class="str">"description"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"Virtual chocolate cake to fill your 
+      virtual tummy"</span><span class="pun">,</span><span class="pln">
+    </span><span class="str">"price"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"10.50"</span><span class="pun">,</span><span class="pln">
+    </span><span class="str">"currencyCode"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"USD"</span><span class="pun">,</span><span class="pln">
+    </span><span class="str">"sellerData"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"user_id:1224245,offer_code:3098576987"</span><span class="pln">
+  </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+        </span></pre>
+      </section>
+    </article>
+    
+    <!-- Create JWT in Python-->
+    <article class="">
+      <h3>
+        Create JWT
+      </h3>
+      <section style="margin-top:5%">
+      Python:
+      <pre class="prettyprint"><span class="pln">        cakeJwt </span><span class="pun">=</span><span class="pln"> jwt</span><span class="pun">.</span><span class="pln">encode</span><span class="pun">(</span><span class="pln">item</span><span class="pun">,</span><span class="pln"> </span><span class="str">"1ZRJNFIOSJSIDFJNVHF"</span><span class="pun">)</span><span class="pln">
+      </span></pre>
+      Ruby:
+      <pre class="prettyprint"><span class="pln">        </span><span class="lit">@cakeJwt</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> JWT</span><span class="pun">.</span><span class="pln">encode</span><span class="pun">(</span><span class="pln">item</span><span class="pun">,</span><span class="pln"> </span><span class="str">"1ZRJNFIOSJSIDFJNVHF"</span><span class="pun">)</span><span class="pln">
+      </span></pre>
+      </section>
+    </article>
+
+
+    <!-- INCLUDE JAVASCRIPT-->
+    <article>
+      <h3>
+        Include JavaScript
+      </h3>
+      <section style="margin-top:18%">
+      <pre class="prettyprint"><span class="tag">&lt;script</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"text/javascript"</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"http://www.google.com/jsapi"</span><span class="tag">&gt;</span><span class="pln">
+</span><span class="tag">&lt;/script&gt;</span><span class="pln">
+</span><span class="tag">&lt;script</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"text/javascript"</span><span class="tag">&gt;</span><span class="pln">
+google</span><span class="pun">.</span><span class="pln">load</span><span class="pun">(</span><span class="str">'payments'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'1.0'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  </span><span class="str">'packages'</span><span class="pun">:</span><span class="pln"> </span><span class="pun">[</span><span class="str">'sandbox_config'</span><span class="pun">]</span><span class="pln">
+</span><span class="pun">});</span><span class="pln">
+</span><span class="tag">&lt;/script&gt;</span><span class="pln">
+      </span></pre></section>
+    </article>
+  
   
   <!-- OVERVIEW -->
   <article>
