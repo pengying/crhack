@@ -47,20 +47,199 @@ Author: Eric Bidelman (ericbidelman@chromium.org),
   
   <!-- AGENDA -->
   <article>
-    <h3>
-      Agenda
-    </h3>
+    <h3>Agenda</h3>
     <p>
-      <ul>
+      <ul class="build">
         <li>Intro</li>
-        <li>API 1</li>
-        <li>API N</li>
-        <li>CWS</li>
-        <li>IAP</li>
+        <li>Introducing DJBreakPoint</li>
+        <li>File APIs</li>
+        <li>.</li>
+        <li>.</li>
+        <li>.</li>
+        <li>.</li>
+        <li>Chrome Web Store</li>
+        <li>In-App Payments API for the Web</li>
       </ul>
     </p>
   </article>
-  
+
+  <!--
+   *
+   * File APIs: INTRO
+   *
+  -->
+  <article class="fill">
+    <h2>File APIs</h2>
+  </article>
+
+  <article>
+    <h3>File APIs</h3>
+     <ul>
+        <li>Reading and manipulating:
+          <ul>
+            <li><code>File</code> / <code>Blob</code>, <code>FileList</code>, <code>FileReader</code><br>
+            <a href="http://dev.w3.org/2006/webapi/FileAPI/" target="_new">http://dev.w3.org/2006/webapi/FileAPI/</a>
+            </li>
+          </ul>
+        </li>
+        <li>Creating and writing:
+          <ul>
+            <li><code>BlobBuilder</code>, <code>FileWriter</code>,  <code>FileSaver</code><br>
+            <a href="http://dev.w3.org/2009/dap/file-system/file-writer.html" target="_new">http://dev.w3.org/2009/dap/file-system/file-writer.html</a>
+            </li>
+          </ul>
+        </li>
+        <li>Directories and System:
+          <ul>
+            <li><code>FileSystem</code><br>
+            <a href="http://dev.w3.org/2009/dap/file-system/pub/FileSystem/" target="_new">http://dev.w3.org/2009/dap/file-system/pub/FileSystem/</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+  </article>
+
+
+  <!--
+   *
+   * File APIS: File
+   *
+  -->
+  <article class="smaller">
+    <h3>Importing Tunes: <code>File</code> / <code>FileList</code></h3>
+      <pre>&lt;input type="file" id="files" name="files[]" <b>multiple</b> /&gt;
+&lt;output id="list"&gt;&lt;/output&gt;
+</pre>
+      <pre>
+  document.querySelector('#files').onchange = function(e) {
+    var files = <b>e.target.files</b>; // FileList
+
+    var output = [];
+    for (var i = 0, f; f = files[i]; ++i) {
+      // f.name
+      // f.type // mimetype
+      // f.size // bytes
+      // f.lastModifiedDate.toLocaleDateString()
+    }
+    document.querySelector('#list').innerHTML =
+        '&lt;ul&gt;' + output.join('') + '&lt;/ul&gt;';
+  };
+</pre>
+      <p>
+        <input type="file" id="filereader-files" multiple />
+        <output id="filereader-list"></output>
+      </p>
+  </article>
+  <script>
+  (function() {
+    document.querySelector('#filereader-files').onchange = function(e) {
+      var files = e.target.files; // FileList
+
+      var output = [];
+      for (var i = 0, f; f = files[i]; ++i) {
+        output.push('<li><b>', f.name, '</b> (',
+            f.type || 'n/a', ') - ', f.size, ' bytes, last modified: ',
+            f.lastModifiedDate.toLocaleDateString(), '</li>');
+      }
+      document.querySelector('#filereader-list').innerHTML =
+          '<ul>' + output.join('') + '</ul>';
+    };
+  })();
+  </script>
+
+
+  <!--
+   *
+   * File APIs: Directory Upload
+   *
+  --> 
+  <article id="slide-dndfiles"> 
+    <h3>Importing a Directory</h3>
+      <pre class="centered">&lt;input type="file" <b>webkitdirectory</b> /&gt;</pre>
+      <ul>
+        <li>Files in the <code>FileList</code> will have a <code>webkitRelativePath</code> property</li>
+      </ul>
+      <p><iframe class="noborder" src="http://www.htmlfivewow.com/demos/directory-upload/index.html" style="height:195px;"></iframe></p>
+  </article>
+
+  <!--
+   *
+   * File APIS: FileReader
+   *
+  -->
+  <article>
+    <h3>Reading Files: <code>FileReader</code></h3>
+    <p>Asynchronously read binary data into memory:</p>
+    <pre>
+var reader = new <b>FileReader</b>();
+
+reader.<b>readAsBinaryString</b>(File|Blob);
+
+reader.<b>readAsText</b>(File|Blob, opt_encoding); // default UTF-8
+
+reader.<b>readAsDataURL</b>(Blob|File);
+
+reader.<b>readAsArrayBuffer</b>(Blob|File);</pre>
+      <p>Reading byte ranges: <a href="http://www.html5rocks.com/tutorials/file/dndfiles/#toc-slicing-files" target="_new">Demo</a></p>
+      <pre>var blob = <b>file.webkitSlice</b>(startingByte, offset, opt_contentType);
+reader.<b>readAsBinaryString</b>(blob);</pre>
+  </article>
+
+  <!--
+   *
+   * File APIS: Monitoring a Read
+   *
+  -->
+  <article>
+    <h3>Monitoring a Read</h3>
+      <pre>
+reader.<b>onerror</b> = errorHandler;
+
+reader.<b>onprogress</b> = updateProgress;
+
+reader.<b>onabort</b> = cancelRead;
+
+reader.<b>onloadstart</b> = updateProgress;
+
+reader.<b>onloadend</b> = function(e) {
+  // <b>e.target.readyState</b> == <b>FileReader.DONE</b> == 2
+};
+
+reader.onload = readFile;</pre>
+    <p><a href="http://www.html5rocks.com/tutorials/file/dndfiles/#toc-monitoring-progress" target="_new">Demo</a></p>
+  </article>
+
+
+  <!--
+   *
+   * File APIs: Drag and Drop File Access
+   *
+  --> 
+  <article id="slide-dndfiles">
+    <h3>Import Tunes Using Drag &amp; Drop</h3>
+  <pre>var reader = new <b>FileReader</b>();
+<b>reader.onload</b> = function(e) {
+  document.querySelector('img').src = <b>e.target.result</b>;
+};
+
+function onDrop(e) {
+  reader.<b>readAsDataURL</b>(<b>e.dataTransfer.files[0]</b>);
+};</pre>
+      <div>
+        <div id="dropzone">
+          Drop image files from your desktop
+        </div>
+      </div>
+      <div id="thumbnails" class="hcenter"></div>
+  </article>
+  <script>
+  document.addEventListener('DOMContentLoaded', function(e) {
+    var dndc = new DNDFileController('dropzone');
+  }, false);
+  </script>
+
+
+
   <!-- OVERVIEW -->
   <article>
     <h3>
@@ -469,8 +648,9 @@ cart-opening-time='1500'
     </p>
     <p style='text-align: center;'>
       Speakermeter: LINK<br />
-      Twitter: #commerce @Name1 @Name2
+      Twitter: @ChromiumDev #commerce
     </p>
   </article>
+  <script src="dnd-lib.js"></script>
 </body>
 </html>
