@@ -211,6 +211,63 @@ google</span><span class="pun">.</span><span class="pln">load</span><span class=
       </span></pre></section>
     </article>
   
+    <!-- DEFINE ITEM & ATTACH ACTION -->
+    <article>
+      <h3>
+        Define JavaScript Purchase Handler
+      </h3>
+      <section style="margin-top:5%">
+      <pre class="prettyprint"><span class="kwd">function</span><span class="pln"> purchase</span><span class="pun">(){</span><span class="pln">
+  </span><span class="pun">...</span><span class="pln">
+  goog</span><span class="pun">.</span><span class="pln">payments</span><span class="pun">.</span><span class="pln">inapp</span><span class="pun">.</span><span class="pln">buy</span><span class="pun">({</span><span class="pln">
+    </span><span class="str">'jwt'</span><span class="pln">     </span><span class="pun">:</span><span class="pln"> cakeJwt</span><span class="pun">,</span><span class="pln">
+    </span><span class="str">'success'</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> successHandler</span><span class="pun">,</span><span class="pln">
+    </span><span class="str">'failure'</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> failureHandler
+  </span><span class="pun">});</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+      </span></pre>
+      Create purchase button
+      <pre class="prettyprint"><span class="tag">&lt;button</span><span class="pln"> </span><span class="atn">onClick</span><span class="pun">=</span><span class="atv">"</span><span class="pln">purchase</span><span class="pun">()</span><span class="atv">"</span><span class="tag">&gt;</span><span class="pln">
+  Buy
+</span><span class="tag">&lt;/button&gt;</span></pre>
+    </section>
+    </article>
+
+	    <!-- DEFINE HANDLER -->
+    <article>
+      <h3>
+        Define Postback Handler
+      </h3>
+      <section style="margin-top:9%">
+      Python
+      <pre class="prettyprint"><span class="kwd">def</span><span class="pln"> post</span><span class="pun">(</span><span class="kwd">self</span><span class="pun">):</span><span class="pln">
+  encoded_jwt </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">self</span><span class="pun">.</span><span class="pln">request</span><span class="pun">.</span><span class="kwd">get</span><span class="pun">(</span><span class="str">'jwt'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">None</span><span class="pun">)</span><span class="pln">
+  </span><span class="kwd">if</span><span class="pln"> encoded_jwt </span><span class="kwd">is</span><span class="pln"> </span><span class="kwd">not</span><span class="pln"> </span><span class="kwd">None</span><span class="pun">:</span><span class="pln">
+    decoded_jwt </span><span class="pun">=</span><span class="pln"> jwt</span><span class="pun">.</span><span class="pln">decode</span><span class="pun">(</span><span class="pln">str</span><span class="pun">(</span><span class="pln">encoded_jwt</span><span class="pun">),</span><span class="pln"> SELLER_SECRET</span><span class="pun">)</span><span class="pln">
+    order_id </span><span class="pun">=</span><span class="pln"> decoded_jwt</span><span class="pun">[</span><span class="str">'response'</span><span class="pun">][</span><span class="str">'orderId'</span><span class="pun">]</span><span class="pln">
+    </span><span class="kwd">self</span><span class="pun">.</span><span class="pln">response</span><span class="pun">.</span><span class="kwd">out</span><span class="pun">.</span><span class="pln">write</span><span class="pun">(</span><span class="pln">order_id</span><span class="pun">)</span><span class="pln">
+      </span></pre>
+    <button onclick="purchase();">Buy</button>
+    </section>
+    </article>
+      
+  <!-- Integration Solutions -->
+  <article>
+	<h3>
+	  Tying Information Together
+	</h3>
+	<p>
+	  </p><ul>
+		<li>Use the sellerData parameter to hold user identification data</li>
+		<li>Encrypt sellerData to protect user info</li>
+		<li>Example: Identifying users - <br>
+		  sellerData = encrypt('user_id: 12345')</li>
+		<li>Example: Identifying context - <br>
+		  sellerData = encrypt('sale: "happy hour"')</li>
+	  </ul>
+	<p></p>
+  </article>
+
   
   <!-- OVERVIEW -->
   <article>
