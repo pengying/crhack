@@ -122,7 +122,6 @@ document.querySelector('input[type="file"]').onchange = function(e) {
 </pre>
     <input type="file" id="filereader-files" multiple accept="audio/*"/>
     <output id="filereader-list"></output>
-
   </article>
   <script>
   (function() {
@@ -231,14 +230,114 @@ function onDrop(e) {
   }, false);
   </script>
 
-
   <!--
    *
-   * Monetizing
+   * XHR2
    *
   -->
   <article class="fill">
-    <h2>Monetizing Your App</h2>
+    <h3>XMLHttpRequest 2</h3>
+    <img src="images/ajax.jpg">
+  </article>
+
+  <!--
+   *
+   * XHR2: Forms
+   *
+  -->
+  <article>
+    <h3>Sending form data: xhr.send(formData)</h3>
+      <pre>
+function submitForm() {
+  var fd = new FormData(); // or prefill: FormData(window.myform)
+  fd.append("username", "Groucho");
+  fd.append("accountnum", 123456);
+
+  // Append File. Creates a multipart/form-data upload.
+  var file = document.querySelector('#afile').files[0];
+  if (file) {
+    fd.append('afile', file);
+  }
+
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', '/upload', true);
+  xhr.onload = function(e) { ... };
+  xhr.send(fd);
+}
+</pre>
+  </article>
+
+  <!--
+   *
+   * XHR2: Blobs
+   *
+  -->
+  <article>
+    <h3>Uploading files: xhr.send(Blob|File)</h3>
+      <pre>
+function upload(blob, opt_callback) {
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', '/upload', true);
+  if (opt_callback) {
+    xhr.onload = opt_callback;
+  }
+  xhr.send(blob);
+}
+
+window.BlobBuilder = window.BlobBuilder ||
+    window.WebKitBlobBuilder || window.MozBlobBuilder;
+
+var bb = new BlobBuilder(); // Create a .txt file on the fly.
+bb.append('Hello World');
+
+uploadFile(bb.getBlob('text/plain'), function(e) {
+  console.log('upload complete');
+});
+</pre>
+
+  </article>
+
+  <!--
+   *
+   * XHR2: Downlading
+   *
+  -->
+  <article class="smaller">
+      <h3>Download files</h3>
+        <pre>
+function download(url, callback) {
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', url, true);
+
+  <b>xhr.responseType = 'arraybuffer';</b> // A raw buffer of bytes.
+
+  xhr.onload = function(e) {
+    callback(this, <b>this.response</b>); // Note: not xhr.responseText
+  };
+  xhr.send();
+}
+
+download('song.mp3', function(xhr, arrayBuffer) {
+  // Create a file.
+  var bb = new BlobBuilder();
+  bb.append(arrayBuffer);
+  var blob = bb.getBlob('audio/mpeg');
+
+  // Create typed arrays "views" of the data buffer.
+  var uInt8Array = new Uint8Array(arrayBuffer);
+  var uInt32Array = new Uint32Array(arrayBuffer);
+  var byte3 = uInt8Array[4]; // byte at offset 4.
+});
+</pre>
+  </article>
+
+  <!--
+   *
+   * Monetization / Distribution
+   *
+  -->
+  <article class="fill">
+    <h2>Monetization / Distribution</h2>
   </article>
 
   <!-- USERS -->
@@ -474,17 +573,20 @@ if encoded_jwt is not None:
     </div>
   </article>
 
-
-  <!-- Q&A -->
   <article>
-    <p style='font-size:80px; margin-top:260px; text-align: center;'>
-      Q&A
-    </p>
-    <p style='text-align: center;'>
-      Speakermeter: LINK<br />
-      Twitter: @ChromiumDev #commerce
-    </p>
+    <h3>Resources</h3>
+    <ul>
+      <li>Chrome's <a href="http://code.google.com/chrome/devtools/" target="_blank">DevTools</a> - invaluable</li>
+      <li><a href="http://www.html5rocks.com" target="_blank">html5rocks.com</a> - learn by tutorial</li>
+      <li><a href="http://html5boilerplate.com/" target="_blank">HTML5 Boilerplate</a>  and <a href="http://www.modernizr.com/" target="_blank">Modernizr</a> - foundation</li>
+      <li><a href="http://caniuse.com" target="_blank">caniuse.com</a> - compatibility tables</li>
+      <li>Google <a href="http://code.google.com/chrome/chromeframe/" target="_blank">Chrome Frame</a> - plugin. Brings Chrome to IE6-9</li>
+      <li>Twitter: <a href="http://twitter.com/ChromiumDev" target="_blank">@ChromiumDev</a></li>
+    </ul>
   </article>
+
+  <article class='biglogo'></article>
+
   <script src="dnd-lib.js"></script>
 </body>
 </html>
