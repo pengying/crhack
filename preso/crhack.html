@@ -19,7 +19,6 @@ Author: Eric Bidelman (ericbidelman@chromium.org),
         Ernest Delgado
         Pete LePage
         Peng Ying
-        Eric Bidelman
 -->
 <html>
 <head>
@@ -57,7 +56,7 @@ Author: Eric Bidelman (ericbidelman@chromium.org),
     <p>
       <ul class="build">
         <li>Introducing DJBreakPoint</li>
-        <li>HTML5 makes building apps a breeze</li>
+        <li>HTML5 makes building apps fun</li>
         <li>File APIs</li>
         <li>Messaging / realtime</li>
         <li>Audio hotness</li>
@@ -79,7 +78,7 @@ Author: Eric Bidelman (ericbidelman@chromium.org),
   <article class="centered">
     <h2>DJBreakpoint</h2>
     <img src="../app/img/dj-working.png" alt="DJBreakpoint" title="DJBreakpoint">
-    <p><a href="https://github.com/pengying/crhack" target="_blank">https://github.com/pengying/crhack</a></p>
+    <p><a href="http://goo.gl/vyVol" target="_blank">http://goo.gl/vyVol</a></p>
   </article>
 
   <!--
@@ -88,7 +87,12 @@ Author: Eric Bidelman (ericbidelman@chromium.org),
    *
   -->
   <article class="fill">
-    <h2>HTML5 makes building apps a breeze</h2>
+    <h2>Building web apps is now a breeze</h2>
+  </article>
+
+  -->
+  <article class="fill">
+    <h3>TODO(pete)</h3>
   </article>
 
   <!--
@@ -106,7 +110,7 @@ Author: Eric Bidelman (ericbidelman@chromium.org),
    *
   -->
   <article class="">
-    <h3>Importing tunes: <code>File</code> / <code>FileList</code></h3>
+    <h3>Importing tunes</h3>
       <pre>&lt;input type="file" <b>accept="audio/*"</b> <b>multiple</b>&gt;</pre>
       <pre>
 document.querySelector('input[type="file"]').onchange = function(e) {
@@ -160,7 +164,7 @@ document.querySelector('input[type="file"]').onchange = function(e) {
    *
   -->
   <article>
-    <h3>Reading files: <code>FileReader</code></h3>
+    <h3>Reading files</h3>
     <p>Asynchronously read binary data into memory:</p>
     <pre>
 var reader = new <b>FileReader</b>();
@@ -172,7 +176,7 @@ reader.<b>readAsText</b>(File|Blob, opt_encoding); // default UTF-8
 reader.<b>readAsDataURL</b>(Blob|File);
 
 reader.<b>readAsArrayBuffer</b>(Blob|File);</pre>
-      <p>Reading byte ranges: <a href="http://www.html5rocks.com/tutorials/file/dndfiles/#toc-slicing-files" target="_new">Demo</a></p>
+      <p>Reading byte ranges:</p>
       <pre>var blob = <b>file.webkitSlice</b>(startingByte, offset, opt_contentType);
 reader.<b>readAsBinaryString</b>(blob);</pre>
   </article>
@@ -183,7 +187,7 @@ reader.<b>readAsBinaryString</b>(blob);</pre>
    *
   -->
   <article>
-    <h3>Monitoring a read</h3>
+    <h3>Monitoring things</h3>
       <pre>
 reader.<b>onerror</b> = errorHandler;
 
@@ -198,7 +202,6 @@ reader.<b>onloadend</b> = function(e) {
 };
 
 reader.onload = readFile;</pre>
-    <p><a href="http://www.html5rocks.com/tutorials/file/dndfiles/#toc-monitoring-progress" target="_new">Demo</a></p>
   </article>
 
 
@@ -236,7 +239,7 @@ function onDrop(e) {
    *
   -->
   <article class="fill">
-    <h3>XMLHttpRequest 2</h3>
+    <h3>Uh oh...someone got a makeover!</h3>
     <img src="images/ajax.jpg">
   </article>
 
@@ -273,7 +276,7 @@ function submitForm() {
    *
   -->
   <article>
-    <h3>Uploading files: xhr.send(Blob|File)</h3>
+    <h3>Uploading a song file</h3>
       <pre>
 function upload(blob, opt_callback) {
   var xhr = new XMLHttpRequest();
@@ -303,7 +306,7 @@ uploadFile(bb.getBlob('text/plain'), function(e) {
    *
   -->
   <article class="smaller">
-      <h3>Download files</h3>
+      <h3>Downloading the song</h3>
         <pre>
 function download(url, callback) {
   var xhr = new XMLHttpRequest();
@@ -572,6 +575,16 @@ if encoded_jwt is not None:
       <img class="centered" src="./images/qascreen.png" width="800px" style="margin-top:5%; margin-left:-1%">
     </div>
   </article>
+
+  <article lass="nobackground">
+      <h3>chromestatus.com</h3>
+      <iframe src='http://chromestatus.com'></iframe>
+    </article>
+
+    <article class="nobackground">
+      <h3>updates.html5rocks.com</h3>
+      <iframe src='http://updates.html5rocks.com'></iframe>
+    </article>
 
   <article>
     <h3>Resources</h3>
