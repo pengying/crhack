@@ -744,3 +744,9 @@ button:active {
   background: linear-gradient(#E3E3E3 40%, #F9F9F9 70%);
 }
 
+#dropzone {
+  border: 2px dashed #ccc;
+  border-radius: 10px;
+  padding: 15px;
+  text-align: center;
+}

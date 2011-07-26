@@ -31,8 +31,8 @@ Author: Eric Bidelman (ericbidelman@chromium.org),
   <!-- Your slides (<article>s) go here. Delete or comment out the
        slides below. -->
 
-  <article class='biglogo'>
-  </article>
+  <article class='biglogo'></article>
+
   <!-- INTRODUCTION -->
   <article>
     <h1>Chrome HTML5 Hackathon</h1>
@@ -50,18 +50,32 @@ Author: Eric Bidelman (ericbidelman@chromium.org),
     <h3>Agenda</h3>
     <p>
       <ul class="build">
-        <li>Intro</li>
         <li>Introducing DJBreakPoint</li>
+        <li>HTML5 makes building apps a breeze</li>
         <li>File APIs</li>
-        <li>.</li>
-        <li>.</li>
-        <li>.</li>
-        <li>.</li>
-        <li>Chrome Web Store</li>
-        <li>In-App Payments API for the Web</li>
+        <li>Messaging / realtime</li>
+        <li>Audio hotness</li>
+        <li>Monetization / Distribution
+          <ul>
+            <li>Chrome Web Store</li>
+            <li>In-App Payments API for the Web</li>
+          </ul>
+        </li>
       </ul>
     </p>
   </article>
+
+  <!--
+   *
+   * DJBreakpoint
+   *
+  -->
+  <article class="centered">
+    <h2>DJBreakpoint</h2>
+    <img src="../app/img/dj-working.png" alt="DJBreakpoint" title="DJBreakpoint">
+    <p><a href="https://github.com/pengying/crhack" target="_blank">https://github.com/pengying/crhack</a></p>
+  </article>
+
 
   <!--
    *
@@ -111,19 +125,18 @@ Author: Eric Bidelman (ericbidelman@chromium.org),
 &lt;output id="list"&gt;&lt;/output&gt;
 </pre>
       <pre>
-  document.querySelector('#files').onchange = function(e) {
-    var files = <b>e.target.files</b>; // FileList
+document.querySelector('#files').onchange = function(e) {
+  var files = <b>e.target.files</b>; // FileList
 
-    var output = [];
-    for (var i = 0, f; f = files[i]; ++i) {
-      // f.name
-      // f.type // mimetype
-      // f.size // bytes
-      // f.lastModifiedDate.toLocaleDateString()
-    }
-    document.querySelector('#list').innerHTML =
-        '&lt;ul&gt;' + output.join('') + '&lt;/ul&gt;';
-  };
+  var output = [];
+  for (var i = 0, f; f = files[i]; ++i) {
+    // f.name
+    // f.type // mimetype
+    // f.size // bytes
+    // f.lastModifiedDate.toLocaleDateString()
+  }
+  document.querySelector('#list').innerHTML = '&lt;ul&gt;' + output.join('') + '&lt;/ul&gt;';
+};
 </pre>
       <p>
         <input type="file" id="filereader-files" multiple />
@@ -467,7 +480,7 @@ if encoded_jwt is not None:
         <h4 style="margin-top:0px; margin-bottom:0px">Switch to Production</h4>
          <ul style="margin-top:5px; margin-bottom:20px">
             <li>Production signup<br>
-              http://google.com/inapppayments</li>
+              https://checkout.google.com/inapppayments/</li>
           </ul>
       </div>
     </div>
