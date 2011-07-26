@@ -96,7 +96,7 @@ body {
 
 .slides > article:not(.nobackground):not(.biglogo) {
   background: url(images/colorbar.png) 0 615px repeat-x,
-              url(images/google_logo.png) 98% 98% no-repeat;
+              url(images/chrome_logo.gif) 98% 98% no-repeat;
 
   background-size: 100%, 15%;
 
