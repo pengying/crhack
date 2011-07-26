@@ -27,10 +27,10 @@ Author: Eric Bidelman (ericbidelman@chromium.org),
 <body style="display: none">
 
 <section class='slides'>
-  
+
   <!-- Your slides (<article>s) go here. Delete or comment out the
        slides below. -->
-  
+
   <article class='biglogo'>
   </article>
   <!-- INTRODUCTION -->
@@ -44,7 +44,7 @@ Author: Eric Bidelman (ericbidelman@chromium.org),
       Twitter: @ChromiumDev
     </p>
   </article>
-  
+
   <!-- AGENDA -->
   <article>
     <h3>Agenda</h3>
@@ -106,7 +106,7 @@ Author: Eric Bidelman (ericbidelman@chromium.org),
    *
   -->
   <article class="smaller">
-    <h3>Importing Tunes: <code>File</code> / <code>FileList</code></h3>
+    <h3>Importing tunes: <code>File</code> / <code>FileList</code></h3>
       <pre>&lt;input type="file" id="files" name="files[]" <b>multiple</b> /&gt;
 &lt;output id="list"&gt;&lt;/output&gt;
 </pre>
@@ -147,14 +147,13 @@ Author: Eric Bidelman (ericbidelman@chromium.org),
   })();
   </script>
 
-
   <!--
    *
    * File APIs: Directory Upload
    *
-  --> 
-  <article id="slide-dndfiles"> 
-    <h3>Importing a Directory</h3>
+  -->
+  <article id="slide-dndfiles">
+    <h3>Importing a directory</h3>
       <pre class="centered">&lt;input type="file" <b>webkitdirectory</b> /&gt;</pre>
       <ul>
         <li>Files in the <code>FileList</code> will have a <code>webkitRelativePath</code> property</li>
@@ -168,7 +167,7 @@ Author: Eric Bidelman (ericbidelman@chromium.org),
    *
   -->
   <article>
-    <h3>Reading Files: <code>FileReader</code></h3>
+    <h3>Reading files: <code>FileReader</code></h3>
     <p>Asynchronously read binary data into memory:</p>
     <pre>
 var reader = new <b>FileReader</b>();
@@ -191,7 +190,7 @@ reader.<b>readAsBinaryString</b>(blob);</pre>
    *
   -->
   <article>
-    <h3>Monitoring a Read</h3>
+    <h3>Monitoring a read</h3>
       <pre>
 reader.<b>onerror</b> = errorHandler;
 
@@ -214,9 +213,9 @@ reader.onload = readFile;</pre>
    *
    * File APIs: Drag and Drop File Access
    *
-  --> 
+  -->
   <article id="slide-dndfiles">
-    <h3>Import Tunes Using Drag &amp; Drop</h3>
+    <h3>Import tunes using drag &amp; drop</h3>
   <pre>var reader = new <b>FileReader</b>();
 <b>reader.onload</b> = function(e) {
   document.querySelector('img').src = <b>e.target.result</b>;
@@ -251,7 +250,7 @@ function onDrop(e) {
   <!-- USERS -->
    <article>
    <h3>
-     Transaction Growth
+     Transaction growth
    </h3>
    <div>
      <div class="usersbooks">
@@ -276,13 +275,11 @@ function onDrop(e) {
      </div>
    </div>
    </article>
-  
+
   <!-- IAP BENEFITS -->
    <article class="">
-  <h3>
-    Benefits
-  </h3>
-  
+  <h3>Benefits</h3>
+
   <div>
     <table class="noborder">
     <tbody><tr class="build">
@@ -294,7 +291,7 @@ function onDrop(e) {
         <li>Millions of buyers</li>
       </ul>
       </td>
-      
+
       <td>
       <h4>Buyers</h4>
       <ul>
@@ -311,7 +308,7 @@ function onDrop(e) {
   <!-- API Flow -->
   <article class="">
   <h3>
-    API Flow
+    API flow
   </h3>
   <div>
     <img class="centered" src="./images/apiflow.png" width="800px" style="margin-top:5%; margin-left:-1%">
@@ -321,7 +318,7 @@ function onDrop(e) {
   <!-- ACCOUNT INFO -->
   <article class="">
   <h3>
-    Before Integrating
+    Before integrating
   </h3>
   <table class="noborder">
     <tbody><tr>
@@ -340,10 +337,10 @@ function onDrop(e) {
   </td>
   </tr></tbody></table>
   </article>
-  
+
     <!-- ITEM JWT -->
   <article class="smaller">
-    <h3>Define Item</h3>
+    <h3>Define item</h3>
     <pre>
 {
   "iss" : 1337133713371337,
@@ -361,7 +358,7 @@ function onDrop(e) {
 }
 </pre>
   </article>
-  
+
   <!-- Create JWT in Python-->
   <article class="">
     <h3>Create JWT</h3>
@@ -391,7 +388,7 @@ cakeJwt = jwt.encode(item, "1ZRJNFIOSJSIDFJNVHF");
 
   <!-- DEFINE ITEM & ATTACH ACTION -->
   <article>
-    <h3>Define JavaScript Purchase Handler</h3>
+    <h3>Define JavaScript purchase handler</h3>
     <pre>
 function purchase() {
   ...
@@ -410,7 +407,7 @@ function purchase() {
 
   <!-- DEFINE HANDLER -->
   <article>
-    <h3>Define Postback Handler</h3>
+    <h3>Define postback handler</h3>
     <p>Python:</p>
     <pre>
 def post(self):
@@ -432,7 +429,7 @@ if encoded_jwt is not None:
 
   <!-- Integration Solutions -->
   <article>
-  <h3>Tying Information Together</h3>
+  <h3>Tying information together</h3>
   <ul>
     <li>Use the sellerData parameter to hold user identification data</li>
     <li>Encrypt sellerData to protect user info</li>
@@ -447,7 +444,7 @@ if encoded_jwt is not None:
   <!-- CHECKOUT APIS -->
   <article>
     <h3>
-      Next Steps
+      Next steps
     </h3>
     <div class="build" style="margin-top:40px">
       <div class="to-build">
