@@ -105,29 +105,24 @@ Author: Eric Bidelman (ericbidelman@chromium.org),
    * File APIS: File
    *
   -->
-  <article class="smaller">
+  <article class="">
     <h3>Importing tunes: <code>File</code> / <code>FileList</code></h3>
-      <pre>&lt;input type="file" id="files" name="files[]" <b>multiple</b> /&gt;
-&lt;output id="list"&gt;&lt;/output&gt;
-</pre>
+      <pre>&lt;input type="file" <b>accept="audio/*"</b> <b>multiple</b>&gt;</pre>
       <pre>
-document.querySelector('#files').onchange = function(e) {
+document.querySelector('input[type="file"]').onchange = function(e) {
   var files = <b>e.target.files</b>; // FileList
 
-  var output = [];
   for (var i = 0, f; f = files[i]; ++i) {
     // f.name
     // f.type // mimetype
     // f.size // bytes
     // f.lastModifiedDate.toLocaleDateString()
   }
-  document.querySelector('#list').innerHTML = '&lt;ul&gt;' + output.join('') + '&lt;/ul&gt;';
 };
 </pre>
-      <p>
-        <input type="file" id="filereader-files" multiple />
-        <output id="filereader-list"></output>
-      </p>
+    <input type="file" id="filereader-files" multiple accept="audio/*"/>
+    <output id="filereader-list"></output>
+
   </article>
   <script>
   (function() {
@@ -152,7 +147,7 @@ document.querySelector('#files').onchange = function(e) {
    *
   -->
   <article id="slide-dndfiles">
-    <h3>Importing a directory</h3>
+    <h3>Importing a directory of tunes</h3>
       <pre class="centered">&lt;input type="file" <b>webkitdirectory</b> /&gt;</pre>
       <ul>
         <li>Files in the <code>FileList</code> will have a <code>webkitRelativePath</code> property</li>
