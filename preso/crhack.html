@@ -342,109 +342,98 @@ function onDrop(e) {
   </article>
   
     <!-- ITEM JWT -->
-    <article class="">
-      <h3>
-        Define Item
-      </h3>
-      <section style="margin-top:5%">
-      <pre class="prettyprint"><span class="pun">{</span><span class="pln">
-  </span><span class="str">"iss"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="lit">1337133713371337</span><span class="pun">,</span><span class="pln">
-  </span><span class="str">"aud"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"Google"</span><span class="pln">
-  </span><span class="str">"typ"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"google/payments/inapp/item/v1"</span><span class="pun">,</span><span class="pln">
-  </span><span class="str">"exp"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"1392348430"</span><span class="pun">,</span><span class="pln">
-  </span><span class="str">"iat"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"1392282180"</span><span class="pun">,</span><span class="pln">
-  </span><span class="str">"request"</span><span class="pln"> </span><span class="pun">:{</span><span class="pln">
-    </span><span class="str">"name"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"Piece of Cake"</span><span class="pun">,</span><span class="pln">
-    </span><span class="str">"description"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"Virtual chocolate cake to fill your 
-      virtual tummy"</span><span class="pun">,</span><span class="pln">
-    </span><span class="str">"price"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"10.50"</span><span class="pun">,</span><span class="pln">
-    </span><span class="str">"currencyCode"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"USD"</span><span class="pun">,</span><span class="pln">
-    </span><span class="str">"sellerData"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"user_id:1224245,offer_code:3098576987"</span><span class="pln">
-  </span><span class="pun">}</span><span class="pln">
-</span><span class="pun">}</span><span class="pln">
-        </span></pre>
-      </section>
-    </article>
-    
-    <!-- Create JWT in Python-->
-    <article class="">
-      <h3>
-        Create JWT
-      </h3>
-      <section style="margin-top:5%">
-      Python:
-      <pre class="prettyprint"><span class="pln">        cakeJwt </span><span class="pun">=</span><span class="pln"> jwt</span><span class="pun">.</span><span class="pln">encode</span><span class="pun">(</span><span class="pln">item</span><span class="pun">,</span><span class="pln"> </span><span class="str">"1ZRJNFIOSJSIDFJNVHF"</span><span class="pun">)</span><span class="pln">
-      </span></pre>
-      Ruby:
-      <pre class="prettyprint"><span class="pln">        </span><span class="lit">@cakeJwt</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> JWT</span><span class="pun">.</span><span class="pln">encode</span><span class="pun">(</span><span class="pln">item</span><span class="pun">,</span><span class="pln"> </span><span class="str">"1ZRJNFIOSJSIDFJNVHF"</span><span class="pun">)</span><span class="pln">
-      </span></pre>
-      </section>
-    </article>
-
-
-    <!-- INCLUDE JAVASCRIPT-->
-    <article>
-      <h3>
-        Include JavaScript
-      </h3>
-      <section style="margin-top:18%">
-      <pre class="prettyprint"><span class="tag">&lt;script</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"text/javascript"</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"http://www.google.com/jsapi"</span><span class="tag">&gt;</span><span class="pln">
-</span><span class="tag">&lt;/script&gt;</span><span class="pln">
-</span><span class="tag">&lt;script</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"text/javascript"</span><span class="tag">&gt;</span><span class="pln">
-google</span><span class="pun">.</span><span class="pln">load</span><span class="pun">(</span><span class="str">'payments'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'1.0'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
-  </span><span class="str">'packages'</span><span class="pun">:</span><span class="pln"> </span><span class="pun">[</span><span class="str">'sandbox_config'</span><span class="pun">]</span><span class="pln">
-</span><span class="pun">});</span><span class="pln">
-</span><span class="tag">&lt;/script&gt;</span><span class="pln">
-      </span></pre></section>
-    </article>
+  <article class="smaller">
+    <h3>Define Item</h3>
+    <pre>
+{
+  "iss" : 1337133713371337,
+  "aud" : "Google"
+  "typ" : "google/payments/inapp/item/v1",
+  "exp" : "1392348430",
+  "iat" : "1392282180",
+  "request" :{
+    "name" : "Piece of Cake",
+    "description" : "Virtual chocolate cake to fill your virtual tummy",
+    "price" : "10.50",
+    "currencyCode" : "USD",
+    "sellerData" : "user_id:1224245,offer_code:3098576987"
+  }
+}
+</pre>
+  </article>
   
-    <!-- DEFINE ITEM & ATTACH ACTION -->
-    <article>
-      <h3>
-        Define JavaScript Purchase Handler
-      </h3>
-      <section style="margin-top:5%">
-      <pre class="prettyprint"><span class="kwd">function</span><span class="pln"> purchase</span><span class="pun">(){</span><span class="pln">
-  </span><span class="pun">...</span><span class="pln">
-  goog</span><span class="pun">.</span><span class="pln">payments</span><span class="pun">.</span><span class="pln">inapp</span><span class="pun">.</span><span class="pln">buy</span><span class="pun">({</span><span class="pln">
-    </span><span class="str">'jwt'</span><span class="pln">     </span><span class="pun">:</span><span class="pln"> cakeJwt</span><span class="pun">,</span><span class="pln">
-    </span><span class="str">'success'</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> successHandler</span><span class="pun">,</span><span class="pln">
-    </span><span class="str">'failure'</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> failureHandler
-  </span><span class="pun">});</span><span class="pln">
-</span><span class="pun">}</span><span class="pln">
-      </span></pre>
-      Create purchase button
-      <pre class="prettyprint"><span class="tag">&lt;button</span><span class="pln"> </span><span class="atn">onClick</span><span class="pun">=</span><span class="atv">"</span><span class="pln">purchase</span><span class="pun">()</span><span class="atv">"</span><span class="tag">&gt;</span><span class="pln">
-  Buy
-</span><span class="tag">&lt;/button&gt;</span></pre>
-    </section>
-    </article>
+  <!-- Create JWT in Python-->
+  <article class="">
+    <h3>Create JWT</h3>
+    <p>Python:</p>
+    <pre>
+cakeJwt = jwt.encode(item, "1ZRJNFIOSJSIDFJNVHF");
+</pre>
+    <p>Ruby:</p>
+<pre>
+@cakeJwt = JWT.encode(item, "1ZRJNFIOSJSIDFJNVHF")
+</pre>
+  </article>
 
-      <!-- DEFINE HANDLER -->
-    <article>
-      <h3>
-        Define Postback Handler
-      </h3>
-      <section style="margin-top:9%">
-      Python
-      <pre class="prettyprint"><span class="kwd">def</span><span class="pln"> post</span><span class="pun">(</span><span class="kwd">self</span><span class="pun">):</span><span class="pln">
-  encoded_jwt </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">self</span><span class="pun">.</span><span class="pln">request</span><span class="pun">.</span><span class="kwd">get</span><span class="pun">(</span><span class="str">'jwt'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">None</span><span class="pun">)</span><span class="pln">
-  </span><span class="kwd">if</span><span class="pln"> encoded_jwt </span><span class="kwd">is</span><span class="pln"> </span><span class="kwd">not</span><span class="pln"> </span><span class="kwd">None</span><span class="pun">:</span><span class="pln">
-    decoded_jwt </span><span class="pun">=</span><span class="pln"> jwt</span><span class="pun">.</span><span class="pln">decode</span><span class="pun">(</span><span class="pln">str</span><span class="pun">(</span><span class="pln">encoded_jwt</span><span class="pun">),</span><span class="pln"> SELLER_SECRET</span><span class="pun">)</span><span class="pln">
-    order_id </span><span class="pun">=</span><span class="pln"> decoded_jwt</span><span class="pun">[</span><span class="str">'response'</span><span class="pun">][</span><span class="str">'orderId'</span><span class="pun">]</span><span class="pln">
-    </span><span class="kwd">self</span><span class="pun">.</span><span class="pln">response</span><span class="pun">.</span><span class="kwd">out</span><span class="pun">.</span><span class="pln">write</span><span class="pun">(</span><span class="pln">order_id</span><span class="pun">)</span><span class="pln">
-      </span></pre>
-    <button onclick="purchase();">Buy</button>
-    </section>
-    </article>
-      
+
+  <!-- INCLUDE JAVASCRIPT-->
+  <article>
+    <h3>Include JavaScript</h3>
+    <pre>
+&lt;script type="text/javascript" src="//www.google.com/jsapi">&lt;/script>
+&lt;script>
+  google.load('payments', '1.0', {
+  'packages': ['sandbox_config']
+  });
+&lt;/script>
+</pre>
+  </article>
+
+  <!-- DEFINE ITEM & ATTACH ACTION -->
+  <article>
+    <h3>Define JavaScript Purchase Handler</h3>
+    <pre>
+function purchase() {
+  ...
+  goog.payments.inapp.buy({
+    'jwt'     : cakeJwt,
+    'success' : successHandler,
+    'failure' : failureHandler
+  });
+}
+</pre>
+    Create purchase button
+    <pre>
+&lt;button onclick="purchase()">Buy&lt;/button&gt;
+</pre>
+  </article>
+
+  <!-- DEFINE HANDLER -->
+  <article>
+    <h3>Define Postback Handler</h3>
+    <p>Python:</p>
+    <pre>
+def post(self):
+encoded_jwt = self.request.get('jwt', None)
+if encoded_jwt is not None:
+  decoded_jwt = jwt.decode(str(encoded_jwt), SELLER_SECRET)
+  order_id = decoded_jwt['response']['orderId']
+  self.response.out.write(order_id)
+</pre>
+  <button onclick="purchase();">Buy</button>
+  </article>
+  <script>
+  (function() {
+    window.purchase = function() {
+      alert('not impl');
+    };
+  })();
+  </script>
+
   <!-- Integration Solutions -->
   <article>
-  <h3>
-    Tying Information Together
-  </h3>
-  <p>
-    </p><ul>
+  <h3>Tying Information Together</h3>
+  <ul>
     <li>Use the sellerData parameter to hold user identification data</li>
     <li>Encrypt sellerData to protect user info</li>
     <li>Example: Identifying users - <br>
@@ -486,419 +475,17 @@ google</span><span class="pun">.</span><span class="pln">load</span><span class=
       </div>
     </div>
   </article>
-  
-  <!-- API Flow -->
+
   <article class="nobackground">
     <h3>Q&amp;A </h3>
     <div>
       <img class="centered" src="./images/qascreen.png" width="800px" style="margin-top:5%; margin-left:-1%">
     </div>
   </article>
-  
 
-  <!-- OVERVIEW -->
+
+  <!-- Q&A -->
   <article>
-    <h3>
-      Title + hidden overlapping images Slide
-    </h3>
-    <div class="hiddenbuild">
-      <img class='centered boxshadow' src='images_preso/buy_flow_1.png' style="margin-top:13%;"/>
-      <img class='centered boxshadow' src='images_preso/buy_flow_2.png' width='900' style="margin-top:3%;"/>
-      <img class='centered boxshadow' src='images_preso/buy_flow_3.png' width='900' style="margin-top:7%;"/>
-      <img class='centered boxshadow' src='images_preso/buy_flow_4.png' style="margin-top:7%;"/>
-    </div>
-  </article>
-  
-  <!--ECOMMERCE PAIN POINTS -->
-  <article>
-    <h3>
-      Title + hidden table of graphics Slide
-    </h3>
-    
-    <div>
-      <table class='centered noborder'>
-        <tr>
-          <td class='build'><img class='centered' src='images_preso/canon_t2i.jpg' width='250'/></td>
-          <td class='build'><img class='centered' src='images_preso/hiking_shoes.jpg' width='250' /></td>
-          <td class='build'><img class='centered build' src='images_preso/backpack.jpg' width='250'/></td>
-        </tr>
-        <tr>
-          <td class='build'><img class='centered' src='images_preso/external_buy_flow.png' width='250'></td>
-          <td class='build' style='padding-top:40px'><img class='centered' src='images_preso/credit_card.jpg' width='250' ></td>
-          <td class='build'><img class='centered' src='images_preso/nexus_s.jpg' height='250'></td>
-        </tr>
-      </table>
-    </div>
-  </article>
-
-  <!-- HOW CAN CHECKOUT HELP -->
-  <article>
-    <h3>
-      Table slide
-    </h3>
-    
-    <div>
-      <table class='noborder'>
-        <tr class='build'>
-          <td>
-            <h4>Left Column</h4>
-            <ul>
-              <li>List Item 1</li>
-              <li>List Item 2</li>
-              <li>List Item 3</li>
-            </ul>
-          </td>
-          
-          <td>
-            <h4>Right Column</h4>
-            <ul>
-              <li>List Item 1</li>
-              <li>List Item 2</li>
-              <li>List Item 3</li>
-            </ul>
-          </td>
-        </tr>
-      </table>
-
-    </div>
-  </article>
-  
-  <!-- STATE OF GOOGLE CHECKOUT -->
-  <article>
-    <h3>
-      Title + 4 small images on top + 1 large bottom images
-    </h3>
-    <div>
-      <table class='centered noborder' style='padding-left:20%;padding-right:20%;' width='600' >
-        <tr>
-          <td class='smallermargins'><img class='centered' src='images_preso/android_market.png' height='125'/></td>
-          <td class='smallermargins'><img class='centered' src='images_preso/chrome_web_store.jpg' height='125'/></td>
-          <td class='smallermargins'><img class='centered' src='images_preso/apps_marketplace.png' height='125'/></td>
-          <td class='smallermargins'><img class='centered' src='images_preso/picasa.png' height='125'/></td>
-        </tr>
-      </table>
-    </div>
-      
-    <div class='build'>
-      <img class='centered' src='images_preso/growthgraph.png' />
-    </div>
-  </article>
-
-<!-- AGENDA - Integration Solutions -->
-  <article>
-    <h3>
-      Agenda Slide with Emphasis
-    </h3>
-    <p>
-      <ul>
-        <li>List Item 1</li>
-        <li class='emphasis'>List Item 2 Emphasized</li>
-        <li>List Item 3</li>
-        <li>List Item 4</li>
-        <li>...</li>
-      </ul>
-    </p>
-  </article>
-
-
-<!-- Integration Solutions -->
-  <article>
-    <h3>
-      Title + list
-    </h3>
-    <p>
-      <ul>
-        <li>List Item 1</li>
-        <li>List Item 2</li>
-        <li>List Item 3</li>
-        <li>List Item 4</li>
-      </ul>
-    </p>
-  </article>
-
-  <!-- Buy Now Buttons -->
-  <article>
-    <h3>
-      Title + list with image
-    </h3>
-    <p>
-      <ul>
-        <li>List Item 1</li>
-        <li>List Item 2</li> 
-      </ul>         
-    </p>
-<div>
- <img class='centered' style='margin: 60px auto; height: 330px' src='images_preso/buy_now_b.png'>
-</div>
-  </article>
-  
-  <!-- CART XML -->
-  <article>
-    <h3>
-      Title + Code
-    </h3>
-    <section style='margin-top:5%'>
-    <pre>
-&lt;checkout-shopping-cart xmlns=&quot;http://checkout.google.com/schema/2&quot;&gt;
-&lt;shopping-cart&gt;
-  &lt;items&gt;
-    &lt;item&gt;
-      &lt;item-name&gt;HelloWorld 2GB MP3 Player&lt;/item-name&gt;
-      &lt;item-description&gt;HelloWorld, the simple MP3 player&lt;/item-description&gt;
-      &lt;unit-price currency=&quot;USD&quot;&gt;159.99&lt;/unit-price&gt;
-      &lt;quantity&gt;1&lt;/quantity&gt;
-    &lt;/item&gt;
-  &lt;/items&gt;
-&lt;/shopping-cart&gt;
-...
-&lt;/checkout-shopping-cart&gt;
-      </pre>
-    </section>
-  </article>
-
-  <!-- Adding a Shopping Cart -->     
-  <article class='asmaller'>
-    <h3>
-      Title + Code and Image
-    </h3>
-    <section>
-    <pre>
-// Include Google shopping cart script
-
-&lt;script id='googlecart-script' type='text/javascript' 
-src='https://checkout.google.com/seller/gsc/v2_2/cart.js?mid=MID' currency='USD'&gt;
-&lt;/script&gt;
-</pre>
-<pre class='anoprettyprint' style='width:600px;'>
-// Add CSS annotations to products
-
-&lt;td class='product'&gt;
-&lt;img class='product-image' src='cup.jpg'&gt;
-&lt;div class='product-title'&gt;Travel Mug&lt;/div&gt;  
-&lt;div class='product-price'&gt;$8.02&lt;/div&gt; 
-&lt;div class='googlecart-add-button'&gt;&lt;/div&gt;
-&lt;/td&gt;
-</pre>
-  <img style='position:absolute; left: 800px; top: 320px; height: 230px' src='images_preso/mug.png'>
-  </section>
-  </article>
-
-  <!-- CUSTOMIZING THE SHOPPING CART -->
-  <article>
-    <h3>
-      Title + 3 snippets of code
-    </h3>
-    <section>
-    <pre>
-// Control Location
-
-&lt;div id='googlecart-widget-control' googlecart-widget-control-align='left'
-style='text-decoration:underline; height:30px'&gt;Cart&lt;/div&gt;
-</pre>
-    <pre>
-// Customize Style
-
-.googlecart-override #googlecart-widget-head {background-color: transparent;}
-.googlecart-override #googlecart-widget-body {border-top-width: 4px;}
-</pre>
-    <pre>
-// Customize Behavior
-
-function googlecartBeforeAdd(item, index, newQuantity, opt_node);
-function googlecartOnCheckoutClick(items, form);
-</pre>
-<!-- 
-highlight-color='#FF7878'
-cart-opening-time='1500'
--->
-    </section>
-  </article>  
-
-  <!-- Integration Solutions Recap -->    
-  <article>
-    <h3>
-      Title + Matrix
-    </h3>
-
-    <table style='margin-top: 50px; text-align:center;' class='comparison'>
-      <tr>
-        <th></th>              
-        <th>
-          <img class='centered' src='images_preso/icon_buynow.jpg'>
-          Buy Now button
-
-        </th>
-        <th>
-          <img class='centered' src='images_preso/icon_store_gadget.gif'>
-          Store gadget
-
-        </th>
-        <th>
-          <img class='centered' src='images_preso/icon_ecom.jpg'>
-          Shopping cart(s)
-
-       </th>  
-      </tr>     
-      <tr>
-        <td>Technical Skill</td>
-        <td>Basic HTML</td> 
-  <td>Basic HTML</td> 
-  <td>Varies</td> 
-    </tr>
-    <tr>
-      <td>Purpose</td>
-      <td>Single item per transaction</td>  
-      <td>Multiple items per transaction</td> 
-      <td>Multiple items per transaction</td> 
-  </tr>
-      <tr>
-        <td>Features</td>
-        <td>Copy & Paste Simplicity</td>  
-        <td>Copy & Paste Store</td> 
-        <td>Powerful and Customizable</td>  
-    </tr>
-    </table>
-  </article>
-
-<!-- CHECKOUT APIS -->
-  <article>
-    <h3>
-      Title + building list
-    </h3>
-    <div class='build'style='margin-top:40px'>
-      <div>
-        <h4 style='margin-top:0px; margin-bottom:0px'>List Item 1</h4>
-        <ul style='margin-top:5px; margin-bottom:20px'>
-          <li>Sub List 1</li>
-          <li>Sub List 2</li>
-        </ul>
-      </div>
-      <div>
-      <h4 style='margin-top:0px; margin-bottom:0px'>List Item 2</h4>
-      <ul style='margin-top:5px; margin-bottom:20px'>
-        <li>Sub List 1</li>
-        <li>Sub List 2</li>
-        <li>Sub List 3</li>
-      </ul>
-      </div>
-    </div>
-  </article>
-
-  <!-- SERVER TO SERVER -->
-  <article>
-    <h3>
-      Title + Animation
-    </h3>
-    <div class="s2s">
-      <table class='noborder'>
-        <tr style="height:70px"><td colspan="5"></td></tr>
-        <tr>
-            <td class='columnspacingleft'></td>
-            <td class='arrowspacing build'><div class='nobotmargin'><p>Serve Page</p><img src='images_preso/arrowleft.png' /></div></td>
-            <td class='columnspacing'></td>
-            <td class='arrowspacing'></td>
-            <td class='columnspacingright'></td>
-        </tr>
-        <tr>
-          <td class='columnspacingleft'></td>
-          <td class='arrowspacing build'><div class='nobotmargin'><p>User Action</p><img src='images_preso/arrowright.png' /></div></td>
-          <td class='columnspacing'></td>
-          <td class='arrowspacing'></td>
-          <td class='columnspacingright'></td>
-        </tr>
-        <tr>
-            <td class='columnspacingleft'></td>
-            <td class='arrowspacing'></td>
-            <td class='columnspacing'></td>
-            <td class='arrowspacing build'><div class='nobotmargin'><p>Post Cart</p><img src='images_preso/arrowright.png' /></div></td>
-            <td class='columnspacingright'></td>
-        </tr>
-        <tr>
-            <td class='columnspacingleft'></td>
-            <td class='arrowspacing'></td>
-            <td class='columnspacing'></td>
-            <td class='arrowspacing build'><div class='nobotmargin'><p>Redirect URL Response</p><img src='images_preso/arrowleft.png' /></div></td>
-            <td class='columnspacingright'></td>
-        </tr>
-        <tr>
-            <td class='columnspacingleft'></td>
-            <td class='arrowspacing build'><div class='nobotmargin'><p>Pass URL to Client</p><img src='images_preso/arrowleft.png' /></div></td>
-            <td class='columnspacing'></td>
-            <td class='arrowspacing'></td>
-            <td class='columnspacingright'></td>
-        </tr>
-        <tr>
-          <td class='columnspacingleft'></td>
-          <td colspan='3' class='longarrow build'><div class='nobotmargin'><p>Redirect User To Checkout</p><img src='images_preso/largearrowright.png' /></div></td>
-          <td class='columnspacingright'></td>
-        </tr>
-      </table>
-    </div>
-  </article>
-
-  <!-- USERS -->
-   <article>
-     <h3>
-       Title + Custom Image sizing & location
-     </h3>
-     <div>
-       <div class='usersbooks'>
-         Books<br />
-         <img src='images_preso/books.png' height='125' />
-       </div>
-       <div class='usersyoutube'>
-         YouTube<br />
-         <img src='images_preso/youtube.png' height='125' />
-       </div>
-       <div class='userscws'>
-         Chrome<br />
-         Web Store<br />
-         <img src='images_preso/cws.png' height='125' />
-       </div>
-       <div class='usersandroidmarket'>
-         Android Market<br />
-         <img src='images_preso/androidmarket.png' height='125' />
-        </div>
-       <div style='margin-top:13%;'>
-         <img class='centered' src='images_preso/growthgraph.png' />
-       <div>
-       <div style='text-align:right' class='build'>
-         <p>And more, with more coming...</p>
-       </div>
-     <div>
-   </article>
-
-<!-- Developers... -->
-<article>
-  <h3>
-    Title + Table with red break bars
-  </h3>
-<table class='noborder tablecenter'>
-<tr>
-  <td style='border-right:dashed 2px rgb(255, 0, 0)'>
-  <img style='height: 300px;' src='images_preso/kid_easy.jpg'>
-  <p style='font-size:22px; text-align: center;'>
-    Text 1
-  </p>
-  </td>
-  <td style='border-right:dashed 2px rgb(255, 0, 0); width:300px'>
-    <img class='centered' style='height: 250px; margin-top:40px;' src='images_preso/tools.jpg'>
-    <p style='font-size:22px; text-align: center; margin-top:37px'>
-    Text 2
-  </p>
-  </td>
-  <td>
-    <img style='height: 220px; margin-top:50px;' src='images_preso/dev_community.jpg'>
-    <p style='font-size:22px; text-align: center; margin-top:50px'>
-      Text 3
-    </p>
-  </td>
-</tr>  
-</table>
-</article>
-
-<!-- Q&A -->
-<article>
     <p style='font-size:80px; margin-top:260px; text-align: center;'>
       Q&A
     </p>
