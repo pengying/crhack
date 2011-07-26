@@ -239,6 +239,262 @@ function onDrop(e) {
   </script>
 
 
+  <!--
+   *
+   * Monetizing
+   *
+  -->
+  <article class="fill">
+    <h2>Monetizing Your App</h2>
+  </article>
+
+  <!-- USERS -->
+   <article>
+   <h3>
+     Transaction Growth
+   </h3>
+   <div>
+     <div class="usersbooks">
+     Books<br>
+     <img src="./images/books.png" height="125">
+     </div>
+     <div class="usersyoutube">
+     YouTube<br>
+     <img src="./images/youtube.png" height="125">
+     </div>
+     <div class="userscws">
+     Chrome<br>
+     Web Store<br>
+     <img src="./images/cws.png" height="125">
+     </div>
+     <div class="usersandroidmarket">
+     Android Market<br>
+     <img src="./images/androidmarket.png" height="125">
+    </div>
+     <div style="margin-top:13%;">
+     <img class="centered" src="./images/growthgraph.png">
+     </div>
+   </div>
+   </article>
+  
+  <!-- IAP BENEFITS -->
+   <article class="">
+  <h3>
+    Benefits
+  </h3>
+  
+  <div>
+    <table class="noborder">
+    <tbody><tr class="build">
+      <td>
+      <h4>Developers</h4>
+      <ul>
+        <li>5% Fees</li>
+        <li>PCI Compliance</li>
+        <li>Millions of buyers</li>
+      </ul>
+      </td>
+      
+      <td>
+      <h4>Buyers</h4>
+      <ul>
+        <li>One account for payments</li>
+        <li>Pay with a few clicks</li>
+        <li>Private payment credentials</li>
+      </ul>
+      </td>
+    </tr>
+    </tbody></table>
+  </div>
+  </article>
+
+  <!-- API Flow -->
+  <article class="">
+  <h3>
+    API Flow
+  </h3>
+  <div>
+    <img class="centered" src="./images/apiflow.png" width="800px" style="margin-top:5%; margin-left:-1%">
+  </div>
+  </article>
+
+  <!-- ACCOUNT INFO -->
+  <article class="">
+  <h3>
+    Before Integrating
+  </h3>
+  <table class="noborder">
+    <tbody><tr>
+    <td>
+  <p>
+    </p><ul>
+    <li>Sign up as a seller</li>
+    <li>Get your <strong>Seller Id</strong></li>
+    <li>Get your <strong>Seller Key</strong></li>
+    <li>Configure your postback URL</li>
+    </ul>
+  <p></p>
+  </td>
+  <td>
+   <img style="margin-top:15%" src="./images/accountinfo.png" width="450px" class="boxshadow">
+  </td>
+  </tr></tbody></table>
+  </article>
+  
+    <!-- ITEM JWT -->
+    <article class="">
+      <h3>
+        Define Item
+      </h3>
+      <section style="margin-top:5%">
+      <pre class="prettyprint"><span class="pun">{</span><span class="pln">
+  </span><span class="str">"iss"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="lit">1337133713371337</span><span class="pun">,</span><span class="pln">
+  </span><span class="str">"aud"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"Google"</span><span class="pln">
+  </span><span class="str">"typ"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"google/payments/inapp/item/v1"</span><span class="pun">,</span><span class="pln">
+  </span><span class="str">"exp"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"1392348430"</span><span class="pun">,</span><span class="pln">
+  </span><span class="str">"iat"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"1392282180"</span><span class="pun">,</span><span class="pln">
+  </span><span class="str">"request"</span><span class="pln"> </span><span class="pun">:{</span><span class="pln">
+    </span><span class="str">"name"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"Piece of Cake"</span><span class="pun">,</span><span class="pln">
+    </span><span class="str">"description"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"Virtual chocolate cake to fill your 
+      virtual tummy"</span><span class="pun">,</span><span class="pln">
+    </span><span class="str">"price"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"10.50"</span><span class="pun">,</span><span class="pln">
+    </span><span class="str">"currencyCode"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"USD"</span><span class="pun">,</span><span class="pln">
+    </span><span class="str">"sellerData"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"user_id:1224245,offer_code:3098576987"</span><span class="pln">
+  </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+        </span></pre>
+      </section>
+    </article>
+    
+    <!-- Create JWT in Python-->
+    <article class="">
+      <h3>
+        Create JWT
+      </h3>
+      <section style="margin-top:5%">
+      Python:
+      <pre class="prettyprint"><span class="pln">        cakeJwt </span><span class="pun">=</span><span class="pln"> jwt</span><span class="pun">.</span><span class="pln">encode</span><span class="pun">(</span><span class="pln">item</span><span class="pun">,</span><span class="pln"> </span><span class="str">"1ZRJNFIOSJSIDFJNVHF"</span><span class="pun">)</span><span class="pln">
+      </span></pre>
+      Ruby:
+      <pre class="prettyprint"><span class="pln">        </span><span class="lit">@cakeJwt</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> JWT</span><span class="pun">.</span><span class="pln">encode</span><span class="pun">(</span><span class="pln">item</span><span class="pun">,</span><span class="pln"> </span><span class="str">"1ZRJNFIOSJSIDFJNVHF"</span><span class="pun">)</span><span class="pln">
+      </span></pre>
+      </section>
+    </article>
+
+
+    <!-- INCLUDE JAVASCRIPT-->
+    <article>
+      <h3>
+        Include JavaScript
+      </h3>
+      <section style="margin-top:18%">
+      <pre class="prettyprint"><span class="tag">&lt;script</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"text/javascript"</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"http://www.google.com/jsapi"</span><span class="tag">&gt;</span><span class="pln">
+</span><span class="tag">&lt;/script&gt;</span><span class="pln">
+</span><span class="tag">&lt;script</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"text/javascript"</span><span class="tag">&gt;</span><span class="pln">
+google</span><span class="pun">.</span><span class="pln">load</span><span class="pun">(</span><span class="str">'payments'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'1.0'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  </span><span class="str">'packages'</span><span class="pun">:</span><span class="pln"> </span><span class="pun">[</span><span class="str">'sandbox_config'</span><span class="pun">]</span><span class="pln">
+</span><span class="pun">});</span><span class="pln">
+</span><span class="tag">&lt;/script&gt;</span><span class="pln">
+      </span></pre></section>
+    </article>
+  
+    <!-- DEFINE ITEM & ATTACH ACTION -->
+    <article>
+      <h3>
+        Define JavaScript Purchase Handler
+      </h3>
+      <section style="margin-top:5%">
+      <pre class="prettyprint"><span class="kwd">function</span><span class="pln"> purchase</span><span class="pun">(){</span><span class="pln">
+  </span><span class="pun">...</span><span class="pln">
+  goog</span><span class="pun">.</span><span class="pln">payments</span><span class="pun">.</span><span class="pln">inapp</span><span class="pun">.</span><span class="pln">buy</span><span class="pun">({</span><span class="pln">
+    </span><span class="str">'jwt'</span><span class="pln">     </span><span class="pun">:</span><span class="pln"> cakeJwt</span><span class="pun">,</span><span class="pln">
+    </span><span class="str">'success'</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> successHandler</span><span class="pun">,</span><span class="pln">
+    </span><span class="str">'failure'</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> failureHandler
+  </span><span class="pun">});</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+      </span></pre>
+      Create purchase button
+      <pre class="prettyprint"><span class="tag">&lt;button</span><span class="pln"> </span><span class="atn">onClick</span><span class="pun">=</span><span class="atv">"</span><span class="pln">purchase</span><span class="pun">()</span><span class="atv">"</span><span class="tag">&gt;</span><span class="pln">
+  Buy
+</span><span class="tag">&lt;/button&gt;</span></pre>
+    </section>
+    </article>
+
+      <!-- DEFINE HANDLER -->
+    <article>
+      <h3>
+        Define Postback Handler
+      </h3>
+      <section style="margin-top:9%">
+      Python
+      <pre class="prettyprint"><span class="kwd">def</span><span class="pln"> post</span><span class="pun">(</span><span class="kwd">self</span><span class="pun">):</span><span class="pln">
+  encoded_jwt </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">self</span><span class="pun">.</span><span class="pln">request</span><span class="pun">.</span><span class="kwd">get</span><span class="pun">(</span><span class="str">'jwt'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">None</span><span class="pun">)</span><span class="pln">
+  </span><span class="kwd">if</span><span class="pln"> encoded_jwt </span><span class="kwd">is</span><span class="pln"> </span><span class="kwd">not</span><span class="pln"> </span><span class="kwd">None</span><span class="pun">:</span><span class="pln">
+    decoded_jwt </span><span class="pun">=</span><span class="pln"> jwt</span><span class="pun">.</span><span class="pln">decode</span><span class="pun">(</span><span class="pln">str</span><span class="pun">(</span><span class="pln">encoded_jwt</span><span class="pun">),</span><span class="pln"> SELLER_SECRET</span><span class="pun">)</span><span class="pln">
+    order_id </span><span class="pun">=</span><span class="pln"> decoded_jwt</span><span class="pun">[</span><span class="str">'response'</span><span class="pun">][</span><span class="str">'orderId'</span><span class="pun">]</span><span class="pln">
+    </span><span class="kwd">self</span><span class="pun">.</span><span class="pln">response</span><span class="pun">.</span><span class="kwd">out</span><span class="pun">.</span><span class="pln">write</span><span class="pun">(</span><span class="pln">order_id</span><span class="pun">)</span><span class="pln">
+      </span></pre>
+    <button onclick="purchase();">Buy</button>
+    </section>
+    </article>
+      
+  <!-- Integration Solutions -->
+  <article>
+  <h3>
+    Tying Information Together
+  </h3>
+  <p>
+    </p><ul>
+    <li>Use the sellerData parameter to hold user identification data</li>
+    <li>Encrypt sellerData to protect user info</li>
+    <li>Example: Identifying users - <br>
+      sellerData = encrypt('user_id: 12345')</li>
+    <li>Example: Identifying context - <br>
+      sellerData = encrypt('sale: "happy hour"')</li>
+    </ul>
+  <p></p>
+  </article>
+
+  <!-- CHECKOUT APIS -->
+  <article>
+    <h3>
+      Next Steps
+    </h3>
+    <div class="build" style="margin-top:40px">
+      <div class="to-build">
+        <h4 style="margin-top:0px; margin-bottom:0px">Integrate</h4>
+        <ul style="margin-top:5px; margin-bottom:20px">
+          <li>Sign up as a seller:<br>
+            http://sandbox.google.com/checkout/inapppayments</li>
+          <li>Review the documentation:<br>
+            http://code.google.com/apis/inapppayments</li>
+        </ul>
+      </div>
+      <div class="to-build">
+      <h4 style="margin-top:0px; margin-bottom:0px">Talk to other developers</h4>
+      <ul style="margin-top:5px; margin-bottom:20px">
+        <li>In-App Payments Forum<br>
+          http://groups.google.com/group/in-app-payments</li>
+      </ul>
+      </div>
+      <div class="to-build">
+        <h4 style="margin-top:0px; margin-bottom:0px">Switch to Production</h4>
+         <ul style="margin-top:5px; margin-bottom:20px">
+            <li>Production signup<br>
+              http://google.com/inapppayments</li>
+          </ul>
+      </div>
+    </div>
+  </article>
+  
+  <!-- API Flow -->
+  <article class="nobackground">
+    <h3>Q&amp;A </h3>
+    <div>
+      <img class="centered" src="./images/qascreen.png" width="800px" style="margin-top:5%; margin-left:-1%">
+    </div>
+  </article>
+  
 
   <!-- OVERVIEW -->
   <article>
@@ -369,7 +625,7 @@ function onDrop(e) {
       <ul>
         <li>List Item 1</li>
         <li>List Item 2</li> 
-      </ul>					
+      </ul>         
     </p>
 <div>
  <img class='centered' style='margin: 60px auto; height: 330px' src='images_preso/buy_now_b.png'>
@@ -400,7 +656,7 @@ function onDrop(e) {
     </section>
   </article>
 
-  <!-- Adding a Shopping Cart -->		  
+  <!-- Adding a Shopping Cart -->     
   <article class='asmaller'>
     <h3>
       Title + Code and Image
@@ -456,9 +712,9 @@ highlight-color='#FF7878'
 cart-opening-time='1500'
 -->
     </section>
-  </article>	
+  </article>  
 
-  <!-- Integration Solutions Recap -->	  
+  <!-- Integration Solutions Recap -->    
   <article>
     <h3>
       Title + Matrix
@@ -481,25 +737,25 @@ cart-opening-time='1500'
           <img class='centered' src='images_preso/icon_ecom.jpg'>
           Shopping cart(s)
 
-       </th>	
-      </tr>			
+       </th>  
+      </tr>     
       <tr>
         <td>Technical Skill</td>
-        <td>Basic HTML</td>	
-	<td>Basic HTML</td>	
-	<td>Varies</td>	
+        <td>Basic HTML</td> 
+  <td>Basic HTML</td> 
+  <td>Varies</td> 
     </tr>
     <tr>
       <td>Purpose</td>
-      <td>Single item per transaction</td>	
-      <td>Multiple items per transaction</td>	
-      <td>Multiple items per transaction</td>	
+      <td>Single item per transaction</td>  
+      <td>Multiple items per transaction</td> 
+      <td>Multiple items per transaction</td> 
   </tr>
       <tr>
         <td>Features</td>
-        <td>Copy & Paste Simplicity</td>	
-        <td>Copy & Paste Store</td>	
-        <td>Powerful and Customizable</td>	
+        <td>Copy & Paste Simplicity</td>  
+        <td>Copy & Paste Store</td> 
+        <td>Powerful and Customizable</td>  
     </tr>
     </table>
   </article>
