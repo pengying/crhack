@@ -86,7 +86,7 @@ Author: Eric Bidelman (ericbidelman@chromium.org),
    *
   -->
   <article class="fill">
-    <h2>Building web apps is now a breeze</h2>
+    <h2>Building web apps - now a breeze</h2>
   </article>
 
   -->
@@ -163,7 +163,7 @@ document.querySelector('input[type="file"]').onchange = function(e) {
    *
   -->
   <article>
-    <h3>Reading files</h3>
+    <h3>Reading file content</h3>
     <p>Asynchronously read binary data into memory:</p>
     <pre>
 var reader = new <b>FileReader</b>();
@@ -180,11 +180,7 @@ reader.<b>readAsArrayBuffer</b>(Blob|File);</pre>
 reader.<b>readAsBinaryString</b>(blob);</pre>
   </article>
 
-  <!--
-   *
-   * File APIS: Monitoring a Read
-   *
-  -->
+<!--
   <article>
     <h3>Monitoring things</h3>
       <pre>
@@ -202,6 +198,7 @@ reader.<b>onloadend</b> = function(e) {
 
 reader.onload = readFile;</pre>
   </article>
+-->
 
 
   <!--
@@ -210,7 +207,7 @@ reader.onload = readFile;</pre>
    *
   -->
   <article id="slide-dndfiles">
-    <h3>Import tunes using drag &amp; drop</h3>
+    <h3>Importing tunes using drag &amp; drop</h3>
   <pre>var reader = new <b>FileReader</b>();
 <b>reader.onload</b> = function(e) {
   document.querySelector('img').src = <b>e.target.result</b>;
@@ -248,7 +245,7 @@ function onDrop(e) {
    *
   -->
   <article>
-    <h3>Sending form data: xhr.send(formData)</h3>
+    <h3>Sending form data</h3>
       <pre>
 function submitForm() {
   var fd = new FormData(); // or prefill: FormData(window.myform)
@@ -275,7 +272,7 @@ function submitForm() {
    *
   -->
   <article>
-    <h3>Uploading a song file</h3>
+    <h3>Uploading a file</h3>
       <pre>
 function upload(blob, opt_callback) {
   var xhr = new XMLHttpRequest();
@@ -296,7 +293,6 @@ uploadFile(bb.getBlob('text/plain'), function(e) {
   console.log('upload complete');
 });
 </pre>
-
   </article>
 
   <!--
@@ -305,7 +301,7 @@ uploadFile(bb.getBlob('text/plain'), function(e) {
    *
   -->
   <article class="smaller">
-      <h3>Downloading the song</h3>
+      <h3>Downloading a file</h3>
         <pre>
 function download(url, callback) {
   var xhr = new XMLHttpRequest();
@@ -330,6 +326,71 @@ download('song.mp3', function(xhr, arrayBuffer) {
   var uInt32Array = new Uint32Array(arrayBuffer);
   var byte3 = uInt8Array[4]; // byte at offset 4.
 });
+</pre>
+  </article>
+
+  <!--
+   *
+   * In DJBreakpoint
+   *
+  -->
+  <article class="smaller">
+    <h3>In DJBreakpoint <img src="../app/img/dj-working.png" alt="DJBreakpoint" title="DJBreakpoint" class="small"> - DJ uploads song</h3>
+    <ul>
+      <li>Server delegates DJ's turn using round robin.</li>
+      <li>If turn && songs in queue: pull file from queue and upload using XHR2.</li>
+      <li>Otherwise, tell server to try someone else.</li>
+    </ul>
+<pre>
+uploadNextSong: function(el) {
+  if (USER_FILE_QUEUE.length) {
+    el.textContent = 'Uploading your file...';
+
+    var formData = new FormData();
+    formData.append('file', USER_FILE_QUEUE.shift());
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/upload', true);
+    xhr.onload = function(e) { el.textContent = 'Uploading complete.'; };
+    xhr.send(formData); // Upload entire song.
+  } else {
+    setTimeout(function() {
+      el.textContent = 'No songs selected! Skipping you.';
+      socket.json.emit('nextuser', {}); // Tell server to try next user.
+    }, 3000);
+  }
+}
+</pre>
+  </article>
+
+  <!--
+   *
+   * In DJBreakpoint
+   *
+  -->
+  <article class="smaller">
+    <h3>In DJBreakpoint <img src="../app/img/dj-working.png" alt="DJBreakpoint" title="DJBreakpoint" class="small"> - then listeners download it</h3>
+    <ul>
+      <li>When DJ's song upload is complete, download link is sent to listeners using websockets.</li>
+      <li>On <code>startsong</code> event, connected listeners download the song using XHR2.</li>
+    </ul>
+<pre>
+this.socket.on('startsong', function(file) {
+  ...
+  fetchSong_(file.url, file.name);
+});
+
+var fetchSong_ = function(url, name) {
+  sm_ = new SoundManager();
+  sm_.load(url, function(audioBuffer) {
+    boothHeader_.textContent = name;
+
+    // Load audio into visualizer, hit play, and start the visuals.
+    visualizer.audioPlayer.loadAudioBuffer(audioBuffer);
+    visualizer.audioPlayer.play();
+    visualizer.startVisuals();
+  });
+};
 </pre>
   </article>
 

@@ -14,6 +14,7 @@
   color: white;
   background-color: orange;
   text-shadow: none;
+  /*-webkit-text-stroke: 1px black;*/
 }
 
 html {
@@ -327,6 +328,10 @@ h3 {
   letter-spacing: -1px;
 
   color: rgb(51, 51, 51);
+}
+
+h3 > img {
+  height: 40px;
 }
 
 article.fill h3 {
