@@ -376,6 +376,40 @@ uploadFile(bb.getBlob('text/plain'), function(e) {
 
   <!--
    *
+   * In DJBreakpoint
+   *
+  -->
+  <article class="smaller">
+    <h3>In DJBreakpoint <img src="../app/img/dj-working.png" alt="DJBreakpoint" title="DJBreakpoint" class="small"> - DJ uploads a song</h3>
+    <ul>
+      <li>Server delegates DJ's turn using round robin.</li>
+      <li>If turn && songs in queue: pull file from queue and upload using XHR2.</li>
+      <li>Otherwise, tell server to try someone else.</li>
+    </ul>
+<pre>
+uploadNextSong: function(el) {
+  if (USER_FILE_QUEUE.length) {
+    el.textContent = 'Uploading your file...';
+
+    var formData = new FormData();
+    formData.append('file', USER_FILE_QUEUE.shift());
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/upload', true);
+    xhr.onload = function(e) { el.textContent = 'Uploading complete.'; };
+    xhr.send(formData); // Upload entire song.
+  } else {
+    setTimeout(function() {
+      el.textContent = 'No songs selected! Skipping you.';
+      socket.json.emit('nextuser', {}); // Tell server to try next user.
+    }, 3000);
+  }
+}
+</pre>
+  </article>
+
+  <!--
+   *
    * XHR2: Downlading
    *
   -->
@@ -414,40 +448,6 @@ download('song.mp3', function(xhr, arrayBuffer) {
    *
   -->
   <article class="smaller">
-    <h3>In DJBreakpoint <img src="../app/img/dj-working.png" alt="DJBreakpoint" title="DJBreakpoint" class="small"> - DJ uploads a song</h3>
-    <ul>
-      <li>Server delegates DJ's turn using round robin.</li>
-      <li>If turn && songs in queue: pull file from queue and upload using XHR2.</li>
-      <li>Otherwise, tell server to try someone else.</li>
-    </ul>
-<pre>
-uploadNextSong: function(el) {
-  if (USER_FILE_QUEUE.length) {
-    el.textContent = 'Uploading your file...';
-
-    var formData = new FormData();
-    formData.append('file', USER_FILE_QUEUE.shift());
-
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', '/upload', true);
-    xhr.onload = function(e) { el.textContent = 'Uploading complete.'; };
-    xhr.send(formData); // Upload entire song.
-  } else {
-    setTimeout(function() {
-      el.textContent = 'No songs selected! Skipping you.';
-      socket.json.emit('nextuser', {}); // Tell server to try next user.
-    }, 3000);
-  }
-}
-</pre>
-  </article>
-
-  <!--
-   *
-   * In DJBreakpoint
-   *
-  -->
-  <article class="smaller">
     <h3>In DJBreakpoint <img src="../app/img/dj-working.png" alt="DJBreakpoint" title="DJBreakpoint" class="small"> - listeners sent a download msg</h3>
     <ul>
       <li>When DJ's song upload is complete, download link is sent to listeners using websockets.</li>
@@ -461,15 +461,73 @@ this.socket.on('startsong', function(file) {
 
 var fetchSong_ = function(url, name) {
   sm_ = new SoundManager();
-  sm_.load(url, function(audioBuffer) {
-    boothHeader_.textContent = name;
+  sm_.load(url, function(audioBuffer, arrayBuffer) {
+    // Display song title, artist, year.
 
-    // Load audio into visualizer, hit play, and start the visuals.
+    // Load audio buffer into visualizer, hit play, and start the visuals.
     visualizer.audioPlayer.loadAudioBuffer(audioBuffer);
     visualizer.audioPlayer.play();
     visualizer.startVisuals();
   });
 };
+</pre>
+  </article>
+
+  <article class="smaller">
+    <h3>Typed Arrays</h3>
+    <ul>
+      <li><code>ArrayBuffer</code> - chunk of bytes in memory. Create "views" from it:
+        <ul>
+          <li><code>Int8Array</code>, <code>Uint8Array</code></li>
+          <li><code>Int16Array</code>, <code>Uint16Array</code></li>
+          <li><code>Int32Array</code>, <code>Uint32Array</code></li>
+          <li><code>Float32Array</code>, <code>Float64Array</code></li>
+        </ul>
+      </li>
+      <li>Multiple representations can be created from a single <code>ArrayBuffer</code> source:
+        <pre>
+var uInt8Array = new Uint8Array(buffer);
+var byte3 = uInt8Array[4]; // byte at offset 4.
+var uInt32Array = new Uint32Array(buffer);
+</pre>
+      </li>
+      <li><code>ArrayBufferView</code> - view of a portion of an <code>ArrayBuffer</code></li>
+      <li><code>DataView</code> - an <code>ArrayBufferView</code> that understands endianness:
+      <pre>
+var data = new DataView(buffer);
+var byte3 = data.getUint8(4);
+var i = data.getInt32(0, false); // Big-endian
+</pre>
+      </li>
+    </ul>
+  </article>
+
+  <!--
+   *
+   * Typed Arrays
+   *
+  -->
+  <article class="smaller">
+    <h3>In DJBreakpoint <img src="../app/img/dj-working.png" alt="DJBreakpoint" title="DJBreakpoint" class="small"> - displaying song's ID3 info</h3>
+    <ul>
+      <li>MP3's ID3 tags read using <code>FileReader</code>, and "parsed" used <code>DataView</code></li>
+      <li><a href="https://github.com/vjeux/jsDataView/" target="_blank">jsDataView</a> - awesome wrapper for <code>DataView</code></li>
+    </ul>
+<pre>
+// http://en.wikipedia.org/wiki/ID3. "TAG" starts at byte -128 from EOF.
+
+var dv = new jDataView(arrayBuffer);
+if (dv.getString(3, dv.length - 128) == 'TAG') {
+  var title = dv.getString(30, dv.tell()).trim();
+  var artist = dv.getString(30, dv.tell()).trim();
+  var album = dv.getString(30, dv.tell()).trim();
+  var year = dv.getString(4, dv.tell()).trim();
+  boothHeader_.textContent = [
+      artist, '-', title, year ? '(' + year + ')' : ''].join(' ');
+} else {
+  boothHeader_.textContent = name; // Just use filename.
+}
+
 </pre>
   </article>
 
@@ -498,7 +556,6 @@ analyser.connect(context.destination);
 </pre>
     </ul>
   </article>
-
 
   <article>
     <h3>In DJBreakpoint <img src="../app/img/dj-working.png" alt="DJBreakpoint" title="DJBreakpoint" class="small"> - playing tunes</h3>
