@@ -315,9 +315,24 @@ exports.addEventListener('load', function(e) {
       '#choose-file', '.booth-header [data-song-title]');
 }, false);
 
+function login() {
+  var displayName = prompt('Enter a username');
+  if (!displayName) {
+    return;
+  }
+  onAuthorized({
+    displayName: displayName,
+    id: Date.now(),
+    image: {
+      url: '/img/dj-dude.png'
+    }
+  });
+}
+
 exports.app = {
   FILE_QUEUE: FILE_QUEUE,
-  generateIdealCoordinate: generateIdealCoordinate
+  generateIdealCoordinate: generateIdealCoordinate,
+  login: login
 };
 
 })(window);
