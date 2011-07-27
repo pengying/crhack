@@ -10,6 +10,11 @@
 */
 
 /* Framework */
+::selection {
+  color: white;
+  background-color: orange;
+  text-shadow: none;
+}
 
 html {
   height: 100%;
@@ -95,16 +100,22 @@ body {
 }
 
 .slides > article:not(.nobackground):not(.biglogo) {
-  background: url(images/colorbar.png) 0 615px repeat-x,
+  background: url(images/colorbar.png) 0 bottom repeat-x,
               url(images/chrome_logo.gif) 98% 98% no-repeat;
-
   background-size: 100%, 15%;
-
   background-color: white;
 }
 .slides.layout-widescreen > article:not(.nobackground):not(.biglogo),
 .slides.layout-faux-widescreen > article:not(.nobackground):not(.biglogo) {
   background-position-x: 0, 840px;
+}
+
+.slides > article:not(.nobackground):not(.biglogo):not(.fill)::after {
+  content: 'HTML5 Web App Hackathon - August 2011';
+  position: absolute;
+  bottom: 15px;
+  font-size: 10pt;
+  letter-spacing: 1px;
 }
 
 /* Slide styles */
