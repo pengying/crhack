@@ -413,7 +413,7 @@ uploadNextSong: function(el) {
    * XHR2: Downlading
    *
   -->
-  <article class="smaller">
+  <article>
       <h3>Downloading a file</h3>
         <pre>
 function download(url, callback) {
@@ -433,11 +433,6 @@ download('song.mp3', function(xhr, arrayBuffer) {
   var bb = new BlobBuilder();
   bb.append(arrayBuffer);
   var blob = bb.getBlob('audio/mpeg');
-
-  // Create typed arrays "views" of the data buffer.
-  var uInt8Array = new Uint8Array(arrayBuffer);
-  var uInt32Array = new Uint32Array(arrayBuffer);
-  var byte3 = uInt8Array[4]; // byte at offset 4.
 });
 </pre>
   </article>
@@ -486,15 +481,15 @@ var fetchSong_ = function(url, name) {
       </li>
       <li>Multiple representations can be created from a single <code>ArrayBuffer</code> source:
         <pre>
-var uInt8Array = new Uint8Array(buffer);
+var uInt8Array = new Uint8Array(arrayBuffer);
 var byte3 = uInt8Array[4]; // byte at offset 4.
-var uInt32Array = new Uint32Array(buffer);
+var uInt32Array = new Uint32Array(arrayBuffer);
 </pre>
       </li>
       <li><code>ArrayBufferView</code> - view of a portion of an <code>ArrayBuffer</code></li>
       <li><code>DataView</code> - an <code>ArrayBufferView</code> that understands endianness:
       <pre>
-var data = new DataView(buffer);
+var data = new DataView(arrayBuffer);
 var byte3 = data.getUint8(4);
 var i = data.getInt32(0, false); // Big-endian
 </pre>
@@ -510,13 +505,14 @@ var i = data.getInt32(0, false); // Big-endian
   <article class="smaller">
     <h3>In DJBreakpoint <img src="../app/img/dj-working.png" alt="DJBreakpoint" title="DJBreakpoint" class="small"> - displaying song's ID3 info</h3>
     <ul>
-      <li>MP3's ID3 tags read using <code>FileReader</code>, and "parsed" used <code>DataView</code></li>
+      <li>MP3's ID3 tags read using <code>FileReader</code>, and "parsed" used <code>DataView</code>
+      according to <a href="http://en.wikipedia.org/wiki/ID3" target="_blank">http://en.wikipedia.org/wiki/ID3</a>.</li>
       <li><a href="https://github.com/vjeux/jsDataView/" target="_blank">jsDataView</a> - awesome wrapper for <code>DataView</code></li>
     </ul>
 <pre>
-// http://en.wikipedia.org/wiki/ID3. "TAG" starts at byte -128 from EOF.
-
 var dv = new jDataView(arrayBuffer);
+
+// "TAG" starts at byte -128 from EOF.
 if (dv.getString(3, dv.length - 128) == 'TAG') {
   var title = dv.getString(30, dv.tell()).trim();
   var artist = dv.getString(30, dv.tell()).trim();
@@ -584,13 +580,13 @@ analyser.getByteFrequencyData(freqs);
     <ul>
       <li>Canvas a simple 2D immediate mode drawing library</li>
       <li>Painters model</li>
+    </ul>
 <pre>
   var canvas = document.getElementById('a');
   var context = canvas.getContext('2d');
   context.fillRect(50, 25, 150, 100);
 </pre>
-    </ul>
-      <li>Use requestAnimationFrame for render callbacks</li>
+    <p>Use <code>requestAnimationFrame</code> for render callbacks:</p>
 <pre>
 
 </pre>
