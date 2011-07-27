@@ -56,8 +56,8 @@ Author: Eric Bidelman (ericbidelman@chromium.org),
       <ul class="build">
         <li>Introducing DJBreakPoint</li>
         <li>HTML5 makes building apps fun</li>
-        <li>File APIs</li>
         <li>Messaging / realtime</li>
+        <li>File APIs</li>
         <li>Audio hotness</li>
         <li>Monetization / Distribution
           <ul>
@@ -89,9 +89,90 @@ Author: Eric Bidelman (ericbidelman@chromium.org),
     <h2>Building web apps - now a breeze</h2>
   </article>
 
+  <!--
+  Thinking in web apps
   -->
   <article class="fill">
     <h3>TODO(pete)</h3>
+  </article>
+
+  <article>
+    <h2>Messaging and Real Time Communication</h2>
+  </article>
+
+  <!--
+    *
+    * Web Sockets
+    *
+  -->
+
+
+  <article>
+    <h3>Web Sockets</h3>
+    <ul>
+      <li>Full-duplex, bi-directional communication over the web</li>
+      <li>Low overhead (no HTTP headers)</li>
+      <pre class="prettyprint">
+var socket = new WebSocket('ws://html5rocks.websocket.org/echo');
+socket.onmessage = function(event) { console.log(event.data); };
+      </pre>
+    </ul>
+  </article>
+
+  <article>
+    <h3>DJ Breakpoint and Socket.io</h3>
+    <ul>
+      <li>We use <a href="#">Socket.io</a> to wrap around websockets.</li>
+      <li>Client: connect to server and send msg</li>
+<pre class="prettyprint">
+var socket = io.connect('http://localhost');
+socket.emit('message', {data: 'hello'})
+socket.on('update', function(data) {
+  console.log(data);
+});
+</pre>
+      <li>Server: track clients and relay msgs</li>
+<pre class="prettyprint">
+var io = require('socket.io').listen(80);
+io.sockets.on('message', function(socket) {
+  socket.emit('update', {messages: messageBuffer});
+});
+</pre>
+    </ul>
+  </article>
+
+  <!--
+    *
+    * Cross domain messaging
+    *
+  -->
+
+
+  <article>
+    <h3>Cross page messaging with postMessage</h3>
+    <ul>
+      <li>Safely enabling cross-origin communication</li>
+      <li>Sending a message</li>
+      <pre class="prettyprint">
+otherWindow.postMessage(message, targetOrigin);
+      </pre>
+      <li>Receiving a message</li>
+      <pre class="prettyprint">
+window.addEventListener("message", function(event) {
+  if (event.origin != "http://myurl.com/foo") { /* do stuff */ }
+}, false);
+      </pre>
+    </ul>
+  </article>
+
+  <article>
+    <h3>postMessage in DJ Breakpoint</h3>
+    <ul>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
   </article>
 
   <!--
@@ -327,6 +408,56 @@ download('song.mp3', function(xhr, arrayBuffer) {
   var byte3 = uInt8Array[4]; // byte at offset 4.
 });
 </pre>
+  </article>
+
+  <article>
+    <h2>Audio and Video</h2>
+  </article>
+
+  <!--
+   *
+   * Audio hotness
+   *
+  -->
+  
+  <article>
+    <h3>Web Audio API</h3>
+    <ul>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
+  </article>
+
+  <article>
+    <h3>Web Audio API in DJ Breakpoint</h3>
+    <ul>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
+  </article>
+
+  <article>
+    <h3>Audio Visualization</h3>
+    <ul>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
+  </article>
+
+  <article>
+    <h3>Visualization in DJ Breakpoint</h3>
+    <ul>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
   </article>
 
   <!--
