@@ -105,8 +105,6 @@ Author: Eric Bidelman (ericbidelman@chromium.org),
     * Web Sockets
     *
   -->
-
-
   <article>
     <h3>Web Sockets</h3>
     <ul>
@@ -115,14 +113,14 @@ Author: Eric Bidelman (ericbidelman@chromium.org),
       <pre class="prettyprint">
 var socket = new WebSocket('ws://html5rocks.websocket.org/echo');
 socket.onmessage = function(event) { console.log(event.data); };
-      </pre>
+</pre>
     </ul>
   </article>
 
   <article>
-    <h3>DJ Breakpoint and Socket.io</h3>
+    <h3>In DJBreakpoint <img src="../app/img/dj-working.png" alt="DJBreakpoint" title="DJBreakpoint" class="small"> - Socket.IO</h3>
     <ul>
-      <li>We use <a href="#">Socket.io</a> to wrap around websockets.</li>
+      <li>We use <a href="http://socket.io/">Socket.IO</a> to wrap around websockets.</li>
       <li>Client: connect to server and send msg</li>
 <pre class="prettyprint">
 var socket = io.connect('http://localhost');
@@ -149,24 +147,24 @@ io.sockets.on('message', function(socket) {
 
 
   <article>
-    <h3>Cross page messaging with postMessage</h3>
+    <h3>Cross page messaging with <code>postMessage</code></h3>
     <ul>
       <li>Safely enabling cross-origin communication</li>
       <li>Sending a message</li>
       <pre class="prettyprint">
 otherWindow.postMessage(message, targetOrigin);
-      </pre>
+</pre>
       <li>Receiving a message</li>
       <pre class="prettyprint">
 window.addEventListener("message", function(event) {
   if (event.origin != "http://myurl.com/foo") { /* do stuff */ }
 }, false);
-      </pre>
+</pre>
     </ul>
   </article>
 
   <article>
-    <h3>postMessage in DJ Breakpoint</h3>
+    <h3>In DJBreakpoint <img src="../app/img/dj-working.png" alt="DJBreakpoint" title="DJBreakpoint" class="small"> - <code>postMessage</code></h3>
     <ul>
       <li></li>
       <li></li>
@@ -416,7 +414,7 @@ download('song.mp3', function(xhr, arrayBuffer) {
    *
   -->
   <article class="smaller">
-    <h3>In DJBreakpoint <img src="../app/img/dj-working.png" alt="DJBreakpoint" title="DJBreakpoint" class="small"> - DJ uploads song</h3>
+    <h3>In DJBreakpoint <img src="../app/img/dj-working.png" alt="DJBreakpoint" title="DJBreakpoint" class="small"> - DJ uploads a song</h3>
     <ul>
       <li>Server delegates DJ's turn using round robin.</li>
       <li>If turn && songs in queue: pull file from queue and upload using XHR2.</li>
@@ -450,7 +448,7 @@ uploadNextSong: function(el) {
    *
   -->
   <article class="smaller">
-    <h3>In DJBreakpoint <img src="../app/img/dj-working.png" alt="DJBreakpoint" title="DJBreakpoint" class="small"> - then listeners download it</h3>
+    <h3>In DJBreakpoint <img src="../app/img/dj-working.png" alt="DJBreakpoint" title="DJBreakpoint" class="small"> - listeners sent a download msg</h3>
     <ul>
       <li>When DJ's song upload is complete, download link is sent to listeners using websockets.</li>
       <li>On <code>startsong</code> event, connected listeners download the song using XHR2.</li>
@@ -476,7 +474,7 @@ var fetchSong_ = function(url, name) {
   </article>
 
   <article>
-    <h2>Audio and Video</h2>
+    <h2>Audio hotness</h2>
   </article>
 
   <!--
@@ -496,7 +494,7 @@ var fetchSong_ = function(url, name) {
   </article>
 
   <article>
-    <h3>Web Audio API in DJ Breakpoint</h3>
+    <h3>In DJBreakpoint <img src="../app/img/dj-working.png" alt="DJBreakpoint" title="DJBreakpoint" class="small"> - playing tunes</h3>
     <ul>
       <li></li>
       <li></li>
@@ -516,7 +514,7 @@ var fetchSong_ = function(url, name) {
   </article>
 
   <article>
-    <h3>Visualization in DJ Breakpoint</h3>
+    <h3>In DJBreakpoint <img src="../app/img/dj-working.png" alt="DJBreakpoint" title="DJBreakpoint" class="small"> - visualizations</h3>
     <ul>
       <li></li>
       <li></li>
