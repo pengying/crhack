@@ -1,7 +1,7 @@
 (function(exports) {
 var FILE_QUEUE = [];
 const REMOVE_DELAY = 4000; // Remove chat bubble after 4s.
-const MIN_CHROME_VERSION = 14;
+const MIN_CHROME_VERSION = 13;
 
 var verOffset = navigator.userAgent.indexOf('Chrome');
 var fullVersion = navigator.userAgent.substring(verOffset + 7).substring(0, 2);
