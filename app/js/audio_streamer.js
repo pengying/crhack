@@ -49,10 +49,21 @@ function AudioStreamer(selector, selector2) {
 
   var fetchSong_ = function(url, name) {
     sm_ = new SoundManager();
-    sm_.load(url, function(audioBuffer) {
-      boothHeader_.textContent = name;
-
+    sm_.load(url, function(audioBuffer, arrayBuffer) {
       //sm_.play(audioBuffer); // Start playing song.
+
+      // http://en.wikipedia.org/wiki/ID3. TAG starts at byte -128 from EOF.
+      var dv = new jDataView(arrayBuffer);
+      if (dv.getString(3, dv.length - 128) == 'TAG') {
+        var title = dv.getString(30, dv.tell()).trim();
+        var artist = dv.getString(30, dv.tell()).trim();
+        var album = dv.getString(30, dv.tell()).trim();
+        var year = dv.getString(4, dv.tell()).trim();
+        boothHeader_.textContent = [artist, '-', title,
+                                    year ? '(' + year + ')' : ''].join(' ');
+      } else {
+        boothHeader_.textContent = name;
+      }
 
       // Load audio into visualizer, hit play, and start the visuals.
       visualizer.audioPlayer.loadAudioBuffer(audioBuffer);
@@ -191,11 +202,11 @@ function SoundManager(opt_loop) {
     var callback = function(arrayBuffer) {
       /* crbug.com/89690 - decodeAudioData crashing tab.
       context_.decodeAudioData(arrayBuffer, function(audioBuffer) {
-        opt_callback && opt_callback(audioBuffer);
+        opt_callback && opt_callback(audioBuffer, arrayBuffer);
       }, function(e) {
         console.log('Error decoding', e);
       });*/
-      opt_callback && opt_callback(context_.createBuffer(arrayBuffer, false));
+      opt_callback && opt_callback(context_.createBuffer(arrayBuffer, false), arrayBuffer);
     }
 
     if (typeof data == 'string') {  // load from a URL.
