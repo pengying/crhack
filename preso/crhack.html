@@ -486,40 +486,85 @@ var fetchSong_ = function(url, name) {
   <article>
     <h3>Web Audio API</h3>
     <ul>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
+      <li>Audio tag brings flashless audio and limitations</li>
+      <li>Single channel, no access to raw stream</li>
+      <li>WebAudio: powerful API to process and synthesize sound in web apps</li>
+<pre>
+context = new webkitAudioContext();
+source = context.createBufferSource();
+analyser = context.createAnalyser();
+source.connect(analyser);
+analyser.connect(context.destination);
+</pre>
     </ul>
   </article>
+
 
   <article>
     <h3>In DJBreakpoint <img src="../app/img/dj-working.png" alt="DJBreakpoint" title="DJBreakpoint" class="small"> - playing tunes</h3>
     <ul>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
+      <li>Loading mp3 via XHR2</li>
+<pre>
+var xhr = new XMLHttpRequest();
+xhr.open("GET", url, true);
+xhr.responseType = "arraybuffer";
+
+xhr.addEventListener('load', function() {
+  var buffer = context.createBuffer(xhr.response, false);
+});
+xhr.send();
+
+</pre>
+      <li>Getting raw data out:</li>
+<pre>
+analyser.getByteFrequencyData(freqs);
+</pre>
     </ul>
   </article>
 
   <article>
-    <h3>Audio Visualization</h3>
+    <h3>Interlude: Visualization with HTML5 Canvas</h3>
     <ul>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
+      <li>Canvas a simple 2D immediate mode drawing library</li>
+      <li>Painters model</li>
+<pre>
+  var canvas = document.getElementById('a');
+  var context = canvas.getContext('2d');
+  context.fillRect(50, 25, 150, 100);
+</pre>
+    </ul>
+      <li>Use requestAnimationFrame for render callbacks</li>
+<pre>
+
+</pre>
+  </article>
+
+  <article>
+    <h3>In DJBreakpoint <img src="../app/img/dj-working.png" alt="DJBreakpoint" title="DJBreakpoint" class="small"> - visualization</h3>
+    <ul>
+      <li>Using ByteFrequencyData from WebAudio API</li>
+      <li>Plotting frequency graph of the music that's playing</li>
+<pre>
+for (var i = 0; i < NUM_BINS + 1; ++i) {
+  var value = freqs[i * width];
+  var percent = value / 256;
+  var height = NUM_BINS * percent;
+  drawContext.fillStyle = 'hsl(' + computedColor + ', 100%, 50%)';
+  drawContext.fillRect(...);
+}
+</pre>
     </ul>
   </article>
 
   <article>
-    <h3>In DJBreakpoint <img src="../app/img/dj-working.png" alt="DJBreakpoint" title="DJBreakpoint" class="small"> - visualizations</h3>
+    <h3>In DJBreakpoint <img src="../app/img/dj-working.png" alt="DJBreakpoint" title="DJBreakpoint" class="small"> - beat detection</h3>
     <ul>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
+      <li>Feeding signal into an external library to get beat</li>
+      <li>Using CSS3 animations to animate avatars</li>
+<pre>
+this.dancingImages[i].style.webkitTransform =
+  'scale(' + scaleX + ',' + scaleY + ') skewX(' + skewAngle + 'rad)';
+</pre>
     </ul>
   </article>
 
