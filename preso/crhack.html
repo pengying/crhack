@@ -54,6 +54,7 @@ Author: Eric Bidelman (ericbidelman@chromium.org),
     <h3>Agenda</h3>
     <p>
       <ul class="build">
+        <li>Thinking web apps</li>
         <li>Introducing DJBreakPoint</li>
         <li>HTML5 makes building apps fun</li>
         <li>Messaging / realtime</li>
@@ -61,12 +62,28 @@ Author: Eric Bidelman (ericbidelman@chromium.org),
         <li>Audio hotness</li>
         <li>Monetization / Distribution
           <ul>
-            <li>Chrome Web Store</li>
             <li>In-App Payments API for the Web</li>
+            <li>Chrome Web Store</li>
           </ul>
         </li>
       </ul>
     </p>
+  </article>
+
+  <!--
+   *
+   * Thinking web apps
+   *
+  -->
+  <article class="fill">
+    <h2>Thinking web apps</h2>
+  </article>
+
+  <!--
+  Thinking in web apps
+  -->
+  <article class="fill">
+    <h3>TODO(pete)</h3>
   </article>
 
   <!--
@@ -89,12 +106,55 @@ Author: Eric Bidelman (ericbidelman@chromium.org),
     <h2>Building web apps - now a breeze</h2>
   </article>
 
-  <!--
-  Thinking in web apps
-  -->
-  <article class="fill">
-    <h3>TODO(pete)</h3>
+  <article>
+    <h3>CSS3: transitions/transforms/dropshadow/border radius</h3>
+    <ul>
+      <li>e
+    </ul>
   </article>
+
+  <article>
+    <h3>Web fonts</h3>
+    <ul>
+      <li>e
+    </ul>
+  </article>
+
+  <article>
+    <h3>.classList/.dataSet</h3>
+    <ul>
+      <li>e
+    </ul>
+  </article>
+
+  <article>
+    <h3>querySelectorAll(), querySelector()</h3>
+    <ul>
+      <li>e
+    </ul>
+  </article>
+
+  <article>
+    <h3>flexbox (layout)</h3>
+    <ul>
+      <li>e
+    </ul>
+  </article>
+
+  <article>
+    <h3>HTML5 DnD</h3>
+    <ul>
+      <li>e
+    </ul>
+  </article>
+
+  <article>
+    <h3>speech input in the chat [ernestd]</h3>
+    <ul>
+      <li>e
+    </ul>
+  </article>
+
 
   <article>
     <h2>Messaging and Real Time Communication</h2>
@@ -144,8 +204,6 @@ io.sockets.on('message', function(socket) {
     * Cross domain messaging
     *
   -->
-
-
   <article>
     <h3>Cross page messaging with <code>postMessage</code></h3>
     <ul>
@@ -173,63 +231,6 @@ window.addEventListener("message", function(event) {
     </ul>
   </article>
 
-  <!--
-   *
-   * HTML5 makes building apps a breeze
-   *
-  -->
-  <article class="fill">
-    <h2>HTML5 makes building apps a breeze</h2>
-  </article>
-
-  <article>
-    <h3>CSS3: transitions/transforms/dropshadow/border radius</h3>
-    <ul>
-      <li>e
-    </ul>
-  </article>
-  
-  <article>
-    <h3>Web fonts</h3>
-    <ul>
-      <li>e
-    </ul>
-  </article>
-
-  <article>
-    <h3>.classList/.dataSet</h3>
-    <ul>
-      <li>e
-    </ul>
-  </article>
-  
-  <article>
-    <h3>querySelectorAll(), querySelector()</h3>
-    <ul>
-      <li>e
-    </ul>
-  </article>
-  
-  <article>
-    <h3>flexbox (layout)</h3>
-    <ul>
-      <li>e
-    </ul>
-  </article>
-
-  <article>
-    <h3>HTML5 DnD</h3>
-    <ul>
-      <li>e
-    </ul>
-  </article>
-
-  <article>
-    <h3>speech input in the chat [ernestd]</h3>
-    <ul>
-      <li>e
-    </ul>
-  </article>        
 
   <!--
    *
@@ -561,9 +562,9 @@ var i = data.getInt32(0, false); // Big-endian
    *
   -->
   <article class="smaller">
-    <h3>In DJBreakpoint <img src="../app/img/dj-working.png" alt="DJBreakpoint" title="DJBreakpoint" class="small"> - displaying song's ID3 info</h3>
+    <h3>In DJBreakpoint <img src="../app/img/dj-working.png" alt="DJBreakpoint" title="DJBreakpoint" class="small"> - displaying song's ID3v1 info</h3>
     <ul>
-      <li>MP3's ID3 tags read using <code>FileReader</code>, and "parsed" used <code>DataView</code>
+      <li>MP3's ID3v1 tags read using <code>FileReader</code>, and "parsed" used <code>DataView</code>
       according to <a href="http://en.wikipedia.org/wiki/ID3" target="_blank">http://en.wikipedia.org/wiki/ID3</a>.</li>
       <li><a href="https://github.com/vjeux/jsDataView/" target="_blank">jsDataView</a> - awesome wrapper for <code>DataView</code></li>
     </ul>
@@ -594,7 +595,7 @@ if (dv.getString(3, dv.length - 128) == 'TAG') {
    * Audio hotness
    *
   -->
-  
+
   <article>
     <h3>Web Audio API</h3>
     <ul>
@@ -731,8 +732,8 @@ this.dancingImages[i].style.webkitTransform =
    <img style="margin-top:30%;margin-left:-10%;" src="./images/vg_chart.png" width="390px">
   </td>
   </tr></tbody></table>
-  </article>   
-   
+  </article>
+
   <!-- IAP BENEFITS -->
    <article class="">
   <h3>Benefits</h3>
@@ -749,15 +750,15 @@ this.dancingImages[i].style.webkitTransform =
         <li>Private payment credentials</li>
       </ul>
       </td>
-	  
+
       <td>
       <h4>Developers</h4>
       <ul>
-        <li>Millions of buyers</li>	  
+        <li>Millions of buyers</li>
         <li>Flat fee (5%) </li>
         <li>PCI Compliance </li>
       </ul>
-      </td>	  
+      </td>
     </tr>
     </tbody></table>
   </div>
@@ -771,8 +772,8 @@ this.dancingImages[i].style.webkitTransform =
   <div>
     <img class="centered" src="./images/user_flow.png" width="800px" style="margin-top:20%; margin-left:-1%">
   </div>
-  </article>  
-  
+  </article>
+
   <!-- Developer Pay Flow -->
   <article class="">
   <h3>
@@ -781,8 +782,8 @@ this.dancingImages[i].style.webkitTransform =
   <div>
     <img class="centered" src="./images/dev_pay_flow.png" width="800px" style="margin-top:15%; margin-left:-1%">
   </div>
-  </article>  
-  
+  </article>
+
   <!-- API Flow -->
   <article class="">
   <h3>
@@ -951,7 +952,17 @@ if encoded_jwt is not None:
     </div>
   </article>
 
-  <!-- Chrome Web Store - take a look -->      
+  <!--
+   *
+   * Chrome Web Store
+   *
+  -->
+  <article class="fill">
+    <h2>Chrome Web Store</h2>
+  </article>
+
+
+  <!-- Chrome Web Store - take a look -->
   <article>
     <h3>
       Chrome Web Store - let's take a look
@@ -1005,7 +1016,7 @@ if encoded_jwt is not None:
     </p>
     <ul>
       <li>
-        Help users find great apps, extensions, and themes 
+        Help users find great apps, extensions, and themes
       </li>
     </ul>
     <p>
@@ -1013,7 +1024,7 @@ if encoded_jwt is not None:
     </p>
     <ul>
       <li>
-        Help developers and brands reach and be discovered by users 
+        Help developers and brands reach and be discovered by users
       </li>
     </ul>
     <p>
@@ -1021,7 +1032,7 @@ if encoded_jwt is not None:
     </p>
     <ul>
       <li>
-        Help developers earn revenue from their apps via Chrome Web Store payments, third-party payments, or ads 
+        Help developers earn revenue from their apps via Chrome Web Store payments, third-party payments, or ads
       </li>
     </ul>
   </article>
@@ -1050,7 +1061,7 @@ if encoded_jwt is not None:
     <p>Read more: <a href="http://www.google.com/chrome/createanapp">http://www.google.com/chrome/createanapp</a>
 
   </article>
-    
+
   <article class="nobackground">
     <h3>Q&amp;A </h3>
     <div>
