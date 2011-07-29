@@ -151,54 +151,101 @@ Author: Eric Bidelman (ericbidelman@chromium.org),
   </article>
 
   <article>
-    <h3>CSS3: transitions/transforms/dropshadow/border radius</h3>
+    <h3>CSS3: transitions/transforms/drop shadow/border radius</h3>
     <ul>
-      <li>e
+      <li>Techniques in the HTML4 era: DHTML transitions, Microsoft filters for transforms, repeated sprites for shadows, absolute image positioning for rounded corners.</li>
     </ul>
+    <pre class="prettyprint">
+   -moz-border-radius: 12px; /* FF1-3.6 */
+-webkit-border-radius: 12px; /* Saf3-4, iOS 1-3.2, Android &lt;1.6 */
+        border-radius: 12px; /* Opera 10.5, IE9, Saf5, Chrome,
+                                FF4, iOS 4, Android 2.1+ */
+</pre>
+    
   </article>
 
   <article>
     <h3>Web fonts</h3>
     <ul>
-      <li>e
+      <li>Techniques in the HTML4 era: Font Image Replacement</li>
     </ul>
+    <pre class="prettyprint">
+@font-face {
+  font-family: 'WebFont';
+  src: url('myfont.eot?#') format('eot'),  /* IE6–8 */
+       url('myfont.woff') format('woff'),  /* FF3.6+, IE9, Chrome6+, 
+                                              Saf5.1+*/
+       url('myfont.ttf') format('truetype');  /* Saf3—5, Chrome4+, 
+                                                 FF3.5, Opera 10+ */
+}
+</pre>
   </article>
 
   <article>
-    <h3>.classList/.dataSet</h3>
+    <h3>classList/dataset</h3>
     <ul>
-      <li>e
+      <li>Techniques in the HTML4 era: custom Javascript for class manipulation, long class names to store application status</li>
     </ul>
+    <pre class="prettyprint">
+var el = document.querySelector('#main').classList;
+el.add('highlight');
+el.remove('shadow');
+el.toggle('highlight');
+
+&lt;div id="out" data-id="good" data-name="joe">&lt;/div>
+document.querySelector('#out').dataset['name'] // joe
+</pre>
   </article>
 
   <article>
     <h3>querySelectorAll(), querySelector()</h3>
     <ul>
-      <li>e
+      <li>Techniques in the HTML4 era: Walking the DOM or using external libraries</li>
     </ul>
+    <pre class="prettyprint">
+var el = document.querySelector('#main').classList;
+el.add('highlight');
+el.remove('shadow');
+el.toggle('highlight');
+
+&lt;div id="out" data-id="good" data-name="joe">&lt;/div>
+document.querySelector('#out').dataset['name'] // joe
+</pre>
   </article>
 
   <article>
-    <h3>flexbox (layout)</h3>
+    <h3>Page Layout with Flex Box</h3>
+    <ul>
+      <li>Techniques in the HTML4 era: Walking the DOM or using external libraries</li>
+    </ul>
+    <pre class="prettyprint">
+var el = document.querySelector('#main').classList;
+el.add('highlight');
+el.remove('shadow');
+el.toggle('highlight');
+
+&lt;div id="out" data-id="good" data-name="joe">&lt;/div>
+document.querySelector('#out').dataset['name'] // joe
+</pre>
+  </article>
+
+  <article>
+    <h3>HTML5 Drag and Drop</h3>
     <ul>
       <li>e
     </ul>
   </article>
 
   <article>
-    <h3>HTML5 DnD</h3>
+    <h3>Speech Input</h3>
     <ul>
       <li>e
     </ul>
   </article>
 
   <article>
-    <h3>speech input in the chat [ernestd]</h3>
-    <ul>
-      <li>e
-    </ul>
+    <h3>In DJBreakpoint <img src="../app/img/dj-working.png" alt="DJBreakpoint" title="DJBreakpoint" class="small"> - ...</h3>
   </article>
-
 
   <article>
     <h2>Messaging and Real Time Communication</h2>
