@@ -203,14 +203,7 @@ document.querySelector('#out').dataset['name'] // joe
       <li>Techniques in the HTML4 era: Walking the DOM or using external libraries</li>
     </ul>
     <pre class="prettyprint">
-var el = document.querySelector('#main').classList;
-el.add('highlight');
-el.remove('shadow');
-el.toggle('highlight');
-
-&lt;div id="out" data-id="good" data-name="joe">&lt;/div>
-document.querySelector('#out').dataset['name'] // joe
-</pre>
+...</pre>
   </article>
 
   <article>
@@ -218,29 +211,86 @@ document.querySelector('#out').dataset['name'] // joe
     <ul>
       <li>Techniques in the HTML4 era: Walking the DOM or using external libraries</li>
     </ul>
-    <pre class="prettyprint">
-var el = document.querySelector('#main').classList;
-el.add('highlight');
-el.remove('shadow');
-el.toggle('highlight');
+    <pre>.box {
+  display: -webkit-<b>box</b>;
+  -webkit-<b>box-orient</b>: <select onchange='changeBoxOrient(event)'> 
+      <option>horizontal</option> 
+      <option>vertical</option> 
+    </select>;
+}
+.box .one, .box .two {
+  -webkit-<b>box-flex</b>: 1;
+}
+.box .three {
+  -webkit-<b>box-flex</b>: 3;
+}
+</pre> 
 
-&lt;div id="out" data-id="good" data-name="joe">&lt;/div>
-document.querySelector('#out').dataset['name'] // joe
-</pre>
+    <div id="box-orient-example" class="example"> 
+      <div> 
+        Box one
+      </div> 
+      <div> 
+        Box two
+      </div> 
+      <div> 
+        Box three
+      </div> 
+    </div> 
+
+    <script defer> 
+      function changeBoxOrient(event) {
+        var el = document.getElementById('box-orient-example');
+        el.style.webkitBoxOrient = event.target.value;
+        el.style.MozBoxOrient = event.target.value; 
+      }
+    </script> 
   </article>
 
   <article>
     <h3>HTML5 Drag and Drop</h3>
     <ul>
-      <li>e
+      <li>Techniques in the HTML4 era: Emulate drag events (cross browser!)</li>
     </ul>
+    <pre class="prettyprint">
+addEvent(drop, 'dragover', cancel);
+addEvent(drop, 'dragenter', cancel);
+addEvent(drop, 'drop', function (event) {
+  // stops the browser from redirecting off to the text.
+  if (event.preventDefault) {
+    event.preventDefault();
+  }
+  this.innerHTML += '&lt;p>' + event.dataTransfer.getData('Text') + '&lt;/p>';
+  return false;
+});
+</pre>
+
   </article>
 
   <article>
     <h3>Speech Input</h3>
-    <ul>
-      <li>e
-    </ul>
+    <pre> 
+function startSearch(event) {
+  if (event.target.<b>results</b>.length > 1) {
+    var second = event.target.results[1].<b>utterance</b>;
+    document.getElementById("second_best").value = second;
+  }
+  event.target.form.submit();
+}
+    </pre> 
+    <input id="input-speech2" type="text" x-webkit-speech speech /> 
+    <div style="text-align: left; font-size: 17px; height: 200px; overflow: auto; width: 500px; border: 1px solid black; padding: 10px" id="speech-results"> 
+
+    </div> 
+    <script> 
+    document.getElementById("input-speech2").addEventListener("webkitspeechchange", function(event) {
+      var speechresults = document.getElementById('speech-results');
+      speechresults.innerHTML = '';
+      for (var res in event.results) {
+        speechresults.innerHTML += 'Utterance: ' + event.results[res]['utterance'] + '<br />Confidence: ' + event.results[res]['confidence'] + '<br /><br />';
+      }
+    }, false);
+    </script>
   </article>
 
   <article>
