@@ -43,11 +43,21 @@
         <img src="img/8track.jpg" alt="8 Track Player"/>
         <p>I don't mean to be a <em>prima donna</em>, but if you're going to spin da tunes,
         at least spin em with a better browser.</p>
-        You need Google Chrome 14+
+        You need Google Chrome 13
       </div>
     </article>
   </div>
-
+  
+  <div id="avatar" class="hidden">
+    <article>
+      <h1>Avatars</h1>
+      <div id="avatar-images">
+      </div>
+      <button id="close" onclick="$('#avatar').addClass('hidden');">
+        Close</button>
+    </article>
+  </div>
+  
   <header>
     <img src="img/dj-working.png" alt="logo" id="logo" />
     <h1><a href="/">DJ Breakpoint</a></h1>
@@ -59,6 +69,7 @@
            1st floor</button>
       <button id="change-floor2" onclick="$('#container').css('background-image', 'url(img/wood-floor2.jpg)'); $(this).attr('disabled', 'disabled'); $('#change-floor').removeAttr('disabled');">
            2nd floor</button>
+        
       <button id="login" onclick="app.login()">Login</button>
     </nav>
   </header>
@@ -106,6 +117,14 @@
 
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/jquery-ui.min.js"></script>
 
+<!-- Include In-App Payment JS -->
+<script type="text/javascript" src="http://www.google.com/jsapi">
+</script>
+<script type="text/javascript">
+google.load('payments', '1.0', {
+  'packages': ['sandbox_config']
+});
+</script>
 
 <!-- scripts concatenated and minified via ant build script-->
 <!--<script src="js/plugins.js"></script>-->
@@ -116,6 +135,7 @@
 <script src="js/audio_streamer.js"></script>
 <script src="js/BeatDetektor.js"></script>
 <script src="js/visualizer.js"></script>
+<script src="js/iap.js"></script>
 
 <!-- mathiasbynens.be/notes/async-analytics-snippet Change UA-XXXXX-X to be your site's ID -->
 <script>

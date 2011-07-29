@@ -322,6 +322,27 @@ Server.prototype = {
       case '/proxy':
         this.proxy(req, res);
         break;
+      case '/buy':
+        var id = "00790225735776612440";
+        var secret = "enAElg5OLqEDdzRbpKAtIA";
+        var postData = ""
+        req.addListener("data", function(chunk){postData += chunk});
+        req.addListener("end", function(){
+          var item = {
+            "iss" : id,
+              "aud" : "Google"
+              "typ" : "google/payments/inapp/item/v1",
+              "exp" : Date.now(),
+              "iat" : Date.now() + 1000000,
+              "request" :{
+                "name" : "Avatar",
+                "description" : "Avatar",
+                "price" : "3.00",
+                "currencyCode" : "USD"
+              };
+          };
+        });
+        break;
       default:
         // TODO(smus): Swap comments to serve dj app:
         //this.sendFile(res, __dirname + '/..' + path, ext);

@@ -40,6 +40,11 @@
   box-pack: @val;
 }
 
+.box-orient(@val) {
+  -webkit-box-orient: @val;
+  -moz-box-orient: @val;
+  box-orient: @val;
+}
 /* ----- */
 
 html {
@@ -276,6 +281,34 @@ span.queue-title {
 span.queue-artist {
 }
 
+
+#avatar {
+  text-align: center;
+  font-family: 'Luckiest Guy', cursive;
+  
+  position: absolute;
+  z-index:100;
+  height:100%;
+  width:100%;
+  
+  .display-box();
+  .box-align(center);
+  .box-pack(center);
+  .box-orient(horizontal);
+  
+  > article {
+    display: inline-block;
+    .border-radius(10px);
+    height: 300px;
+    width:400px;
+    
+    background: rgba(0,0,0, 0.9);
+    border: 1px solid #EEE;
+    h1 {
+      color: #FFFFFF;
+    }
+  }
+}
 
 #not-supported {
   text-align: center;

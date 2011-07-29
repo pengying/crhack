@@ -1,5 +1,11 @@
 (function(exports) {
 var FILE_QUEUE = [];
+
+var Avatars = {
+  'monkey': 'img/monkey.gif',
+  'html5': 'img/html5.png'
+};
+
 const REMOVE_DELAY = 4000; // Remove chat bubble after 4s.
 const MIN_CHROME_VERSION = 13;
 
@@ -256,6 +262,20 @@ var generateIdealCoordinate = function(width, height) {
   return {left: left, top: top};
 };
 
+var loadAvatars = function(){
+  var avDiv = document.querySelector('#avatar-images');
+  for (var i in Avatars){
+    var img = document.createElement('img');
+    img.src = Avatars[i];
+    img.lat = i;
+    img.addEventListener('click', 
+function(){
+  purchase.buy(i);
+}, false);
+    avDiv.appendChild(img);
+  }
+}
+
 var onAuthorized = function(data) {
   //document.querySelector('#directory-upload').disabled = false;
 
@@ -267,7 +287,11 @@ var onAuthorized = function(data) {
   img.src = data.image.url;
   img.alt = 'You';
   img.title = img.alt;
+  img.addEventListener('click', function(){
+    $("#avatar").removeClass("hidden")}, false);
   loginButton.parentElement.appendChild(img);
+  
+
 
   // Add avatar to dance floor.
   visualizer.addDancer(
@@ -297,7 +321,7 @@ exports.addEventListener('message', function(e) {
     }, REMOVE_DELAY, $chatBubble);
   }
 }, false);
-
+  
 // Needs to be onload and not DOMContentLoaded b/c need to wait for chat iframe
 // to fully load.
 exports.addEventListener('load', function(e) {
@@ -306,7 +330,9 @@ exports.addEventListener('load', function(e) {
   } else if (localStorage.profile) {
     onAuthorized(JSON.parse(localStorage.profile));
   }
-
+  
+  loadAvatars();
+  
   document.querySelector('#volume-control').addEventListener('change', function(e) {
     visualizer.audioPlayer.setVolume(this.valueAsNumber);
   }, false);
