@@ -327,19 +327,19 @@ Server.prototype = {
         var secret = "enAElg5OLqEDdzRbpKAtIA";
         var postData = ""
         req.addListener("data", function(chunk){postData += chunk});
-        req.addListener("end", function(){
+        req.addListener("end", function() {
           var item = {
             "iss" : id,
-              "aud" : "Google"
-              "typ" : "google/payments/inapp/item/v1",
-              "exp" : Date.now(),
-              "iat" : Date.now() + 1000000,
-              "request" :{
-                "name" : "Avatar",
-                "description" : "Avatar",
-                "price" : "3.00",
-                "currencyCode" : "USD"
-              };
+            "aud" : "Google",
+            "typ" : "google/payments/inapp/item/v1",
+            "exp" : Date.now(),
+            "iat" : Date.now() + 1000000,
+            "request" :{
+              "name" : "Avatar",
+              "description" : "Avatar",
+              "price" : "3.00",
+              "currencyCode" : "USD"
+            }
           };
         });
         break;
