@@ -265,6 +265,16 @@ var generateIdealCoordinate = function(width, height) {
   return {left: left, top: top};
 };
 
+/* Change the current user's avatar and propgate across users */
+var changeAvatar = function(avatar){
+  document.querySelector("#my-dude").src = Avatars[avatar];
+  document.querySelector(".profile-img").src = Avatars[avatar];
+  var profile = JSON.parse(localStorage.profile);
+  profile.image.url = "/" + Avatars[avatar];
+  localStorage.profile = JSON.stringify(profile);
+  $("#avatar").addClass('hidden');
+}
+
 var loadAvatars = function(){
   var avDiv = document.querySelector('#avatar-images');
   for (var i in Avatars){
@@ -273,7 +283,7 @@ var loadAvatars = function(){
     img.lat = i;
     img.addEventListener('click', 
 function(){
-  iap.buy(i);
+  iap.buy(this.lat);
 }, false);
     avDiv.appendChild(img);
   }
@@ -299,7 +309,7 @@ var onAuthorized = function(data) {
   // Add avatar to dance floor.
   visualizer.addDancer(
       '#dance-floor .dudes-container', data.id, data.image.url, 64, 64);
-
+  
   // Send chatter info to chat iframe.
   document.querySelector('#chat-window iframe').contentWindow.postMessage(
       data, document.location.origin);
@@ -361,7 +371,8 @@ function login() {
 exports.app = {
   FILE_QUEUE: FILE_QUEUE,
   generateIdealCoordinate: generateIdealCoordinate,
-  login: login
+  login: login,
+  changeAvatar: changeAvatar
 };
 
 })(window);

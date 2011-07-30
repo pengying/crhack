@@ -23,11 +23,13 @@ var iap = {};
 }
 
 function successHandler(notification){
-  
+  //console.log(JSON.stringify(notification));
+  var avatar = notification.request.sellerData;
+  app.changeAvatar(avatar);
 }
 
 function failureHandler(notification){
-  
+  console.log(JSON.stringify(notification));
 }
 
 })(iap);

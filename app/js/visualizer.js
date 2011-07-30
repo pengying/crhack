@@ -31,7 +31,7 @@
 
     $(selector).append([
         '<div data-profile-id="', id,'" style="left:', coords.left, 'px;',
-        'top:', coords.top, 'px;"><img src="', imgSrc, '" style="width:',
+        'top:', coords.top, 'px;"><img id="my-dude" src="', imgSrc, '" style="width:',
         imgWidth, 'px;height:', imgHeight, 'px;" data-profile-id="', id,
         '" draggable></div>'].join(''));
 
