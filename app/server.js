@@ -24,6 +24,7 @@ var opts = require('opts');
 var url = require('url');
 var mime = require('mime');
 var sys = require('sys');
+var crypto = require('crypto');
 
 var formidable = require('formidable');
 var sio = require('socket.io');
@@ -325,23 +326,74 @@ Server.prototype = {
       case '/buy':
         var id = "00790225735776612440";
         var secret = "enAElg5OLqEDdzRbpKAtIA";
-        var postData = ""
+        var postData = "";
+        var header = {
+          "typ": "JWT",
+          "alg": "HS256"
+        };
+        header = new Buffer(JSON.stringify(header)).toString('base64');
         req.addListener("data", function(chunk){postData += chunk});
-        req.addListener("end", function(){
-          var item = {
-            "iss" : id,
-              "aud" : "Google"
-              "typ" : "google/payments/inapp/item/v1",
-              "exp" : Date.now(),
-              "iat" : Date.now() + 1000000,
-              "request" :{
-                "name" : "Avatar",
-                "description" : "Avatar",
-                "price" : "3.00",
-                "currencyCode" : "USD"
-              };
-          };
-        });
+        req.addListener("end", 
+function(){
+  var item = {
+    "iss" : id,
+    "aud" : "Google",
+    "typ" : "google/payments/inapp/item/v1",
+    "exp" : Date.now(),
+    "iat" : Date.now() + 1000000,
+    "request" :{
+      "name" : "Avatar",
+      "description" : postData + " Avatar",
+      "price" : "3.00",
+      "currencyCode" : "USD"
+    }
+  };
+  var response = new Buffer(JSON.stringify(item)).toString('base64');
+  
+  var body = header + "." + response;
+  //var hmac = crypto.createHmac('SHA256', secret);
+  //var hash = hmac.update(body);
+  //body += "." + hash.digest(encoding='base64');
+  
+  //Cheat
+  //TODO(pying): update mac and remove this cheat
+  switch(postData){
+    case 'Monkey':
+      body = "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIwMDc5MDIyNTczNTc3N" + 
+               "jYxMjQ0MCIsImF1ZCI6Ikdvb2dsZSIsInR5cCI6Imdvb2dsZS9" + 
+               "wYXltZW50cy9pbmFwcC9pdGVtL3YxIiwiaWF0IjoxMzEyMDUwO" + 
+               "TM1LCJleHAiOjEzMTIxMzczMzUsInJlcXVlc3QiOnsiY3VycmV" + 
+               "uY3lDb2RlIjoiVVNEIiwicHJpY2UiOiIzLjAwIiwibmFtZSI6I" + 
+               "kF2YXRhciIsInNlbGxlckRhdGEiOiJBdmF0YXIiLCJkZXNjcml" + 
+               "wdGlvbiI6Ik1vbmtleSBBdmF0YXIifX0.F_uhPuseCe66QgXva" + 
+               "MjdvcDK5SiGarJOO7Fk3ocel3w";
+      break;
+    case 'Html5':
+      body = "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIwMDc5MDIyNTczNTc3N" + 
+               "jYxMjQ0MCIsImF1ZCI6Ikdvb2dsZSIsInR5cCI6Imdvb2dsZS9" + 
+               "wYXltZW50cy9pbmFwcC9pdGVtL3YxIiwiaWF0IjoxMzEyMDUwO" + 
+               "TU0LCJleHAiOjEzMTIxMzczNTQsInJlcXVlc3QiOnsiY3VycmV" + 
+               "uY3lDb2RlIjoiVVNEIiwicHJpY2UiOiI0LjAwIiwibmFtZSI6I" + 
+               "kF2YXRhciIsInNlbGxlckRhdGEiOiJBdmF0YXIiLCJkZXNjcml" + 
+               "wdGlvbiI6IkhUTUw1IEF2YXRhciJ9fQ.ri8CazGBIf2jrap0F6" + 
+               "y-wpwl9rgYMHywRSo7UATgbh0";
+      break;
+    default:
+      body = "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIwMDc5MDIyNTczNTc3N" + 
+               "jYxMjQ0MCIsImF1ZCI6Ikdvb2dsZSIsInR5cCI6Imdvb2dsZS9" + 
+               "wYXltZW50cy9pbmFwcC9pdGVtL3YxIiwiaWF0IjoxMzEyMDUwO" + 
+               "TEzLCJleHAiOjE0MTIxMzcyNTksInJlcXVlc3QiOnsiY3VycmV" + 
+               "uY3lDb2RlIjoiVVNEIiwicHJpY2UiOiIxMC4wMCIsIm5hbWUiO" + 
+               "iJBdmF0YXIiLCJzZWxsZXJEYXRhIjoiQXZhdGFyIiwiZGVzY3J" + 
+               "pcHRpb24iOiJBdmF0YXIifX0.-Oy66N7IPP3pkTByt0grZ9k2u" + 
+               "4OC12-y4bezI9nafrY";
+  }
+  res.writeHead(200, {
+    'Content-Length': body.length,
+    'Content-Type': 'text/plain' });
+  res.write(body);
+  res.end();
+});
         break;
       default:
         // TODO(smus): Swap comments to serve dj app:

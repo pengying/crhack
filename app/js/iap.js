@@ -1,10 +1,12 @@
-(function(purchases)){
+var iap = {};
+
+(function(context){
   var xhr = new XMLHttpRequest();
   
-function buy(item){
-  xhr.open('POST', window.location.href + 'purchase', true);
+  context.buy = function (item){
+  xhr.open('POST', window.location.href + 'buy', true);
   xhr.onreadystatechange = function(jwt){
-    if(xhr.reqdystate == 4){
+    if(xhr.readyState == 4){
       if(xhr.status == 200){
         goog.payments.inapp.buy({
           'jwt' : xhr.responseText,
@@ -12,8 +14,12 @@ function buy(item){
           'failure' : failureHandler
         });
       }
+      else{
+        console.log("error" + xhr.status)
+      }
     }
   }
+  xhr.send(item);
 }
 
 function successHandler(notification){
@@ -23,8 +29,6 @@ function successHandler(notification){
 function failureHandler(notification){
   
 }
-purchases.iap = {
-  buy: buy
-};
-})(window);
+
+})(iap);
 

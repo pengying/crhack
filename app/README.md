@@ -1,4 +1,6 @@
 ## Install
+Check your OpenSSL support (openssl list-message-digest-algorithms)
+If it does not include SHA256 download new openssl before compiling node
 
 Install node (v0.4.9).
 Install [npm](http://github.com/isaacs/npm).

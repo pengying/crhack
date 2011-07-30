@@ -1,9 +1,12 @@
 (function(exports) {
 var FILE_QUEUE = [];
 
+//Lets define the possible avatars
+//Well probably need to do some form of server verification
+//TODO(pying):server verification
 var Avatars = {
-  'monkey': 'img/monkey.gif',
-  'html5': 'img/html5.png'
+  'Monkey': 'img/monkey.gif',
+  'Html5': 'img/html5.png'
 };
 
 const REMOVE_DELAY = 4000; // Remove chat bubble after 4s.
@@ -270,7 +273,7 @@ var loadAvatars = function(){
     img.lat = i;
     img.addEventListener('click', 
 function(){
-  purchase.buy(i);
+  iap.buy(i);
 }, false);
     avDiv.appendChild(img);
   }
