@@ -187,7 +187,41 @@ Author: Eric Bidelman (ericbidelman@chromium.org),
         border-radius: 12px; /* Opera 10.5, IE9, Saf5, Chrome,
                                 FF4, iOS 4, Android 2.1+ */
 </pre>
-    
+    <style> 
+      #logo-container {
+        font-size: 20px;
+        color: #226;
+        padding: 20px 0 50px;
+        margin-bottom: 50px;
+        text-align: center;
+      }
+      #logo-container:hover {
+        -webkit-transform: rotate(-90deg);
+        -webkit-transition: all 1s ease-in;
+      }
+    </style> 
+      <pre><input id="web20-shadow" type="range" min="0" max="9" value="0" onchange="changeWeb20(event)"><input id="web20-gradient" type="range" min="0" max="100" value="0" onchange="changeWeb20(event)"> <input id="web20-border" type="range" min="0" max="50" value="0" onchange="changeWeb20(event)"> <input id="web20-reflect" type="range" min="0" max="100" value="0" onchange="changeWeb20(event)"></pre> 
+        <div id="logo-container"> 
+          <div id="web20-google"> 
+            CSS3
+          </div> 
+        </div> 
+
+    <script defer> 
+      function changeWeb20() {
+        var el = document.getElementById('web20-google');
+
+        var textShadowVal = document.getElementById('web20-shadow').value;
+        var gradientVal = document.getElementById('web20-gradient').value / 100;
+        var borderVal = document.getElementById('web20-border').value;
+        var reflectVal = document.getElementById('web20-reflect').value / 100;
+
+        el.style.textShadow = 'rgba(0, 0, 0, 0.5) 0 ' + textShadowVal + 'px ' + textShadowVal + 'px';
+        el.style.background = '-webkit-gradient(linear, left top, left bottom, from(rgba(200, 200, 240, ' + gradientVal + ')), to(rgba(255, 255, 255, ' + gradientVal + ')))';
+        el.style.borderRadius = borderVal + 'px';
+        el.style.webkitBoxReflect = 'below 10px -webkit-gradient(linear, left top, left bottom, from(transparent), to(rgba(255, 255, 255, ' + reflectVal + ')))';
+      }
+    </script>
   </article>
 
   <article>
@@ -205,6 +239,7 @@ Author: Eric Bidelman (ericbidelman@chromium.org),
                                                  FF3.5, Opera 10+ */
 }
 </pre>
+  <span style="font-family: Arial">Arial</span> <span style="font-family: Comic Sans MS">Comic Sans MS</span> <span style="font-family: Courier New">Courier New</span> <span style="font-family: Georgia">Georgia</span> <span style="font-family: Impact">Impact</span> <span style="font-family: Times New Roman">Times New Roman</span> <span style="font-family: Trebuchet MS">Trebuchet MS</span> <span style="font-family: Verdana">Verdana</span>
   </article>
 
   <article>
@@ -228,8 +263,10 @@ document.querySelector('#out').dataset['name'] // joe
     <ul>
       <li>Techniques in the HTML4 era: Walking the DOM or using external libraries</li>
     </ul>
-    <pre class="prettyprint">
-...</pre>
+    <pre class="prettyprint">var els = document.querySelectorAll("ul li:nth-child(odd)");
+var tds = document.querySelectorAll("table.test > tr > td");
+var el = document.querySelector("table.test > tr > td");
+var els = document.getElementsByClassName('section');</pre>
   </article>
 
   <article>
@@ -337,7 +374,9 @@ addEvent(drop, 'drop', function (event) {
   </article>
 
   <article>
-    <h3>In DJBreakpoint <img src="../app/img/dj-working.png" alt="DJBreakpoint" title="DJBreakpoint" class="small"> - ...</h3>
+    <h3>In DJBreakpoint <img src="../app/img/dj-working.png" alt="DJBreakpoint" title="DJBreakpoint" class="small"> - Better Coded UI</h3>
+    <p>Drag and Drop + Speech Input + Rounded Corners + CSS Gradients + CSS Tranforms + CSS Transitions + etc</p>
+    <img style="margin-top: 40px" width="800px" src="images/boxes.png" />
   </article>
 
   <article>
