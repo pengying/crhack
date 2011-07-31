@@ -233,6 +233,25 @@ document.querySelector('#out').dataset['name'] // joe
   </article>
 
   <article>
+    <style> 
+      #box-orient-example {
+        height: 260px;
+        display: -webkit-box; -webkit-box-orient: horizontal;
+        display: -moz-box; -moz-box-orient: horizontal;
+      }
+      #box-orient-example div:nth-child(1) {
+        background: white; padding: 10px; -webkit-box-flex: 1; 
+        -moz-box-flex: 1; text-align: center;
+      }
+      #box-orient-example div:nth-child(2) {
+        background: #ddd; padding: 10px; -webkit-box-flex: 1; 
+        -moz-box-flex: 1; text-align: center;
+      }
+      #box-orient-example div:nth-child(3) {
+        background: white; padding: 10px; -webkit-box-flex: 3; 
+        -moz-box-flex: 3; text-align: center;
+      }
+    </style>
     <h3>Page Layout with Flex Box</h3>
     <ul>
       <li>Techniques in the HTML4 era: Walking the DOM or using external libraries</li>
@@ -295,15 +314,13 @@ addEvent(drop, 'drop', function (event) {
 
   <article>
     <h3>Speech Input</h3>
-    <pre> 
-function startSearch(event) {
+    <pre>function startSearch(event) {
   if (event.target.<b>results</b>.length > 1) {
     var second = event.target.results[1].<b>utterance</b>;
     document.getElementById("second_best").value = second;
   }
   event.target.form.submit();
-}
-    </pre> 
+}</pre> 
     <input id="input-speech2" type="text" x-webkit-speech speech /> 
     <div style="text-align: left; font-size: 17px; height: 200px; overflow: auto; width: 500px; border: 1px solid black; padding: 10px" id="speech-results"> 
 
