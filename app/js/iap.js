@@ -33,4 +33,3 @@ function failureHandler(notification){
 }
 
 })(iap);
-
