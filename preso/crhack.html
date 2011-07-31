@@ -26,6 +26,35 @@ Author: Eric Bidelman (ericbidelman@chromium.org),
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <script src="slides.js"></script>
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+  <script>
+    google.load('payments', '1.0', {
+    'packages': ['sandbox_config']
+    });
+  </script>
+  <script type="text/javascript">
+    var body = "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIwMDc5MDIyNTczNTc3N" + 
+             "jYxMjQ0MCIsImF1ZCI6Ikdvb2dsZSIsInR5cCI6Imdvb2dsZS9" + 
+             "wYXltZW50cy9pbmFwcC9pdGVtL3YxIiwiaWF0IjoxMzEyMDUyN" + 
+             "zQ3LCJleHAiOjEzMTIxMzkxNDcsInJlcXVlc3QiOnsiY3VycmV" + 
+             "uY3lDb2RlIjoiVVNEIiwicHJpY2UiOiI1LjAwIiwibmFtZSI6I" + 
+             "kF2YXRhciIsInNlbGxlckRhdGEiOiJIdG1sNSIsImRlc2NyaXB" + 
+             "0aW9uIjoiQXZhdGFyIn19.Ex9yWaSPk_QcFlZlOa8kHNFFJwXA" + 
+             "eKlxV7e43KIkMoU";
+    function buy(){
+      goog.payments.inapp.buy({
+        'jwt': body,
+        'success': successHandler,
+        'failure': failureHandler
+      });
+    }
+    var successHandler = function(notification){
+      $('#output').text(JSON.stringify(notification))
+    }
+    var failureHandler = function(notification){
+      $('#output').text(JSON.stringify(notification));
+    }
+  </script>
   
   <style type="text/css">
     .principle {
@@ -824,9 +853,14 @@ this.dancingImages[i].style.webkitTransform =
    *
   -->
   <article class="fill">
-    <h2>Monetization / Distribution</h2>
+    <h2>Monetization</h2>
   </article>
 
+  <!-- Demo -->
+  <article>
+    <h3>In DJBreakpoint <img src="../app/img/dj-working.png" alt="DJBreakpoint" title="DJBreakpoint" class="small"> - Demo</h3>
+  </article>
+  
   <!-- Transaction growth -->
    <article>
    <h3>
@@ -893,6 +927,15 @@ this.dancingImages[i].style.webkitTransform =
     <tbody><tr class="build">
 
       <td>
+      <h4>Developers</h4>
+      <ul>
+        <li>Flat fee (5%) </li>
+        <li>PCI Compliance </li>
+        <li>Millions of buyers</li>
+      </ul>
+      </td>
+      
+      <td>
       <h4>Buyers</h4>
       <ul>
         <li>One account for payments</li>
@@ -901,14 +944,6 @@ this.dancingImages[i].style.webkitTransform =
       </ul>
       </td>
 
-      <td>
-      <h4>Developers</h4>
-      <ul>
-        <li>Millions of buyers</li>
-        <li>Flat fee (5%) </li>
-        <li>PCI Compliance </li>
-      </ul>
-      </td>
     </tr>
     </tbody></table>
   </div>
@@ -972,8 +1007,8 @@ this.dancingImages[i].style.webkitTransform =
     <h3>Define Item for Sale</h3>
     <pre>
 {
-  "iss" : 1337133713371337,
-  "aud" : "Google"
+  "iss" : "1337133713371337",
+  "aud" : "Google",
   "typ" : "google/payments/inapp/item/v1",
   "exp" : "1392348430",
   "iat" : "1392282180",
@@ -1045,16 +1080,11 @@ if encoded_jwt is not None:
   decoded_jwt = jwt.decode(str(encoded_jwt), SELLER_SECRET)
   order_id = decoded_jwt['response']['orderId']
   self.response.out.write(order_id)
-</pre>
-  <button onclick="purchase();">Buy</button>
+    </pre>
+    <pre id='output' style='height:5em;'>
+    </pre>
+  <button onclick="buy();">Buy</button>
   </article>
-  <script>
-  (function() {
-    window.purchase = function() {
-      alert('not impl');
-    };
-  })();
-  </script>
 
   <!-- Integration Solutions -->
   <article>
@@ -1070,7 +1100,7 @@ if encoded_jwt is not None:
   <p></p>
   </article>
 
-  <!-- The Web App Ecosystem -->
+  <!-- The Web App Ecosystem 
   <article class="">
   <h3>
     The Web App Ecosystem
@@ -1078,7 +1108,7 @@ if encoded_jwt is not None:
   <div>
     <img class="centered" src="./images/app_ecosystem.png" width="780px" style="margin-top:16%; margin-left:0%">
   </div>
-  </article> 
+  </article> -->
   
   <!-- In-App Payments - The Big Picture -->
   <article class="">
@@ -1090,7 +1120,7 @@ if encoded_jwt is not None:
   </div>
   </article> 
   
-  <!-- CHECKOUT APIS -->
+  <!-- CHECKOUT APIS
   <article>
     <h3>
       Next Steps
@@ -1120,7 +1150,7 @@ if encoded_jwt is not None:
           </ul>
       </div>
     </div>
-  </article> 
+  </article> -->
   
   <!--
    *
@@ -1128,7 +1158,7 @@ if encoded_jwt is not None:
    *
   -->
   <article class="fill">
-    <h2>Chrome Web Store</h2>
+    <h2>Chrome Web Store Distribution</h2>
   </article>
 
 
@@ -1215,13 +1245,13 @@ if encoded_jwt is not None:
     <p>Read more: <a href="http://www.google.com/chrome/createanapp">http://www.google.com/chrome/createanapp</a>
 
   </article>
-
+<!--
   <article class="nobackground">
     <h3>Q&amp;A </h3>
     <div>
       <img class="centered" src="./images/qascreen.png" width="800px" style="margin-top:5%; margin-left:-1%">
     </div>
-  </article>
+  </article>-->
 
   <article lass="nobackground">
       <h3>chromestatus.com</h3>
@@ -1238,10 +1268,15 @@ if encoded_jwt is not None:
     <ul>
       <li>Chrome's <a href="http://code.google.com/chrome/devtools/" target="_blank">DevTools</a> - invaluable</li>
       <li><a href="http://www.html5rocks.com" target="_blank">html5rocks.com</a> - learn by tutorial</li>
+      <li><a href="http://google.com/payments">google.com/payments</a> - Payments signup & documentation
+      </li>
+      <li><a href="http://chrome.google.com/webstore">chrome.google.com/webstore</a> - Chrome Web Store
+      </li>
+      <li><a href>
       <li><a href="http://html5boilerplate.com/" target="_blank">HTML5 Boilerplate</a>  and <a href="http://www.modernizr.com/" target="_blank">Modernizr</a> - foundation</li>
       <li><a href="http://caniuse.com" target="_blank">caniuse.com</a> - compatibility tables</li>
       <li>Google <a href="http://code.google.com/chrome/chromeframe/" target="_blank">Chrome Frame</a> - plugin. Brings Chrome to IE6-9</li>
-      <li>Twitter: <a href="http://twitter.com/ChromiumDev" target="_blank">@ChromiumDev</a></li>
+      <li>Twitter: <a href="http://twitter.com/ChromiumDev" target="_blank">@ChromiumDev @GoogCommerceDev</a></li>
     </ul>
   </article>
 
