@@ -462,10 +462,17 @@ window.addEventListener("message", function(event) {
   <article>
     <h3>In DJBreakpoint <img src="../app/img/dj-working.png" alt="DJBreakpoint" title="DJBreakpoint" class="small"> - <code>postMessage</code></h3>
     <ul>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
+      <li>Chat implemented in a separate frame</li>
+      <li>Chat frame sends message to parent:</li>
+      <pre class="prettyprint">
+socket_.on('chat', function(data) {
+  window.parent.postMessage(data, document.location.origin);
+}</pre>
+      <li>Main frame listens for the event and renders bubble:</li>
+      <pre class="prettyprint">
+window.addEventListener('message', function(e) {
+  document.querySelector('#dudes').append(createBubble(e.data));
+});</pre>
     </ul>
   </article>
 
