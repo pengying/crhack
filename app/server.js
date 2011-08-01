@@ -148,6 +148,9 @@ function Server() {
       });
     });
 
+    socket.on('changeAvatar', function(data){
+      
+    });
     socket.on('disconnect', function() {
       //djs.splice(djs.indexOf(socket), 1);
       socket.get('profileid', function(err, profileId) {
