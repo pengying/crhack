@@ -933,30 +933,6 @@ this.dancingImages[i].style.webkitTransform =
   <article class="fill">
     <h2>Monetization</h2>
   </article>
-
-  <!-- Demo -->
-  <article>
-    <h3>In DJBreakpoint <img src="../app/img/dj-working.png" alt="DJBreakpoint" title="DJBreakpoint" class="small"> - IAP</h3>
-    <pre>
-context.buy = function (item){
-xhr.open(&#x27;POST&#x27;, window.location.href + &#x27;buy&#x27;, true);
-xhr.onreadystatechange = function(jwt){
-  if(xhr.readyState == 4){
-    if(xhr.status == 200){
-      goog.payments.inapp.buy({
-        &#x27;jwt&#x27; : xhr.responseText,
-        &#x27;success&#x27; : successHandler,
-        &#x27;failure&#x27; : failureHandler
-      });
-    }
-    else{
-      console.log(&quot;error&quot; + xhr.status)
-    }
-  }
-}
-    </pre>
-    
-  </article>
   
   <!-- Transaction growth -->
    <article>
@@ -1207,6 +1183,30 @@ if encoded_jwt is not None:
   <p></p>
   </article>
 
+  <!-- Demo -->
+  <article>
+    <h3>In DJBreakpoint <img src="../app/img/dj-working.png" alt="DJBreakpoint" title="DJBreakpoint" class="small"> - IAP</h3>
+    <pre>
+context.buy = function (item){
+xhr.open(&#x27;POST&#x27;, window.location.href + &#x27;buy&#x27;, true);
+xhr.onreadystatechange = function(jwt){
+  if(xhr.readyState == 4){
+    if(xhr.status == 200){
+      goog.payments.inapp.buy({
+        &#x27;jwt&#x27; : xhr.responseText,
+        &#x27;success&#x27; : successHandler,
+        &#x27;failure&#x27; : failureHandler
+      });
+    }
+    else{
+      console.log(&quot;error&quot; + xhr.status)
+    }
+  }
+}
+    </pre>
+
+  </article>
+  
   <!-- The Web App Ecosystem 
   <article class="">
   <h3>
