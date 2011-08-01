@@ -24,14 +24,16 @@ function Chatter(selector) {
   window.addEventListener('message', function(e) {
     if (e.origin == document.location.origin) {
       var data = e.data;
-      if (data.displayName) { // New user. Set their data.
+      if (e.action == 'changeAvatar'){// Handle avatar change
+        self_.changeAvatar(e.data);
+      } else if (data.displayName) { // New user. Set their data.
         nicknameInput_.value = data.displayName;
         profileId_.value = data.profileId;
         doLogin_(data);
       }
     }
   }, false);
-
+  
   nicknameInput_.addEventListener('keypress', function(e) {
     if (e.keyCode == 13) {
       e.preventDefault();
@@ -116,7 +118,15 @@ function Chatter(selector) {
               data.users[data.profileId].image.url, 64, 64);
         }
       });
+      
 
+      //Propagate Avatar update
+      socket_.on('changeAvatar', function(data){
+        log_('<span data-nickname="' + data.displayName + '">' + 
+          data.displayName + '</span>: changed their avatar');
+          window.parent.app.updateAvatar(data);
+      });
+      
       socket_.on('chat', function(data) {
         log_('<span data-nickname="' + data.displayName + '">' +
              data.displayName + '</span>: ' + data.msg);
@@ -169,6 +179,10 @@ function Chatter(selector) {
     socket_.emit('chat', msg);
   };
 
+  this.changeAvatar = function(avatar){
+    socket_.emit('changeAvatar', avatar)
+  }
+  
   var init = (function() {
     var fragment = document.createDocumentFragment();
 

@@ -275,6 +275,10 @@ var changeAvatar = function(avatar){
   $("#avatar").addClass('hidden');
 }
 
+var updateAvatar = function(avatar){
+  console.log('avatar updating should go here');
+}
+
 var loadAvatars = function(){
   var avDiv = document.querySelector('#avatar-images');
   for (var i in Avatars){
@@ -372,7 +376,8 @@ exports.app = {
   FILE_QUEUE: FILE_QUEUE,
   generateIdealCoordinate: generateIdealCoordinate,
   login: login,
-  changeAvatar: changeAvatar
+  changeAvatar: changeAvatar,
+  updateAvatar: updateAvatar
 };
 
 })(window);
