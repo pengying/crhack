@@ -35,12 +35,12 @@ Author: Eric Bidelman (ericbidelman@chromium.org),
   <script type="text/javascript">
     var body = "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIwMDc5MDIyNTczNTc3N" + 
              "jYxMjQ0MCIsImF1ZCI6Ikdvb2dsZSIsInR5cCI6Imdvb2dsZS9" + 
-             "wYXltZW50cy9pbmFwcC9pdGVtL3YxIiwiaWF0IjoxMzEyMDUyN" + 
-             "zQ3LCJleHAiOjEzMTIxMzkxNDcsInJlcXVlc3QiOnsiY3VycmV" + 
-             "uY3lDb2RlIjoiVVNEIiwicHJpY2UiOiI1LjAwIiwibmFtZSI6I" + 
+             "wYXltZW50cy9pbmFwcC9pdGVtL3YxIiwiaWF0IjoxMzEyMjA3M" + 
+             "zk5LCJleHAiOjE0MTIyOTM3ODEsInJlcXVlc3QiOnsiY3VycmV" + 
+             "uY3lDb2RlIjoiVVNEIiwicHJpY2UiOiIzLjAwIiwibmFtZSI6I" + 
              "kF2YXRhciIsInNlbGxlckRhdGEiOiJIdG1sNSIsImRlc2NyaXB" + 
-             "0aW9uIjoiQXZhdGFyIn19.Ex9yWaSPk_QcFlZlOa8kHNFFJwXA" + 
-             "eKlxV7e43KIkMoU";
+             "0aW9uIjoiQXZhdGFyIn19.u8aJEP7YBvCQwOIr4OELDRHjX0SJ" + 
+             "YKEfQq4gWiVw3FU";
     function buy(){
       goog.payments.inapp.buy({
         'jwt': body,
@@ -49,10 +49,10 @@ Author: Eric Bidelman (ericbidelman@chromium.org),
       });
     }
     var successHandler = function(notification){
-      $('#output').text(JSON.stringify(notification))
+      document.querySelector('#output').textContent = JSON.stringify(notification);
     }
     var failureHandler = function(notification){
-      $('#output').text(JSON.stringify(notification));
+      document.querySelector('#output').textContent = JSON.stringify(notification);
     }
   </script>
   
