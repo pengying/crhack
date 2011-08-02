@@ -273,10 +273,19 @@ var changeAvatar = function(avatar){
   profile.image.url = "/" + Avatars[avatar];
   localStorage.profile = JSON.stringify(profile);
   $("#avatar").addClass('hidden');
+  var data = {
+    id: myAvatar.data-profile-id,
+    action: 'changeAvatar',
+    newAvatar: Avatars[avatar];
+  };
+  document.querySelector('#chat-window iframe').contentWindow.postMessage(
+      data, document.location.origin);
 }
 
 var updateAvatar = function(avatar){
-  console.log('avatar updating should go here');
+  //look up query selector for selecting by attributes
+  //var myAvatar = document.querySelector();
+  //myAvatar.src = Avatar[avatar];
 }
 
 var loadAvatars = function(){
