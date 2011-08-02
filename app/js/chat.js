@@ -1,3 +1,5 @@
+/* Author: Eric Bidelman (ericbidelman@chromium.org) */
+
 function Chatter(selector) {
   var self_ = this;
   var container_ = document.querySelector(selector);
