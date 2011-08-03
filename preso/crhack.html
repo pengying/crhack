@@ -893,7 +893,10 @@ analyser.getByteFrequencyData(freqs);
 </pre>
     <p>Use <code>requestAnimationFrame</code> for render callbacks:</p>
 <pre>
+window.requestAnimationFrame = window.webkitRequestAnimationFrame ||
+  window.mozRequestAnimationFrame || window.msRequestAnimationFrame;
 
+window.requestAnimationFrame(animate, opt_elem /* bounding elem */);
 </pre>
   </article>
 
