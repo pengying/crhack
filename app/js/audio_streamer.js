@@ -1,3 +1,5 @@
+/* Author: Eric Bidelman (ericbidelman@chromium.org) */
+
 window.BlobBuilder = window.BlobBuilder || window.WebKitBlobBuilder || window.MozBlobBuilder;
 window.URL = window.URL || window.webkitURL;
 

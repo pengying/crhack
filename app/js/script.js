@@ -1,3 +1,11 @@
+/* Authors:
+ *   Eric Bidelman (ericbidelman@chromium.org)
+ *   Boris Smus
+ *   Ernest Delgado
+ *   Ido Green
+ *   Peng Ying
+ */
+
 (function(exports) {
 var FILE_QUEUE = [];
 
