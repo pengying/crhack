@@ -284,7 +284,7 @@ var changeAvatar = function(avatar){
   var data = {
     id: myAvatar.data-profile-id,
     action: 'changeAvatar',
-    newAvatar: Avatars[avatar],
+    newAvatar: Avatars[avatar]
   };
   document.querySelector('#chat-window iframe').contentWindow.postMessage(
       data, document.location.origin);
