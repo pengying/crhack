@@ -27,7 +27,7 @@ var sys = require('sys');
 var crypto = require('crypto');
 
 var formidable = require('formidable');
-var sio = require('socket.io');
+var sio = require('socket.io0.8.4');
 
 // Server global defaults.
 var host = 'localhost';
