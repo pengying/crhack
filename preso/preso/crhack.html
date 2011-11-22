@@ -1,0 +1,1356 @@
+<!DOCTYPE html>
+<!--
+Copyright 2011 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+Author: Eric Bidelman (ericbidelman@chromium.org),
+        Boris Smus
+        Ernest Delgado
+        Pete LePage
+        Peng Ying
+-->
+<html>
+<head>
+  <title>HTML5 Web App Hackathon</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <script src="slides.js"></script>
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+  <script>
+    google.load('payments', '1.0', {
+    'packages': ['sandbox_config']
+    });
+  </script>
+  <script type="text/javascript">
+    var body = "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIwMDc5MDIyNTczNTc3N" + 
+             "jYxMjQ0MCIsImF1ZCI6Ikdvb2dsZSIsInR5cCI6Imdvb2dsZS9" + 
+             "wYXltZW50cy9pbmFwcC9pdGVtL3YxIiwiaWF0IjoxMzEyMjA3M" + 
+             "zk5LCJleHAiOjE0MTIyOTM3ODEsInJlcXVlc3QiOnsiY3VycmV" + 
+             "uY3lDb2RlIjoiVVNEIiwicHJpY2UiOiIzLjAwIiwibmFtZSI6I" + 
+             "kF2YXRhciIsInNlbGxlckRhdGEiOiJIdG1sNSIsImRlc2NyaXB" + 
+             "0aW9uIjoiQXZhdGFyIn19.u8aJEP7YBvCQwOIr4OELDRHjX0SJ" + 
+             "YKEfQq4gWiVw3FU";
+    function buy(){
+      goog.payments.inapp.buy({
+        'jwt': body,
+        'success': successHandler,
+        'failure': failureHandler
+      });
+    }
+    var successHandler = function(notification){
+      document.querySelector('#output').textContent = JSON.stringify(notification);
+    }
+    var failureHandler = function(notification){
+      document.querySelector('#output').textContent = JSON.stringify(notification);
+    }
+  </script>
+</head>
+<body style="display: none">
+
+<section class='slides'>
+
+  <!-- Your slides (<article>s) go here. Delete or comment out the
+       slides below. -->
+
+  <article class='biglogo'></article>
+
+  <!-- INTRODUCTION -->
+  <article id="title-slide">
+    <h1>HTML5 Web App Hackathon <img src="images/HTML5_Badge_64.png" style="vertical-align:middle"></h1>
+    <br>
+    <p>
+       Ernest Delgado, Pete LePage, Boris Smus<br>
+       Daniel Hermes, Mihai Ionescu, Nadim Ratani, Peng Ying
+    </p>
+    <p>
+      August 1-11, 2011 (NYC, CHI, KIR, MTV)
+    </p>
+    <p>#HTML5Hack</p>
+  </article>
+
+  <!-- Schedule -->
+  <article>
+    <h3>Schedule</h3>
+    <p>
+      <ul class="build">
+        <li>12:00-1:30 - Lunch & Presentation</li>
+        <li>1:30-2:00 - Pitches & Team organization</li>
+        <li>2:00-7:00 - Hacking</li>
+        <li>7:00-8:00 - Dinner & Finish hacking</li>
+        <li>8:00-9:00 - Presentations, Voting & Prizes</li>
+        </li>
+      </ul>
+    </p>
+  </article>
+  
+  <!-- AGENDA -->
+  <article>
+    <h3>Agenda</h3>
+    <p>
+      <ul class="build">
+        <li>Thinking web apps</li>
+        <li>Introducing DJBreakPoint</li>
+        <li>HTML5 makes building apps fun</li>
+        <li>Messaging / realtime</li>
+        <li>File APIs</li>
+        <li>Audio hotness</li>
+        <li>Distribution using Chrome Web Store</li>
+        <li>Monetization with In-App Payments</li>
+        </li>
+      </ul>
+    </p>
+  </article>
+
+  <!--
+   *
+   * Thinking web apps
+   *
+  -->
+  <article class="fill">
+    <h2>Thinking In Web Apps</h2>
+  </article>
+
+  <article class="fill">
+    <img src="images/springpad.png">
+    <div class="build">
+      <div class="principle"><h4>Tight Focus</h4>A great web application has a tight focus encouraging people to <strong>interact</strong>, <strong>engage</strong>, and <strong>accomplish</strong> something, rather than passively view content.</div>
+    </div>
+    <!--<div class="source"><a href="http://bit.ly/p7G6IA">http://bit.ly/p7G6IA</a></div>-->
+  </article>
+
+  <article class="fill">
+    <img src="images/gojee.png">
+    <div class="build">
+      <div class="principle"><h4>Provide Rich Visuals</h4>A great web application provides rich visuals that will <strong>delight the eye without distracting the mind.</strong></div>
+    </div>
+    <!--<div class="source"><a href="http://bit.ly/oZEqJh">http://bit.ly/oZEqJh</a></div>-->
+  </article>
+  
+  <article class="fill">
+    <img src="images/280slides.png">
+    <div class="build">
+      <div class="principle"><h4>Great User Experiences</h4>A great web application uses the <strong>latest web technologies</strong> enhance the user experience, so users can complete their work faster, easier and with confidence.</div>
+    </div>
+    <!--<div class="source"><a href="http://bit.ly/qSIzFl">http://bit.ly/qSIzFl</a></div>-->
+  </article>
+
+  <!--
+   *
+   * DJBreakpoint
+   *
+  -->
+  <article class="centered">
+    <h2>DJBreakpoint</h2>
+    <img src="../app/img/dj-working.png" alt="DJBreakpoint" title="DJBreakpoint">
+    <p><a href="http://goo.gl/vyVol" target="_blank">http://goo.gl/vyVol</a></p>
+  </article>
+
+  <!--
+   *
+   * HTML5 makes building apps a breeze
+   *
+  -->
+  <article class="fill">
+    <h2>Building web apps - now a breeze</h2>
+  </article>
+
+  <article>
+    <h3>CSS3: transitions/transforms/drop shadow/border radius</h3>
+    <ul class="build">
+      <li>Techniques in the HTML4 era: DHTML transitions, Microsoft filters for transforms, repeated sprites for shadows, absolute image positioning for rounded corners.</li>
+    </ul>
+    <pre class="prettyprint">
+   -moz-border-radius: 12px; /* FF1-3.6 */
+-webkit-border-radius: 12px; /* Saf3-4, iOS 1-3.2, Android &lt;1.6 */
+        border-radius: 12px; /* Opera 10.5, IE9, Saf5, Chrome,
+                                FF4, iOS 4, Android 2.1+ */
+</pre>
+    <style> 
+      #logo-container {
+        font-size: 20px;
+        color: #226;
+        padding: 20px 0 50px;
+        margin-bottom: 50px;
+        text-align: center;
+      }
+      #logo-container:hover {
+        -webkit-transform: rotate(-90deg);
+        -webkit-transition: all 1s ease-in;
+      }
+    </style> 
+      <pre><input id="web20-shadow" type="range" min="0" max="9" value="0" onchange="changeWeb20(event)"><input id="web20-gradient" type="range" min="0" max="100" value="0" onchange="changeWeb20(event)"> <input id="web20-border" type="range" min="0" max="50" value="0" onchange="changeWeb20(event)"> <input id="web20-reflect" type="range" min="0" max="100" value="0" onchange="changeWeb20(event)"></pre> 
+        <div id="logo-container"> 
+          <div id="web20-google"> 
+            CSS3
+          </div> 
+        </div> 
+
+    <script defer> 
+      function changeWeb20() {
+        var el = document.getElementById('web20-google');
+
+        var textShadowVal = document.getElementById('web20-shadow').value;
+        var gradientVal = document.getElementById('web20-gradient').value / 100;
+        var borderVal = document.getElementById('web20-border').value;
+        var reflectVal = document.getElementById('web20-reflect').value / 100;
+
+        el.style.textShadow = 'rgba(0, 0, 0, 0.5) 0 ' + textShadowVal + 'px ' + textShadowVal + 'px';
+        el.style.background = '-webkit-gradient(linear, left top, left bottom, from(rgba(200, 200, 240, ' + gradientVal + ')), to(rgba(255, 255, 255, ' + gradientVal + ')))';
+        el.style.borderRadius = borderVal + 'px';
+        el.style.webkitBoxReflect = 'below 10px -webkit-gradient(linear, left top, left bottom, from(transparent), to(rgba(255, 255, 255, ' + reflectVal + ')))';
+      }
+    </script>
+  </article>
+
+  <article>
+    <h3>Web fonts</h3>
+    <ul class="build">
+      <li>Techniques in the HTML4 era: Font Image Replacement</li>
+    </ul>
+    <pre class="prettyprint">
+@font-face {
+  font-family: 'WebFont';
+  src: url('myfont.eot?#') format('eot'),  /* IE6–8 */
+       url('myfont.woff') format('woff'),  /* FF3.6+, IE9, Chrome6+, 
+                                              Saf5.1+*/
+       url('myfont.ttf') format('truetype');  /* Saf3—5, Chrome4+, 
+                                                 FF3.5, Opera 10+ */
+}
+</pre>
+  <span style="font-family: Arial">Arial</span> <span style="font-family: Comic Sans MS">Comic Sans MS</span> <span style="font-family: Courier New">Courier New</span> <span style="font-family: Georgia">Georgia</span> <span style="font-family: Impact">Impact</span> <span style="font-family: Times New Roman">Times New Roman</span> <span style="font-family: Trebuchet MS">Trebuchet MS</span> <span style="font-family: Verdana">Verdana</span>
+  </article>
+
+  <article>
+    <h3>classList/dataset</h3>
+    <ul class="build">
+      <li>Techniques in the HTML4 era: custom Javascript for class manipulation, long class names to store application status</li>
+    </ul>
+    <pre class="prettyprint">
+var el = document.querySelector('#main').classList;
+el.add('highlight');
+el.remove('shadow');
+el.toggle('highlight');
+
+&lt;div id="out" data-id="good" data-name="joe">&lt;/div>
+document.querySelector('#out').dataset['name'] // joe
+</pre>
+  </article>
+
+  <article>
+    <h3>querySelectorAll(), querySelector()</h3>
+    <ul class="build">
+      <li>Techniques in the HTML4 era: Walking the DOM or using external libraries</li>
+    </ul>
+    <pre class="prettyprint">var els = document.querySelectorAll("ul li:nth-child(odd)");
+var tds = document.querySelectorAll("table.test > tr > td");
+var el = document.querySelector("table.test > tr > td");
+var els = document.getElementsByClassName('section');</pre>
+  </article>
+
+  <article>
+    <style> 
+      #box-orient-example {
+        height: 260px;
+        display: -webkit-box; -webkit-box-orient: horizontal;
+        display: -moz-box; -moz-box-orient: horizontal;
+      }
+      #box-orient-example div:nth-child(1) {
+        background: white; padding: 10px; -webkit-box-flex: 1; 
+        -moz-box-flex: 1; text-align: center;
+      }
+      #box-orient-example div:nth-child(2) {
+        background: #ddd; padding: 10px; -webkit-box-flex: 1; 
+        -moz-box-flex: 1; text-align: center;
+      }
+      #box-orient-example div:nth-child(3) {
+        background: white; padding: 10px; -webkit-box-flex: 3; 
+        -moz-box-flex: 3; text-align: center;
+      }
+    </style>
+    <h3>Page Layout with Flex Box</h3>
+    <ul class="build">
+      <li>Techniques in the HTML4 era: negative margins, clearfix, tables!, hasLayout (zoom:1), Block Formatting Context</li>
+    </ul>
+    <pre>.box {
+  display: -webkit-<b>box</b>;
+  -webkit-<b>box-orient</b>: <select onchange='changeBoxOrient(event)'> 
+      <option>horizontal</option> 
+      <option>vertical</option> 
+    </select>;
+}
+.box .one, .box .two {
+  -webkit-<b>box-flex</b>: 1;
+}
+.box .three {
+  -webkit-<b>box-flex</b>: 3;
+}
+</pre> 
+
+    <div id="box-orient-example" class="example"> 
+      <div> 
+        Box one
+      </div> 
+      <div> 
+        Box two
+      </div> 
+      <div> 
+        Box three
+      </div> 
+    </div> 
+
+    <script defer> 
+      function changeBoxOrient(event) {
+        var el = document.getElementById('box-orient-example');
+        el.style.webkitBoxOrient = event.target.value;
+        el.style.MozBoxOrient = event.target.value; 
+      }
+    </script> 
+  </article>
+
+  <article>
+    <h3>HTML5 Drag and Drop</h3>
+    <ul class="build">
+      <li>Techniques in the HTML4 era: Emulate drag events (cross browser!)</li>
+    </ul>
+    <pre class="prettyprint">
+addEvent(drop, 'dragover', cancel);
+addEvent(drop, 'dragenter', cancel);
+addEvent(drop, 'drop', function (event) {
+  // stops the browser from redirecting off to the text.
+  if (event.preventDefault) {
+    event.preventDefault();
+  }
+  this.innerHTML += '&lt;p>' + event.dataTransfer.getData('Text') + '&lt;/p>';
+  return false;
+});
+</pre>
+
+  </article>
+
+  <article>
+    <h3>Speech Input</h3>
+    <pre>function startSearch(event) {
+  if (event.target.<b>results</b>.length > 1) {
+    var second = event.target.results[1].<b>utterance</b>;
+    document.getElementById("second_best").value = second;
+  }
+  event.target.form.submit();
+}</pre> 
+    <input id="input-speech2" type="text" x-webkit-speech speech /> 
+    <div style="text-align: left; font-size: 17px; height: 200px; overflow: auto; width: 500px; border: 1px solid black; padding: 10px" id="speech-results"> 
+
+    </div> 
+    <script> 
+    document.getElementById("input-speech2").addEventListener("webkitspeechchange", function(event) {
+      var speechresults = document.getElementById('speech-results');
+      speechresults.innerHTML = '';
+      for (var res in event.results) {
+        speechresults.innerHTML += 'Utterance: ' + event.results[res]['utterance'] + '<br />Confidence: ' + event.results[res]['confidence'] + '<br /><br />';
+      }
+    }, false);
+    </script>
+  </article>
+
+  <article>
+    <h3>In DJBreakpoint <img src="../app/img/dj-working.png" alt="DJBreakpoint" title="DJBreakpoint" class="small"> - Better Coded UI</h3>
+    <p>Drag and Drop + Speech Input + Rounded Corners + CSS Gradients + CSS Tranforms + CSS Transitions + etc</p>
+    <img style="margin-top: 40px" width="800px" src="images/boxes.png" />
+  </article>
+
+  <article>
+    <h2>Messaging and Real Time Communication</h2>
+  </article>
+
+  <!--
+    *
+    * Web Sockets
+    *
+  -->
+  <article>
+    <h3>Web Sockets</h3>
+    <ul>
+      <li>Full-duplex, bi-directional communication over the web</li>
+      <li>Low overhead (no HTTP headers)</li>
+      <pre class="prettyprint">
+var socket = new WebSocket('ws://html5rocks.websocket.org/echo');
+socket.onmessage = function(event) { console.log(event.data); };
+</pre>
+    </ul>
+  </article>
+
+  <article>
+    <h3>In DJBreakpoint <img src="../app/img/dj-working.png" alt="DJBreakpoint" title="DJBreakpoint" class="small"> - Socket.IO</h3>
+    <ul>
+      <li>We use <a href="http://socket.io/">Socket.IO</a> to wrap around websockets.</li>
+      <li>Client: connect to server and send msg</li>
+<pre class="prettyprint">
+var socket = io.connect('http://localhost');
+socket.emit('message', {data: 'hello'})
+socket.on('update', function(data) {
+  console.log(data);
+});
+</pre>
+      <li>Server: track clients and relay msgs</li>
+<pre class="prettyprint">
+var io = require('socket.io').listen(80);
+io.sockets.on('message', function(socket) {
+  socket.emit('update', {messages: messageBuffer});
+});
+</pre>
+    </ul>
+  </article>
+
+  <!--
+    *
+    * Cross domain messaging
+    *
+  -->
+  <article>
+    <h3>Cross page messaging with <code>postMessage</code></h3>
+    <ul>
+      <li>Safely enabling cross-origin communication</li>
+      <li>Sending a message</li>
+      <pre class="prettyprint">
+otherWindow.postMessage(message, targetOrigin);
+</pre>
+      <li>Receiving a message</li>
+      <pre class="prettyprint">
+window.addEventListener("message", function(event) {
+  if (event.origin != "http://myurl.com/foo") { /* do stuff */ }
+}, false);
+</pre>
+    </ul>
+  </article>
+
+  <article>
+    <h3>In DJBreakpoint <img src="../app/img/dj-working.png" alt="DJBreakpoint" title="DJBreakpoint" class="small"> - <code>postMessage</code></h3>
+    <ul>
+      <li>Chat implemented in a separate frame</li>
+      <li>Chat frame sends message to parent:</li>
+      <pre class="prettyprint">
+socket_.on('chat', function(data) {
+  window.parent.postMessage(data, document.location.origin);
+}</pre>
+      <li>Main frame listens for the event and renders bubble:</li>
+      <pre class="prettyprint">
+window.addEventListener('message', function(e) {
+  document.querySelector('#dudes').append(createBubble(e.data));
+});</pre>
+    </ul>
+  </article>
+
+
+  <!--
+   *
+   * File APIs: INTRO
+   *
+  -->
+  <article class="fill">
+    <h2>File APIs</h2>
+  </article>
+
+  <!--
+   *
+   * File APIS: File
+   *
+  -->
+  <article class="">
+    <h3>Importing tunes</h3>
+      <pre>&lt;input type="file" <b>accept="audio/*"</b> <b>multiple</b>&gt;</pre>
+      <pre>
+document.querySelector('input[type="file"]').onchange = function(e) {
+  var files = <b>e.target.files</b>; // FileList
+
+  for (var i = 0, f; f = files[i]; ++i) {
+    // f.name
+    // f.type // mimetype
+    // f.size // bytes
+    // f.lastModifiedDate.toLocaleDateString()
+  }
+};
+</pre>
+    <input type="file" id="filereader-files" multiple accept="audio/*"/>
+    <output id="filereader-list"></output>
+  </article>
+  <script>
+  (function() {
+    document.querySelector('#filereader-files').onchange = function(e) {
+      var files = e.target.files; // FileList
+
+      var output = [];
+      for (var i = 0, f; f = files[i]; ++i) {
+        output.push('<li><b>', f.name, '</b> (',
+            f.type || 'n/a', ') - ', f.size, ' bytes, last modified: ',
+            f.lastModifiedDate.toLocaleDateString(), '</li>');
+      }
+      document.querySelector('#filereader-list').innerHTML =
+          '<ul>' + output.join('') + '</ul>';
+    };
+  })();
+  </script>
+
+  <!--
+   *
+   * File APIs: Directory Upload
+   *
+  -->
+  <article id="slide-dndfiles">
+    <h3>Importing a directory of tunes</h3>
+      <pre class="centered">&lt;input type="file" <b>webkitdirectory</b> /&gt;</pre>
+      <ul>
+        <li>Files in the <code>FileList</code> will have a <code>webkitRelativePath</code> property</li>
+      </ul>
+      <p><iframe class="noborder" src="http://www.htmlfivewow.com/demos/directory-upload/index.html" style="height:195px;"></iframe></p>
+  </article>
+
+  <!--
+   *
+   * File APIS: FileReader
+   *
+  -->
+  <article>
+    <h3>Reading file content</h3>
+    <p>Asynchronously read binary data into memory:</p>
+    <pre>
+var reader = new <b>FileReader</b>();
+
+reader.<b>readAsBinaryString</b>(File|Blob);
+
+reader.<b>readAsText</b>(File|Blob, opt_encoding); // default UTF-8
+
+reader.<b>readAsDataURL</b>(Blob|File);
+
+reader.<b>readAsArrayBuffer</b>(Blob|File);</pre>
+      <p>Reading byte ranges:</p>
+      <pre>var blob = <b>file.webkitSlice</b>(startingByte, offset, opt_contentType);
+reader.<b>readAsBinaryString</b>(blob);</pre>
+  </article>
+
+<!--
+  <article>
+    <h3>Monitoring things</h3>
+      <pre>
+reader.<b>onerror</b> = errorHandler;
+
+reader.<b>onprogress</b> = updateProgress;
+
+reader.<b>onabort</b> = cancelRead;
+
+reader.<b>onloadstart</b> = updateProgress;
+
+reader.<b>onloadend</b> = function(e) {
+  // <b>e.target.readyState</b> == <b>FileReader.DONE</b> == 2
+};
+
+reader.onload = readFile;</pre>
+  </article>
+-->
+
+
+  <!--
+   *
+   * File APIs: Drag and Drop File Access
+   *
+  -->
+  <article id="slide-dndfiles">
+    <h3>Importing tunes using drag &amp; drop</h3>
+  <pre>var reader = new <b>FileReader</b>();
+<b>reader.onload</b> = function(e) {
+  document.querySelector('img').src = <b>e.target.result</b>;
+};
+
+function onDrop(e) {
+  reader.<b>readAsDataURL</b>(<b>e.dataTransfer.files[0]</b>);
+};</pre>
+      <div>
+        <div id="dropzone">
+          Drop image files from your desktop
+        </div>
+      </div>
+      <div id="thumbnails" class="hcenter"></div>
+  </article>
+  <script>
+  document.addEventListener('DOMContentLoaded', function(e) {
+    var dndc = new DNDFileController('dropzone');
+  }, false);
+  </script>
+
+  <!--
+   *
+   * XHR2
+   *
+  -->
+  <article class="fill">
+    <h3>Uh oh...someone got a makeover!</h3>
+    <img src="images/ajax.jpg">
+  </article>
+
+  <!--
+   *
+   * XHR2: Forms
+   *
+  -->
+  <article>
+    <h3>Sending form data</h3>
+      <pre>
+function submitForm() {
+  var fd = new FormData(); // or prefill: FormData(window.myform)
+  fd.append("username", "Groucho");
+  fd.append("accountnum", 123456);
+
+  // Append File. Creates a multipart/form-data upload.
+  var file = document.querySelector('#afile').files[0];
+  if (file) {
+    fd.append('afile', file);
+  }
+
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', '/upload', true);
+  xhr.onload = function(e) { ... };
+  xhr.send(fd);
+}
+</pre>
+  </article>
+
+  <!--
+   *
+   * XHR2: Blobs
+   *
+  -->
+  <article>
+    <h3>Uploading a file</h3>
+      <pre>
+function upload(blob, opt_callback) {
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', '/upload', true);
+  if (opt_callback) {
+    xhr.onload = opt_callback;
+  }
+  xhr.send(blob);
+}
+
+window.BlobBuilder = window.BlobBuilder ||
+    window.WebKitBlobBuilder || window.MozBlobBuilder;
+
+var bb = new BlobBuilder(); // Create a .txt file on the fly.
+bb.append('Hello World');
+
+uploadFile(bb.getBlob('text/plain'), function(e) {
+  console.log('upload complete');
+});
+</pre>
+  </article>
+
+  <!--
+   *
+   * In DJBreakpoint
+   *
+  -->
+  <article class="smaller">
+    <h3>In DJBreakpoint <img src="../app/img/dj-working.png" alt="DJBreakpoint" title="DJBreakpoint" class="small"> - DJ uploads a song</h3>
+    <ul>
+      <li>Server delegates DJ's turn using round robin.</li>
+      <li>If turn && songs in queue: pull file from queue and upload using XHR2.</li>
+      <li>Otherwise, tell server to try someone else.</li>
+    </ul>
+<pre>
+uploadNextSong: function(el) {
+  if (USER_FILE_QUEUE.length) {
+    el.textContent = 'Uploading your file...';
+
+    var formData = new FormData();
+    formData.append('file', USER_FILE_QUEUE.shift());
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/upload', true);
+    xhr.onload = function(e) { el.textContent = 'Uploading complete.'; };
+    xhr.send(formData); // Upload entire song.
+  } else {
+    setTimeout(function() {
+      el.textContent = 'No songs selected! Skipping you.';
+      socket.json.emit('nextuser', {}); // Tell server to try next user.
+    }, 3000);
+  }
+}
+</pre>
+  </article>
+
+  <!--
+   *
+   * XHR2: Downlading
+   *
+  -->
+  <article>
+      <h3>Downloading a file</h3>
+        <pre>
+function download(url, callback) {
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', url, true);
+
+  <b>xhr.responseType = 'arraybuffer';</b> // A raw buffer of bytes.
+
+  xhr.onload = function(e) {
+    callback(this, <b>this.response</b>); // Note: not xhr.responseText
+  };
+  xhr.send();
+}
+
+download('song.mp3', function(xhr, arrayBuffer) {
+  // Create a file.
+  var bb = new BlobBuilder();
+  bb.append(arrayBuffer);
+  var blob = bb.getBlob('audio/mpeg');
+});
+</pre>
+  </article>
+
+  <!--
+   *
+   * In DJBreakpoint
+   *
+  -->
+  <article class="smaller">
+    <h3>In DJBreakpoint <img src="../app/img/dj-working.png" alt="DJBreakpoint" title="DJBreakpoint" class="small"> - listeners sent a download msg</h3>
+    <ul>
+      <li>When DJ's song upload is complete, download link is sent to listeners using websockets.</li>
+      <li>On <code>startsong</code> event, connected listeners download the song using XHR2.</li>
+    </ul>
+<pre>
+this.socket.on('startsong', function(file) {
+  ...
+  fetchSong_(file.url, file.name);
+});
+
+var fetchSong_ = function(url, name) {
+  sm_ = new SoundManager();
+  sm_.load(url, function(audioBuffer, arrayBuffer) {
+    // Display song title, artist, year.
+
+    // Load audio buffer into visualizer, hit play, and start the visuals.
+    visualizer.audioPlayer.loadAudioBuffer(audioBuffer);
+    visualizer.audioPlayer.play();
+    visualizer.startVisuals();
+  });
+};
+</pre>
+  </article>
+
+  <article class="smaller">
+    <h3>Typed Arrays</h3>
+    <ul>
+      <li><code>ArrayBuffer</code> - chunk of bytes in memory. Create "views" from it:
+        <ul>
+          <li><code>Int8Array</code>, <code>Uint8Array</code></li>
+          <li><code>Int16Array</code>, <code>Uint16Array</code></li>
+          <li><code>Int32Array</code>, <code>Uint32Array</code></li>
+          <li><code>Float32Array</code>, <code>Float64Array</code></li>
+        </ul>
+      </li>
+      <li>Multiple representations can be created from a single <code>ArrayBuffer</code> source:
+        <pre>
+var uInt8Array = new Uint8Array(arrayBuffer);
+var byte3 = uInt8Array[4]; // byte at offset 4.
+var uInt32Array = new Uint32Array(arrayBuffer);
+</pre>
+      </li>
+      <li><code>ArrayBufferView</code> - view of a portion of an <code>ArrayBuffer</code></li>
+      <li><code>DataView</code> - an <code>ArrayBufferView</code> that understands endianness:
+      <pre>
+var data = new DataView(arrayBuffer);
+var byte3 = data.getUint8(4);
+var i = data.getInt32(0, false); // Big-endian
+</pre>
+      </li>
+    </ul>
+  </article>
+
+  <!--
+   *
+   * Typed Arrays
+   *
+  -->
+  <article class="smaller">
+    <h3>In DJBreakpoint <img src="../app/img/dj-working.png" alt="DJBreakpoint" title="DJBreakpoint" class="small"> - displaying song's ID3v1 info</h3>
+    <ul>
+      <li>MP3's ID3v1 tags read using <code>FileReader</code>, and "parsed" used <code>DataView</code>
+      according to <a href="http://en.wikipedia.org/wiki/ID3" target="_blank">http://en.wikipedia.org/wiki/ID3</a>.</li>
+      <li><a href="https://github.com/vjeux/jsDataView/" target="_blank">jsDataView</a> - awesome wrapper for <code>DataView</code></li>
+    </ul>
+<pre>
+var dv = new jDataView(arrayBuffer);
+
+// "TAG" starts at byte -128 from EOF.
+if (dv.getString(3, dv.length - 128) == 'TAG') {
+  var title = dv.getString(30, dv.tell()).trim();
+  var artist = dv.getString(30, dv.tell()).trim();
+  var album = dv.getString(30, dv.tell()).trim();
+  var year = dv.getString(4, dv.tell()).trim();
+  boothHeader_.textContent = [
+      artist, '-', title, year ? '(' + year + ')' : ''].join(' ');
+} else {
+  boothHeader_.textContent = name; // Just use filename.
+}
+
+</pre>
+  </article>
+
+  <article>
+    <h2>Audio hotness</h2>
+  </article>
+
+  <!--
+   *
+   * Audio hotness
+   *
+  -->
+
+  <article>
+    <h3>Web Audio API</h3>
+    <ul>
+      <li>Audio tag brings flashless audio and limitations</li>
+      <li>Single channel, no access to raw stream</li>
+      <li>WebAudio: powerful API to process and synthesize sound in web apps</li>
+<pre>
+context = new webkitAudioContext();
+source = context.createBufferSource();
+analyser = context.createAnalyser();
+source.connect(analyser);
+analyser.connect(context.destination);
+</pre>
+    </ul>
+  </article>
+
+  <article>
+    <h3>In DJBreakpoint <img src="../app/img/dj-working.png" alt="DJBreakpoint" title="DJBreakpoint" class="small"> - playing tunes</h3>
+    <ul>
+      <li>Loading mp3 via XHR2</li>
+<pre>
+var xhr = new XMLHttpRequest();
+xhr.open("GET", url, true);
+xhr.responseType = "arraybuffer";
+
+xhr.addEventListener('load', function() {
+  var buffer = context.createBuffer(xhr.response, false);
+});
+xhr.send();
+
+</pre>
+      <li>Getting raw data out:</li>
+<pre>
+analyser.getByteFrequencyData(freqs);
+</pre>
+    </ul>
+  </article>
+
+  <article>
+    <h3>Interlude: Visualization with HTML5 Canvas</h3>
+    <ul>
+      <li>Canvas a simple 2D immediate mode drawing library</li>
+      <li>Painters model</li>
+    </ul>
+<pre>
+  var canvas = document.getElementById('a');
+  var context = canvas.getContext('2d');
+  context.fillRect(50, 25, 150, 100);
+</pre>
+    <p>Use <code>requestAnimationFrame</code> for render callbacks:</p>
+<pre>
+window.requestAnimationFrame = window.webkitRequestAnimationFrame ||
+  window.mozRequestAnimationFrame || window.msRequestAnimationFrame;
+
+window.requestAnimationFrame(animate, opt_elem /* bounding elem */);
+</pre>
+  </article>
+
+  <article>
+    <h3>In DJBreakpoint <img src="../app/img/dj-working.png" alt="DJBreakpoint" title="DJBreakpoint" class="small"> - visualization</h3>
+    <ul>
+      <li>Using ByteFrequencyData from WebAudio API</li>
+      <li>Plotting frequency graph of the music that's playing</li>
+<pre>
+for (var i = 0; i < NUM_BINS + 1; ++i) {
+  var value = freqs[i * width];
+  var percent = value / 256;
+  var height = NUM_BINS * percent;
+  drawContext.fillStyle = 'hsl(' + computedColor + ', 100%, 50%)';
+  drawContext.fillRect(...);
+}
+</pre>
+    </ul>
+  </article>
+
+  <article>
+    <h3>In DJBreakpoint <img src="../app/img/dj-working.png" alt="DJBreakpoint" title="DJBreakpoint" class="small"> - beat detection</h3>
+    <ul>
+      <li>Feeding signal into an external library to get beat</li>
+      <li>Using CSS3 animations to animate avatars</li>
+<pre>
+this.dancingImages[i].style.webkitTransform =
+  'scale(' + scaleX + ',' + scaleY + ') skewX(' + skewAngle + 'rad)';
+</pre>
+    </ul>
+  </article>
+
+
+  
+  <!--
+   *
+   * Chrome Web Store
+   *
+  -->
+
+      <article>
+        <div class="steps">
+          <span><strong>Step 1.</strong> Build web app<br/></span>
+          <span><strong>Step 2.</strong> ???????<br /></span>
+          <span><strong>Step 3.</strong> Profit!</span>
+          <div class='author'>
+            <a href="http://chzb.gr/o8tlUQ" target="_blank">Internet adage</a>
+          </div>
+        </div>
+      </article>
+           
+      <article>
+        <img class="centered" src="images/cws-logo.png" style="width: 100%;">
+        <div class="build">
+          <div class="build overlayBox">
+            <div>Make it <strong>easy</strong> for users to <strong>discover great apps</strong>, extensions, and themes</div>
+            <div>Make it <strong>easy</strong> for developers and brands to reach the <strong>160+ million Chrome users</strong></div>
+          </div>
+        </div>
+      </article>
+      
+      <article>
+        <img class="centered" src="images/cws-screenshot.png" style="width: 100%;">
+        <div class="build">
+          <div class="overlayBox">
+            <ul class="build">
+              <li>Multiple monetization models, including one-time, subscriptions and in-app payments</li>
+              <li>One-time $5 developer registration fee</li>
+              <li>No review or approval process</li>
+              <li>No restrictions on advertising</li>
+              <li>No restrictions on the platform</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+      
+      <article>
+        <img src="images/wgt-logo.png">
+        <span class="build">
+          <q class="casestudy">Play <strong>23%</strong> more and spend <strong>147%</strong> more</q>
+          
+        </span>
+        <div class="casestudySource">
+          <a href="http://bit.ly/nMCxgo" target="_blank">
+            http://bit.ly/nMCxgo
+          </a>
+        </div>
+      </article>
+      
+      <article>
+        <img src="images/springpad-logo.png">
+        <span class="build">
+          <q class="casestudy"><strong>100%</strong> more engagement</q>
+        </span>
+        <div class="casestudySource">
+          <a href="http://bit.ly/p59XJb" target="_blank">
+            http://bit.ly/p59XJb
+          </a>
+        </div>
+      </article>
+
+    <article>
+      <h3>Let's do it - Building the manifest</h3>
+      <pre class="prettyprint">
+{ "app": {
+    "launch": {
+      "urls": ["https://chrome.google.com/webstore"],
+      "web_url": "https://chrome.google.com/webstore",
+      "container": "tab"
+    }
+  },
+  "permissions": [],
+  "icons": {
+    "16": "16.png",
+    "128": "128.png"
+  },
+  "name": "Chrome Web Store - Apps, Extensions and Themes",
+  "description": "Discover great apps, games, extensions and...
+     themes for Google Chrome.",
+  "version": "1.0."
+}</pre>
+    </article>
+
+    <article>
+      <h3>Let's do it - Creating the images</h3>
+      <div>
+        <div>
+          <h4 style="margin-bottom:10px;">Required</h4>
+          <ul class="build" style="margin-top: 10px;">
+            <li><strong>Icons</strong> - a 16x16 and a 128x128 application icon</li>
+            <li><strong>Screen Shots</strong> - at least 1 screen shot (400x275)</li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 style="margin-bottom:10px;">Optional*</h4>
+          <ul class="build" style="margin-top:10px;">
+            <li><strong>YouTube Video</strong> - promote your application with a short video</li>
+            <li><strong>Promotional Images</strong> - banners used if your app is featured</li>
+            <li><strong>Customized Header Background</strong> - increase the professional look of your app</li>
+          </ul>
+          <p style="font-size:0.75em;">* but highly recommended!</p>
+        </div>
+      </div>
+    </article>
+
+    <article>
+      <h3>Let's do it - Uploading to the Chrome Web Store</h3>
+      <ol class="build">
+        <li>Zip the manifest and two icon files together</li>
+        <li>Upload the zip file to the Chrome Web Store via the <a href="https://chrome.google.com/webstore/developer/dashboard">Developer Dashboard</a></li>
+      </ol>
+      <p></p>
+      <img src="images/cws-upload.png" style="margin-top:25px;">
+    </article>
+
+    <article>
+      <h3>Let's do it - Edit &amp; Publish</h3>
+      <ol class="build">
+        <li>Upload additional resources like screen shots &amp; promotional images</li>
+        <li>Pick a category and provide a detailed description</li>
+        <li>Choose a price or use a <em>free</em>mium model</li>
+        <li>Verify your website, and provide analytics token</li>
+        <li>Publish!</li>
+      </ol>
+      <img src="images/cws-publish.png">
+    </article>
+
+
+  <!--
+   *
+   * Monetization / Distribution
+   *
+  -->
+  <article class="fill">
+    <h2>Monetization</h2>
+  </article>
+
+  <!-- USERS -->
+  <!--
+   <article>
+   <h3>
+     Transaction growth
+   </h3>
+   <div>
+     <div class="usersbooks">
+     Books<br>
+     <img src="./images/books.png" height="125">
+     </div>
+     <div class="usersyoutube">
+     YouTube<br>
+     <img src="./images/youtube.png" height="125">
+     </div>
+     <div class="userscws">
+     Chrome<br>
+     Web Store<br>
+     <img src="./images/cws.png" height="125">
+     </div>
+     <div class="usersandroidmarket">
+     Android Market<br>
+     <img src="./images/androidmarket.png" height="125">
+    </div>
+     <div style="margin-top:13%;">
+     <img class="centered" src="./images/growthgraph.png">
+     </div>
+   </div>
+   </article>
+-->
+
+  <!-- Virtual Goods -->
+  <article class="">
+  <h3>
+    What's up with Freemium
+  </h3>
+  <table class="noborder">
+    <tbody><tr>
+  <td>
+   <img style="margin-top:25%; margin-left:-10%;" src="./images/freemiumgamerevenue.png" width="400px">
+  </td>
+  <td>
+   <img style="margin-top:25%;margin-left:-10%;" src="./images/purchasebreakdown.jpg" width="400px">
+  </td>
+  </tr></tbody></table>
+  </article>
+
+  <!-- Transaction growth -->
+   <article>
+   <h3>
+     Transaction growth at Google
+   </h3>
+  <div>
+    <img class="centered" src="./images/payments_growth.png" width="800px" style="margin-top:5%; margin-left:-1%">
+  </div>
+   </article>
+   
+  <!-- IAP BENEFITS -->
+   <article class="">
+  <h3>Introducing In-App Payments</h3>
+
+  <div>
+    <table class="noborder">
+    <tbody><tr class="build">
+
+      <td>
+      <h4>Developers</h4>
+      <ul>
+        <li>Flat fee (5%) </li>
+        <li>PCI Compliance </li>
+        <li>Millions of buyers</li>
+      </ul>
+      </td>
+
+      <td>
+      <h4>Buyers</h4>
+      <ul>
+        <li>One account for payments</li>
+        <li>Pay with a few clicks</li>
+        <li>Private payment credentials</li>
+      </ul>
+      </td>
+
+    </tr>
+    </tbody></table>
+  </div>
+  </article>
+
+  <!-- In-App Payments - The Big Picture -->
+  <article class="">
+  <h3>
+    In-App Payments - The big picture
+  </h3>
+  <div>
+    <img class="centered" src="./images/iap_recap.png" width="800px" style="margin-top:10%; margin-left:0%">
+  </div>
+  </article>
+
+  <!-- User Flow -->
+  <article class="">
+  <h3>
+    Users - click, pay, use
+  </h3>
+  <div>
+    <img class="centered" src="./images/user_flow.png" width="800px" style="margin-top:20%; margin-left:-1%">
+  </div>
+  </article>
+
+  <!-- Developer Pay Flow -->
+  <article class="">
+  <h3>
+    Developers - Monetize in two calls
+  </h3>
+  <div>
+    <img class="centered" src="./images/dev_pay_flow.png" width="800px" style="margin-top:15%; margin-left:-1%">
+  </div>
+  </article>
+
+  <!-- API Flow -->
+  <article class="">
+  <h3>
+    API flow - Full picture
+  </h3>
+  <div>
+    <img class="centered" src="./images/apiflow.png" width="800px" style="margin-top:5%; margin-left:-1%">
+  </div>
+  </article>
+
+  <!-- ACCOUNT INFO -->
+  <article class="">
+  <h3>
+    Lets integrate - Create account
+  </h3>
+  <table class="noborder">
+    <tbody><tr>
+    <td>
+  <p>
+    </p><ul>
+    <li>Sign up as a seller</li>
+    <li>Get your <strong>Seller Id</strong></li>
+    <li>Get your <strong>Seller Key</strong></li>
+    <li>Configure your postback URL</li>
+    </ul>
+  <p></p>
+  </td>
+  <td>
+   <img style="margin-top:15%" src="./images/accountinfo.png" width="450px" class="boxshadow">
+  </td>
+  </tr></tbody></table>
+  </article>
+
+    <!-- ITEM JWT -->
+  <article class="smaller">
+    <h3>Lets integrate - Define item</h3>
+    <pre>
+{
+  "iss" : "1337133713371337",
+  "aud" : "Google",
+  "typ" : "google/payments/inapp/item/v1",
+  "exp" : "1392348430",
+  "iat" : "1392282180",
+  "request" :{
+    "name" : "Piece of Cake",
+    "description" : "Virtual chocolate cake to fill your virtual tummy",
+    "price" : "10.50",
+    "currencyCode" : "USD",
+    "sellerData" : "user_id:1224245,offer_code:3098576987"
+  }
+}
+</pre>
+  </article>
+
+  <!-- Create JWT in Python-->
+  <article class="">
+    <h3>Lets integrate - Create JSON web token</h3>
+    <p>Python:</p>
+    <pre>
+cakeJwt = jwt.encode(item, "1ZRJNFIOSJSIDFJNVHF");
+</pre>
+    <p>Ruby:</p>
+<pre>
+@cakeJwt = JWT.encode(item, "1ZRJNFIOSJSIDFJNVHF")
+</pre>
+  </article>
+
+
+  <!-- INCLUDE JAVASCRIPT-->
+  <article>
+    <h3>Lets integrate - Include JavaScript library</h3>
+    <pre>
+&lt;script type="text/javascript" src="//www.google.com/jsapi">&lt;/script>
+&lt;script>
+  google.load('payments', '1.0', {
+  'packages': ['sandbox_config']
+  });
+&lt;/script>
+</pre>
+  </article>
+
+  <!-- DEFINE ITEM & ATTACH ACTION -->
+  <article>
+    <h3>Lets integrate - Define JavaScript purchase handler</h3>
+    <pre>
+function purchase() {
+  ...
+  goog.payments.inapp.buy({
+    'jwt'     : cakeJwt,
+    'success' : successHandler,
+    'failure' : failureHandler
+  });
+}
+</pre>
+    Create purchase button
+    <pre>
+&lt;button onclick="purchase()">Buy&lt;/button&gt;
+</pre>
+  </article>
+
+  <!-- DEFINE HANDLER -->
+  <article>
+    <h3>Lets integrate - Define postback handler</h3>
+    <p>Python:</p>
+    <pre>
+def post(self):
+encoded_jwt = self.request.get('jwt', None)
+if encoded_jwt is not None:
+  decoded_jwt = jwt.decode(str(encoded_jwt), SELLER_SECRET)
+  order_id = decoded_jwt['response']['orderId']
+  self.response.out.write(order_id)
+    </pre>
+    <pre id='output' style='height:5em;'>
+    </pre>
+  <button onclick="buy();">Buy</button>
+  </article>
+
+  <!-- Integration Solutions -->
+  <article>
+  <h3>Lets integrate - Tying information together</h3>
+  <ul>
+    <li>Use the sellerData parameter to hold user identification data</li>
+    <li>Encrypt sellerData to protect user info</li>
+    <li>Example: Identifying users - <br>
+      sellerData = encrypt('user_id: 12345')</li>
+    <li>Example: Identifying context - <br>
+      sellerData = encrypt('sale: "happy hour"')</li>
+    </ul>
+  <p></p>
+  </article>
+
+  <!-- Demo -->
+  <article>
+    <h3>In DJBreakpoint <img src="../app/img/dj-working.png" alt="DJBreakpoint" title="DJBreakpoint" class="small"> - IAP</h3>
+    <pre>
+context.buy = function (item){
+xhr.open(&#x27;POST&#x27;, window.location.href + &#x27;buy&#x27;, true);
+xhr.onreadystatechange = function(jwt){
+  if(xhr.readyState == 4){
+    if(xhr.status == 200){
+      goog.payments.inapp.buy({
+        &#x27;jwt&#x27; : xhr.responseText,
+        &#x27;success&#x27; : successHandler,
+        &#x27;failure&#x27; : failureHandler
+      });
+    }
+    else{
+      console.log(&quot;error&quot; + xhr.status)
+    }
+  }
+}
+    </pre>
+
+  </article>
+  <article lass="nobackground">
+      <h3>chromestatus.com</h3>
+      <iframe src='http://chromestatus.com'></iframe>
+    </article>
+
+    <article class="nobackground">
+      <h3>updates.html5rocks.com</h3>
+      <iframe src='http://updates.html5rocks.com'></iframe>
+    </article>
+
+  <article>
+    <h3>Resources</h3>
+    <ul>
+      <li>Chrome's <a href="http://code.google.com/chrome/devtools/" target="_blank">DevTools</a> - invaluable</li>
+      <li><a href="http://www.html5rocks.com" target="_blank">html5rocks.com</a> - learn by tutorial</li>
+      <li><a href="http://google.com/payments">google.com/payments</a> - Payments signup & documentation
+      </li>
+      <li><a href="http://chrome.google.com/webstore">chrome.google.com/webstore</a> - Chrome Web Store
+      </li>
+      <li><a href>
+      <li><a href="http://html5boilerplate.com/" target="_blank">HTML5 Boilerplate</a>  and <a href="http://www.modernizr.com/" target="_blank">Modernizr</a> - foundation</li>
+      <li><a href="http://caniuse.com" target="_blank">caniuse.com</a> - compatibility tables</li>
+      <li>Google <a href="http://code.google.com/chrome/chromeframe/" target="_blank">Chrome Frame</a> - plugin. Brings Chrome to IE6-9</li>
+      <li>Twitter: <a href="http://twitter.com/ChromiumDev" target="_blank">@ChromiumDev @GoogCommerceDev</a></li>
+    </ul>
+  </article>
+
+  <article class='biglogo'>
+    <p class='centered' style='padding-top:400px'>Feedback: <a href="http://goo.gl/oTflp">goo.gl/oTflp</a></p>
+  </article>
+
+  <script src="dnd-lib.js"></script>
+</body>
+</html>
