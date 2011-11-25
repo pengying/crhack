@@ -1,14 +1,12 @@
 var path = require('path'),
-    sys = require('sys'),
+    sys = require('util'),
     fs = require('fs');
 
-require.paths.unshift(path.join(__dirname, '..'));
-
 var less = {
-    version: [1, 1, 3],
-    Parser: require('less/parser').Parser,
-    importer: require('less/parser').importer,
-    tree: require('less/tree'),
+    version: [1, 1, 5],
+    Parser: require('./parser').Parser,
+    importer: require('./parser').importer,
+    tree: require('./tree'),
     render: function (input, options, callback) {
         options = options || {};
 
@@ -16,7 +14,7 @@ var less = {
             callback = options, options = {};
         }
 
-        var parser = new(this.Parser)(options),
+        var parser = new(less.Parser)(options),
             ee;
 
         if (callback) {
@@ -36,11 +34,12 @@ var less = {
         }
     },
     writeError: function (ctx, options) {
+        options = options || {};
+
         var message = "";
         var extract = ctx.extract;
         var error = [];
-
-        options = options || {};
+        var stylize = options.color ? less.stylize : function (str) { return str };
 
         if (options.silent) { return }
 
@@ -80,7 +79,7 @@ var less = {
  'call',     'url',       'alpha',      'import',
  'mixin',    'comment',   'anonymous',  'value', 'javascript'
 ].forEach(function (n) {
-    require(path.join('less', 'tree', n));
+    require('./tree/' + n);
 });
 
 less.Parser.importer = function (file, paths, callback) {
@@ -103,7 +102,7 @@ less.Parser.importer = function (file, paths, callback) {
           if (e) sys.error(e);
 
           new(less.Parser)({
-              paths: [path.dirname(pathname)],
+              paths: [path.dirname(pathname)].concat(paths),
               filename: pathname
           }).parse(data, function (e, root) {
               if (e) less.writeError(e);
@@ -116,7 +115,7 @@ less.Parser.importer = function (file, paths, callback) {
     }
 }
 
-require('less/functions');
+require('./functions');
 
 for (var k in less) { exports[k] = less[k] }
 
@@ -134,4 +133,5 @@ function stylize(str, style) {
     return '\033[' + styles[style][0] + 'm' + str +
            '\033[' + styles[style][1] + 'm';
 }
+less.stylize = stylize;
 
