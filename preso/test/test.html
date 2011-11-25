@@ -1,0 +1,13 @@
+<html>
+<head>
+<script type="text/javascript" language="javascript" src="https://wallet.sandbox.google.com/merchant/merchant.js">
+</script>
+<script type='text/javascript'>
+function failureGettingMaskedWallet(error) {	alert('fail:' + error);}
+function handleMaskedWallet(jwt) {	alert('success:' + jwt);}
+</script>
+</head>
+<body>
+<g:wallet jwt="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiIxMTczOTc3NDA2NDM1NzQ5NjgwNyIsImlhdCI6MTMxNjYxOTg3NywidHlwIjoiZ29vZ2xlL3BheW1lbnRleHByZXNzL3YxL21hc2tlZC9yZXF1ZXN0IiwiYXVkIjoiR29vZ2xlIiwic2VsZWN0b3JzIjp7InBheSI6eyJ0eXBlIjoiUEFZTUVOVF9JTlNUUlVNRU5UIn19fQ.2ZAh1PgntG129C7fwLbt95O4P0tpMOMXT7MxYHWNyMo" onsuccess="handleMaskedWallet(jwt)" onfailure="failureGettingMaskedWallet(error)"></g:wallet>
+</body>
+</html>

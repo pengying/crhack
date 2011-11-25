@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<!--
+Copyright 2011 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+Author: Eric Bidelman (ericbidelman@chromium.org),
+        Boris Smus
+        Ernest Delgado
+        Pete LePage
+        Peng Ying
+-->
+<html>
+<head>
+  <title>HTML5 Web App Hackathon</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <script src="slides.js"></script>
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+  <script>
+    google.load('payments', '1.0', {
+    'packages': ['sandbox_config']
+    });
+  </script>
+  <script type="text/javascript">
+    var body = "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIwMDc5MDIyNTczNTc3N" + 
+             "jYxMjQ0MCIsImF1ZCI6Ikdvb2dsZSIsInR5cCI6Imdvb2dsZS9" + 
+             "wYXltZW50cy9pbmFwcC9pdGVtL3YxIiwiaWF0IjoxMzEyMjA3M" + 
+             "zk5LCJleHAiOjE0MTIyOTM3ODEsInJlcXVlc3QiOnsiY3VycmV" + 
+             "uY3lDb2RlIjoiVVNEIiwicHJpY2UiOiIzLjAwIiwibmFtZSI6I" + 
+             "kF2YXRhciIsInNlbGxlckRhdGEiOiJIdG1sNSIsImRlc2NyaXB" + 
+             "0aW9uIjoiQXZhdGFyIn19.u8aJEP7YBvCQwOIr4OELDRHjX0SJ" + 
+             "YKEfQq4gWiVw3FU";
+    function buy(){
+      goog.payments.inapp.buy({
+        'jwt': body,
+        'success': successHandler,
+        'failure': failureHandler
+      });
+    }
+    var successHandler = function(notification){
+      document.querySelector('#output').textContent = JSON.stringify(notification);
+    }
+    var failureHandler = function(notification){
+      document.querySelector('#output').textContent = JSON.stringify(notification);
+    }
+  </script>
+</head>
+<body style="display: none">
+
+<section class='slides'>
+
+  <!-- Your slides (<article>s) go here. Delete or comment out the
+       slides below. -->
+
+  <article class='biglogo'></article>
+
+  <!--
+   *
+   * Introduction
+   *
+  -->
+  <article id="title-slide">
+    <h1>Distribution & Monetization</h1>
+    <br>
+    <p>
+       <h3>+Peng Ying</h3>
+      August 27th 2011 Social Dev Camp<br />
+      Hashtag: #sdcmoney
+	</p>
+  </article>
+  
+  <!--
+   *
+   * Chrome Web Store
+   *
+  -->
+
+      <article>
+        <div class="steps">
+          <span><strong>Step 1.</strong> Build web app<br/></span>
+          <span><strong>Step 2.</strong> ???????<br /></span>
+          <span><strong>Step 3.</strong> Profit!</span>
+          <div class='author'>
+            <a href="http://chzb.gr/o8tlUQ" target="_blank">Internet adage</a>
+          </div>
+        </div>
+      </article>
+
+	  <article class="distribution nobackground">
+	    <h2>Distribution</h2>
+	  </article>
+	
+      <article>
+        <img class="centered" src="images/cws-logo.png" style="width: 100%;">
+        <div class="build">
+          <div class="build overlayBox">
+            <div>Make it <strong>easy</strong> for users to <strong>discover great apps</strong>, extensions, and themes</div>
+            <div>Make it <strong>easy</strong> for developers and brands to reach the <strong>160+ million Chrome users</strong></div>
+          </div>
+        </div>
+      </article>
+      
+      <article>
+        <img class="centered" src="images/cws-screenshot.png" style="width: 100%;">
+        <div class="build">
+          <div class="overlayBox">
+            <ul class="build">
+              <li>Multiple monetization models, including one-time, subscriptions and in-app payments</li>
+              <li>One-time $5 developer registration fee</li>
+              <li>No review or approval process</li>
+              <li>No restrictions on advertising</li>
+              <li>No restrictions on the platform</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+      
+      <article>
+        <img src="images/wgt-logo.png">
+        <span class="build">
+          <q class="casestudy">Play <strong>23%</strong> more and spend <strong>147%</strong> more</q>
+          
+        </span>
+        <div class="casestudySource">
+          <a href="http://bit.ly/nMCxgo" target="_blank">
+            http://bit.ly/nMCxgo
+          </a>
+        </div>
+      </article>
+      
+      <article>
+        <img src="images/springpad-logo.png">
+        <span class="build">
+          <q class="casestudy"><strong>100%</strong> more engagement</q>
+        </span>
+        <div class="casestudySource">
+          <a href="http://bit.ly/p59XJb" target="_blank">
+            http://bit.ly/p59XJb
+          </a>
+        </div>
+      </article>
+
+    <article>
+      <h3>Let's do it - Building the manifest</h3>
+      <pre class="prettyprint">
+{ "app": {
+    "launch": {
+      "urls": ["https://chrome.google.com/webstore"],
+      "web_url": "https://chrome.google.com/webstore",
+      "container": "tab"
+    }
+  },
+  "permissions": [],
+  "icons": {
+    "16": "16.png",
+    "128": "128.png"
+  },
+  "name": "Chrome Web Store - Apps, Extensions and Themes",
+  "description": "Discover great apps, games, extensions and...
+     themes for Google Chrome.",
+  "version": "1.0."
+}</pre>
+    </article>
+
+    <article>
+      <h3>Let's do it - Creating the images</h3>
+      <div>
+        <div>
+          <h4 style="margin-bottom:10px;">Required</h4>
+          <ul class="build" style="margin-top: 10px;">
+            <li><strong>Icons</strong> - a 16x16 and a 128x128 application icon</li>
+            <li><strong>Screen Shots</strong> - at least 1 screen shot (400x275)</li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 style="margin-bottom:10px;">Optional*</h4>
+          <ul class="build" style="margin-top:10px;">
+            <li><strong>YouTube Video</strong> - promote your application with a short video</li>
+            <li><strong>Promotional Images</strong> - banners used if your app is featured</li>
+            <li><strong>Customized Header Background</strong> - increase the professional look of your app</li>
+          </ul>
+          <p style="font-size:0.75em;">* but highly recommended!</p>
+        </div>
+      </div>
+    </article>
+
+    <article>
+      <h3>Let's do it - Uploading to the Chrome Web Store</h3>
+      <ol class="build">
+        <li>Zip the manifest and two icon files together</li>
+        <li>Upload the zip file to the Chrome Web Store via the <a href="https://chrome.google.com/webstore/developer/dashboard">Developer Dashboard</a></li>
+      </ol>
+      <p></p>
+      <img src="images/cws-upload.png" style="margin-top:25px;">
+    </article>
+
+    <article>
+      <h3>Let's do it - Edit &amp; Publish</h3>
+      <ol class="build">
+        <li>Upload additional resources like screen shots &amp; promotional images</li>
+        <li>Pick a category and provide a detailed description</li>
+        <li>Choose a price or use a <em>free</em>mium model</li>
+        <li>Verify your website, and provide analytics token</li>
+        <li>Publish!</li>
+      </ol>
+      <img src="images/cws-publish.png">
+    </article>
+
+
+  <!--
+   *
+   * Monetization / Distribution
+   *
+  -->
+  <article class="monetization nobackground">
+    <h2>Monetization</h2>
+  </article>
+
+  <!-- Virtual Goods -->
+  <article class="">
+  <h3>
+    What's up with Freemium
+  </h3>
+  <table class="noborder">
+    <tbody><tr>
+  <td>
+   <img style="margin-top:25%; margin-left:-10%;" src="./images/freemiumgamerevenue.png" width="400px">
+  </td>
+  <td>
+   <img style="margin-top:25%;margin-left:-10%;" src="./images/purchasebreakdown.jpg" width="400px">
+  </td>
+  </tr></tbody></table>
+  </article>
+
+  <!-- Transaction growth -->
+   <article>
+   <h3>
+     Transaction growth at Google
+   </h3>
+  <div>
+    <img class="centered" src="./images/payments_growth.png" width="800px" style="margin-top:5%; margin-left:-1%">
+  </div>
+   </article>
+   
+  <!-- IAP BENEFITS -->
+   <article class="">
+  <h3>Introducing In-App Payments</h3>
+
+  <div>
+    <table class="noborder">
+    <tbody><tr class="build">
+
+      <td>
+      <h4>Developers</h4>
+      <ul>
+        <li>Flat fee (5%) </li>
+        <li>PCI Compliance </li>
+        <li>Millions of buyers</li>
+      </ul>
+      </td>
+
+      <td>
+      <h4>Buyers</h4>
+      <ul>
+        <li>One account for payments</li>
+        <li>Pay with a few clicks</li>
+        <li>Private payment credentials</li>
+      </ul>
+      </td>
+
+    </tr>
+    </tbody></table>
+  </div>
+  </article>
+
+  <!-- In-App Payments - The Big Picture -->
+  <article class="">
+  <h3>
+    In-App Payments - The big picture
+  </h3>
+  <div>
+    <img class="centered" src="./images/iap_recap.png" width="800px" style="margin-top:10%; margin-left:0%">
+  </div>
+  </article>
+
+  <!-- User Flow -->
+  <article class="">
+  <h3>
+    Users - click, pay, use
+  </h3>
+  <div>
+    <img class="centered" src="./images/user_flow.png" width="800px" style="margin-top:20%; margin-left:-1%">
+  </div>
+  </article>
+
+  <!-- Developer Pay Flow -->
+  <article class="">
+  <h3>
+    Developers - Monetize in two calls
+  </h3>
+  <div>
+    <img class="centered" src="./images/dev_pay_flow.png" width="800px" style="margin-top:15%; margin-left:-1%">
+  </div>
+  </article>
+
+  <!-- API Flow -->
+  <article class="">
+  <h3>
+    API flow - Full picture
+  </h3>
+  <div>
+    <img class="centered" src="./images/apiflow.png" width="800px" style="margin-top:5%; margin-left:-1%">
+  </div>
+  </article>
+
+  <!-- ACCOUNT INFO -->
+  <article class="">
+  <h3>
+    Lets integrate - Create account
+  </h3>
+  <table class="noborder">
+    <tbody><tr>
+    <td>
+  <p>
+    </p><ul>
+    <li>Sign up as a seller</li>
+    <li>Get your <strong>Seller Id</strong></li>
+    <li>Get your <strong>Seller Key</strong></li>
+    <li>Configure your postback URL</li>
+    </ul>
+  <p></p>
+  </td>
+  <td>
+   <img style="margin-top:15%" src="./images/accountinfo.png" width="450px" class="boxshadow">
+  </td>
+  </tr></tbody></table>
+  </article>
+
+    <!-- ITEM JWT -->
+  <article class="smaller">
+    <h3>Lets integrate - Define item</h3>
+    <pre>
+{
+  "iss" : "1337133713371337",
+  "aud" : "Google",
+  "typ" : "google/payments/inapp/item/v1",
+  "exp" : "1392348430",
+  "iat" : "1392282180",
+  "request" :{
+    "name" : "Piece of Cake",
+    "description" : "Virtual chocolate cake to fill your virtual tummy",
+    "price" : "10.50",
+    "currencyCode" : "USD",
+    "sellerData" : "user_id:1224245,offer_code:3098576987"
+  }
+}
+</pre>
+  </article>
+
+  <!-- Create JWT in Python-->
+  <article class="">
+    <h3>Lets integrate - Create JSON web token</h3>
+    <p>Python:</p>
+    <pre>
+cakeJwt = jwt.encode(item, "1ZRJNFIOSJSIDFJNVHF");
+</pre>
+    <p>Ruby:</p>
+<pre>
+@cakeJwt = JWT.encode(item, "1ZRJNFIOSJSIDFJNVHF")
+</pre>
+  </article>
+
+
+  <!-- INCLUDE JAVASCRIPT-->
+  <article>
+    <h3>Lets integrate - Include JavaScript library</h3>
+    <pre>
+&lt;script type="text/javascript" src="//www.google.com/jsapi">&lt;/script>
+&lt;script>
+  google.load('payments', '1.0', {
+  'packages': ['sandbox_config']
+  });
+&lt;/script>
+</pre>
+  </article>
+
+  <!-- DEFINE ITEM & ATTACH ACTION -->
+  <article>
+    <h3>Lets integrate - Define JavaScript purchase handler</h3>
+    <pre>
+function purchase() {
+  ...
+  goog.payments.inapp.buy({
+    'jwt'     : cakeJwt,
+    'success' : successHandler,
+    'failure' : failureHandler
+  });
+}
+</pre>
+    Create purchase button
+    <pre>
+&lt;button onclick="purchase()">Buy&lt;/button&gt;
+</pre>
+  </article>
+
+  <!-- DEFINE HANDLER -->
+  <article>
+    <h3>Lets integrate - Define postback handler</h3>
+    <p>Python:</p>
+    <pre>
+def post(self):
+encoded_jwt = self.request.get('jwt', None)
+if encoded_jwt is not None:
+  decoded_jwt = jwt.decode(str(encoded_jwt), SELLER_SECRET)
+  order_id = decoded_jwt['response']['orderId']
+  self.response.out.write(order_id)
+    </pre>
+    <pre id='output' style='height:5em;'>
+    </pre>
+  <button onclick="buy();">Buy</button>
+  </article>
+
+  <!-- Integration Solutions -->
+  <article>
+  <h3>Lets integrate - Tying information together</h3>
+  <ul>
+    <li>Use the sellerData parameter to hold user identification data</li>
+    <li>Encrypt sellerData to protect user info</li>
+    <li>Example: Identifying users - <br>
+      sellerData = encrypt('user_id: 12345')</li>
+    <li>Example: Identifying context - <br>
+      sellerData = encrypt('sale: "happy hour"')</li>
+    </ul>
+  <p></p>
+  </article>
+
+  <!-- Demo -->
+  <article>
+    <h3>In DJBreakpoint <img src="images/dj-working.png" alt="DJBreakpoint" title="DJBreakpoint" class="small"> - IAP</h3>
+    <pre>
+context.buy = function (item){
+xhr.open(&#x27;POST&#x27;, window.location.href + &#x27;buy&#x27;, true);
+xhr.onreadystatechange = function(jwt){
+  if(xhr.readyState == 4){
+    if(xhr.status == 200){
+      goog.payments.inapp.buy({
+        &#x27;jwt&#x27; : xhr.responseText,
+        &#x27;success&#x27; : successHandler,
+        &#x27;failure&#x27; : failureHandler
+      });
+    }
+    else{
+      console.log(&quot;error&quot; + xhr.status)
+    }
+  }
+}
+    </pre>
+  </article>
+
+  <article>
+    <h3>Key takeaways</h3>
+    <ul class="build">
+	  <li>Distribution and monetization are important aspects of making an application successful</li>
+	  <li>Chrome Web Store is an easy way to reach millions of users and distribute your web app however you want</li>
+	  <li>It may be more lucrative to charge nothing up front and allow users to pay what they want</li>
+	  <li>In-App Payments enables developers to easily add this functionality to their app</li>
+	</ul>
+  </article>
+
+  <article>
+    <h3>Resources</h3>
+    <ul>
+	  <li><a href="http://chrome.google.com/webstore">chrome.google.com/webstore</a> - Chrome Web Store
+      </li>
+      <li><a href="http://google.com/payments">google.com/payments</a> - Payments signup & documentation
+      </li>
+      <li><a href="http://www.html5rocks.com" target="_blank">html5rocks.com</a> - learn by tutorial</li>
+      <li><a href="http://html5boilerplate.com/" target="_blank">HTML5 Boilerplate</a>  and <a href="http://www.modernizr.com/" target="_blank">Modernizr</a> - foundation</li>
+      <li><a href="http://caniuse.com" target="_blank">caniuse.com</a> - compatibility tables</li>
+      <li>Twitter: <a href="http://twitter.com/ChromiumDev" target="_blank">@ChromiumDev @GoogCommerceDev</a></li>
+    </ul>
+  </article>
+
+  <article class='biglogo'>
+    <p class='centered' style='padding-top:400px'>Presentation URL<br /> <a href="http://goo.gl/Sefa4">goo.gl/Sefa4</a></p>
+  </article>
+
+  <script src="dnd-lib.js"></script>
+</body>
+</html>
