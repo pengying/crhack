@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<!--
+Copyright 2011 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+Author: Eric Bidelman (ericbidelman@chromium.org),
+        Boris Smus
+        Ernest Delgado
+        Pete LePage
+        Peng Ying
+-->
+<html>
+<head>
+  <title>HTML5 Web App Hackathon</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <script src="slides.js"></script>
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+  <script>
+    google.load('payments', '1.0', {
+    'packages': ['sandbox_config']
+    });
+  </script>
+  <script type="text/javascript">
+    var body = "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIwMDc5MDIyNTczNTc3N" + 
+             "jYxMjQ0MCIsImF1ZCI6Ikdvb2dsZSIsInR5cCI6Imdvb2dsZS9" + 
+             "wYXltZW50cy9pbmFwcC9pdGVtL3YxIiwiaWF0IjoxMzEyMjA3M" + 
+             "zk5LCJleHAiOjE0MTIyOTM3ODEsInJlcXVlc3QiOnsiY3VycmV" + 
+             "uY3lDb2RlIjoiVVNEIiwicHJpY2UiOiIzLjAwIiwibmFtZSI6I" + 
+             "kF2YXRhciIsInNlbGxlckRhdGEiOiJIdG1sNSIsImRlc2NyaXB" + 
+             "0aW9uIjoiQXZhdGFyIn19.u8aJEP7YBvCQwOIr4OELDRHjX0SJ" + 
+             "YKEfQq4gWiVw3FU";
+    function buy(){
+      goog.payments.inapp.buy({
+        'jwt': body,
+        'success': successHandler,
+        'failure': failureHandler
+      });
+    }
+    var successHandler = function(notification){
+      document.querySelector('#output').textContent = JSON.stringify(notification);
+    }
+    var failureHandler = function(notification){
+      document.querySelector('#output').textContent = JSON.stringify(notification);
+    }
+    
+    function adsenseResumeRequestedEvent()
+    {
+      document.write("Ad Complete Event Fired!");
+    }
+    
+    function removeAdSwf() {
+      document.getElementById("afg-adloader").style.visibility = "hidden";
+    }
+    
+  </script>
+</head>
+<body style="display: none">
+
+<section class='slides'>
+
+  <!-- Your slides (<article>s) go here. Delete or comment out the
+       slides below. -->
+
+  <article class='biglogo'></article>
+
+  <!--
+   *
+   * Introduction
+   *
+  -->
+  <article id="title-slide">
+    <h1><span class='blue'>Distribution & Monetization<span></h1>
+    <br>
+    <p>
+       <h3>+Peng Ying<br />
+         +Mihai Ionescu</h3>
+      November 1st-15th 2011 <span class='blue'>GDD</span><br />
+      Hashtag: #gddmoney
+  </p>
+  </article>
+  
+  <!--
+   *
+   * Chrome Web Store
+   *
+  -->
+
+      <article>
+        <div class="steps">
+          <span><strong>Step 1.</strong> Build web app<br/></span>
+          <span><strong>Step 2.</strong> ???????<br /></span>
+          <span><strong>Step 3.</strong> Profit!</span>
+          <div class='author'>
+            <a href="http://chzb.gr/o8tlUQ" target="_blank">Internet adage</a>
+          </div>
+        </div>
+      </article>
+
+    <article class="distribution nobackground">
+      <h2>Distribution</h2>
+    </article>
+  
+      <article>
+        <img class="centered" src="images/cws-logo.png" style="width: 100%;">
+        <div class="build">
+          <div class="build overlayBox">
+            <div>Make it <strong class='blue'>easy</strong> for users to <strong class='blue'>discover great apps</strong>, extensions, and themes</div>
+            <div>Make it <strong class='blue'>easy</strong> for developers and brands to reach the <strong class='blue'>200+ million Chrome users</strong></div>
+          </div>
+        </div>
+      </article>
+      
+      <article>
+        <img class="centered" src="images/cws-screenshot.png" style="width: 100%;margin-top:50px">
+        <div class="build">
+          <div class="overlayBox">
+            <ul class="build">
+              <li>One-time $5 developer registration fee</li>
+              <li>Multiple monetization models, including one-time, subscriptions and in-app payments</li>
+              <li>No review or approval process</li>
+              <li>No restrictions on advertising</li>
+              <li>No restrictions on the platform</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+      
+      <article>
+        <img src="images/wgt-logo.png">
+        <span class="build">
+          <q class="casestudy">Play <strong class='blue'>23%</strong> more and spend <strong class='blue'>147%</strong> more</q>
+          
+        </span>
+        <div class="casestudySource">
+          <a href="http://bit.ly/nMCxgo" target="_blank">
+            http://bit.ly/nMCxgo
+          </a>
+        </div>
+      </article>
+      
+      <article>
+        <img src="images/springpad-logo.png">
+        <span class="build">
+          <q class="casestudy"><strong class='blue'>100%</strong> more engagement</q>
+        </span>
+        <div class="casestudySource">
+          <a href="http://bit.ly/p59XJb" target="_blank">
+            http://bit.ly/p59XJb
+          </a>
+        </div>
+      </article>
+
+    <article>
+      <h3>Let's do it - Build the manifest</h3>
+      <pre class="prettyprint">
+{ "app": {
+    "launch": {
+      "urls": ["https://chrome.google.com/webstore"],
+      "web_url": "https://chrome.google.com/webstore",
+      "container": "tab"
+    }
+  },
+  "permissions": [],
+  "icons": {
+    "16": "16.png",
+    "128": "128.png"
+  },
+  "name": "Chrome Web Store - Apps, Extensions and Themes",
+  "description": "Discover great apps, games, extensions and...
+     themes for Google Chrome.",
+  "version": "1.0."
+}</pre>
+    </article>
+
+    <article>
+      <h3>Let's do it - Create the images</h3>
+      <div>
+        <div>
+          <h4 style="margin-bottom:10px;">Required</h4>
+          <ul class="build" style="margin-top: 10px;">
+            <li><strong>Icons</strong> - a 16x16 and a 128x128 application icon</li>
+            <li><strong>Screen Shots</strong> - at least 1 screen shot (400x275)</li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 style="margin-bottom:10px;">Optional*</h4>
+          <ul class="build" style="margin-top:10px;">
+            <li><strong>YouTube Video</strong> - promote your application with a short video</li>
+            <li><strong>Promotional Images</strong> - banners used if your app is featured</li>
+            <li><strong>Customized Header Background</strong> - increase the professional look of your app</li>
+          </ul>
+          <p style="font-size:0.75em;" class='blue'>* but highly recommended!</p>
+        </div>
+      </div>
+    </article>
+
+    <article>
+      <h3>Let's do it - Upload to the Chrome Web Store</h3>
+      <ol class="build">
+        <li>Zip the manifest and two icon files together</li>
+        <li>Upload the zip file to the Chrome Web Store via the <a href="https://chrome.google.com/webstore/developer/dashboard">Developer Dashboard</a></li>
+      </ol>
+      <p></p>
+      <img src="images/cws-upload.png" style="margin-top:25px;">
+    </article>
+
+    <article>
+      <h3>Let's do it - Edit &amp; Publish</h3>
+      <ol class="build">
+        <li>Upload additional resources like screen shots &amp; promotional images</li>
+        <li>Pick a category and provide a detailed description</li>
+        <li>Choose a price or use a <em>free</em>mium model</li>
+        <li>Verify your website, and provide analytics token</li>
+        <li>Publish!</li>
+      </ol>
+      <img src="images/cws-publish.png">
+    </article>
+
+
+  <!--
+   *
+   * Monetization / Distribution
+   *
+  -->
+  <article class="monetization nobackground">
+    <h2>Payments</h2>
+  </article>
+
+  <!-- Virtual Goods -->
+  <article class="">
+  <h3>
+    What's up with Freemium
+  </h3>
+  <table class="noborder">
+    <tbody><tr>
+  <td>
+   <img style="margin-top:25%; margin-left:-10%;" src="./images/freemiumgamerevenue.png" width="400px">
+  </td>
+  <td>
+   <img style="margin-top:25%;margin-left:-10%;" src="./images/purchasebreakdown.jpg" width="400px">
+  </td>
+  </tr></tbody></table>
+  </article>
+
+  <!-- Transaction growth -->
+   <article>
+   <h3>
+     Transaction growth at Google
+   </h3>
+  <div>
+    <img class="centered" src="./images/payments_growth.png" width="800px" style="margin-top:5%; margin-left:-1%">
+  </div>
+   </article>
+   
+  <!-- IAP BENEFITS -->
+   <article class="">
+  <h3>Introducing In-App Payments</h3>
+
+  <div>
+    <table class="noborder">
+    <tbody><tr class="build">
+
+      <td>
+      <h4>Developers</h4>
+      <ul>
+        <li>Flat fee <strong class='blue'>5%</strong> </li>
+        <li>PCI Compliance </li>
+        <li>Risk Management</li>
+        <li>Simple API</li>
+        <li>Millions of buyers</li>
+      </ul>
+      </td>
+
+      <td>
+      <h4>Buyers</h4>
+      <ul>
+        <li>One account for payments</li>
+        <li>Pay with a few clicks</li>
+        <li>Private payment credentials</li>
+      </ul>
+      </td>
+
+    </tr>
+    </tbody></table>
+  </div>
+  </article>
+
+  <!-- User Flow -->
+  <article class="">
+  <h3>
+    Users - click, pay, use
+  </h3>
+  <div>
+    <img class="centered" src="./images/user_flow.png" width="800px" style="margin-top:20%; margin-left:-1%">
+  </div>
+  </article>
+
+  <!-- Developer Pay Flow -->
+  <article class="">
+  <h3>
+    Developers - Monetize in two calls
+  </h3>
+  <div>
+    <img class="centered" src="./images/dev_pay_flow.png" width="800px" style="margin-top:15%; margin-left:-1%">
+  </div>
+  </article>
+
+  <!-- API Flow -->
+  <article class="">
+  <h3>
+    API flow - Full picture
+  </h3>
+  <div>
+    <img class="centered" src="./images/apiflow.png" width="800px" style="margin-top:5%; margin-left:-1%">
+  </div>
+  </article>
+
+  <!-- ACCOUNT INFO -->
+  <article class="">
+  <h3>
+    Lets integrate - Create account
+  </h3>
+  <table class="noborder">
+    <tbody><tr>
+    <td>
+  <p>
+    </p><ul>
+    <li>Sign up as a seller</li>
+    <li>Get your <strong class='blue'>Seller Id</strong></li>
+    <li>Get your <strong class='blue'>Seller Key</strong></li>
+    <li>Configure your postback URL</li>
+    </ul>
+  <p></p>
+  </td>
+  <td>
+   <img style="margin-top:15%" src="./images/accountinfo.png" width="450px" class="boxshadow">
+  </td>
+  </tr></tbody></table>
+  </article>
+
+    <!-- ITEM JWT -->
+  <article class="smaller">
+    <h3>Lets integrate - Define item</h3>
+    <pre>
+{
+  "iss" : "1337133713371337",
+  "aud" : "Google",
+  "typ" : "google/payments/inapp/item/v1",
+  "exp" : "1392348430",
+  "iat" : "1392282180",
+  "request" :{
+    "name" : "Piece of Cake",
+    "description" : "Virtual chocolate cake to fill your virtual tummy",
+    "price" : "10.50",
+    "currencyCode" : "USD",
+    "sellerData" : "user_id:1224245,offer_code:3098576987"
+  }
+}
+</pre>
+  </article>
+
+  <!-- Create JWT in Python-->
+  <article class="">
+    <h3>Lets integrate - Create JSON web token</h3>
+    <p>Python:</p>
+    <pre>
+cakeJwt = jwt.encode(item, "1ZRJNFIOSJSIDFJNVHF");
+</pre>
+    <p>Ruby:</p>
+<pre>
+@cakeJwt = JWT.encode(item, "1ZRJNFIOSJSIDFJNVHF")
+</pre>
+  </article>
+
+
+  <!-- INCLUDE JAVASCRIPT-->
+  <article>
+    <h3>Lets integrate - Include JavaScript library</h3>
+    <pre>
+&lt;script type="text/javascript" src="//www.google.com/jsapi">&lt;/script>
+&lt;script>
+  google.load('payments', '1.0', {
+  'packages': ['sandbox_config']
+  });
+&lt;/script>
+</pre>
+  </article>
+
+  <!-- DEFINE ITEM & ATTACH ACTION -->
+  <article>
+    <h3>Lets integrate - Define JavaScript purchase handler</h3>
+    <pre>
+function purchase() {
+  ...
+  goog.payments.inapp.buy({
+    'jwt'     : cakeJwt,
+    'success' : successHandler,
+    'failure' : failureHandler
+  });
+}
+</pre>
+    Create purchase button
+    <pre>
+&lt;button onclick="purchase()">Buy&lt;/button&gt;
+</pre>
+  </article>
+
+  <!-- DEFINE HANDLER -->
+  <article>
+    <h3>Lets integrate - Define postback handler</h3>
+    <p>Python:</p>
+    <pre>
+def post(self):
+encoded_jwt = self.request.get('jwt', None)
+if encoded_jwt is not None:
+  decoded_jwt = jwt.decode(str(encoded_jwt), SELLER_SECRET)
+  order_id = decoded_jwt['response']['orderId']
+  self.response.out.write(order_id)
+    </pre>
+    <pre id='output' style='height:5em;'>
+    </pre>
+  <button onclick="buy();">Buy</button>
+  </article>
+
+  <!-- Integration Solutions -->
+  <article>
+  <h3>Lets integrate - Tying information together</h3>
+  <ul>
+    <li>Use the sellerData parameter to hold user identification data</li>
+    <li>Encrypt sellerData to protect user info</li>
+    <li>Example: Identifying users - <br>
+      sellerData = encrypt('user_id: 12345')</li>
+    <li>Example: Identifying context - <br>
+      sellerData = encrypt('sale: "happy hour"')</li>
+    </ul>
+  <p></p>
+  </article>
+
+  <!-- Demo 
+  <article>
+    <h3>In DJBreakpoint <img src="images/dj-working.png" alt="DJBreakpoint" title="DJBreakpoint" class="small"> - IAP</h3>
+    <pre>
+context.buy = function (item){
+xhr.open(&#x27;POST&#x27;, window.location.href + &#x27;buy&#x27;, true);
+xhr.onreadystatechange = function(jwt){
+  if(xhr.readyState == 4){
+    if(xhr.status == 200){
+      goog.payments.inapp.buy({
+        &#x27;jwt&#x27; : xhr.responseText,
+        &#x27;success&#x27; : successHandler,
+        &#x27;failure&#x27; : failureHandler
+      });
+    }
+    else{
+      console.log(&quot;error&quot; + xhr.status)
+    }
+  }
+}
+    </pre>
+  </article>
+-->
+  <article>
+  <h3>Securing Content</h3>
+    <p>Implement server side checks</p>
+    <p>Compile and minimize your JavaScript<p>
+      <pre>
+function hello(longName) {
+  alert('Hello, ' + longName);
+}
+hello('New User');
+      </pre>
+      <pre>
+java -jar compiler.jar --js hello.js --js_output_file 
+  hello-compiled.js
+      </pre>
+            
+      <pre>
+function hello(a){alert("Hello, "+a)}hello("New User");
+      </pre>
+  </article>
+
+  <article class="advertising nobackground">
+    <h2>Advertising</h2>
+  </article>
+
+  <article>
+  <h3>Why advertise</h3>
+  <table class='noborder'>
+      <tr>
+        <td>
+          <div class='addiv'>
+            <div class='image'>
+              <img src='images/250.png' width='200px' class='centered'>
+            </div>
+            
+            <div class='stat'>
+              <p class='focustext'>>250%</p>
+              <p class='smaller'>Overall industry growth in Q4 2010 beyond 2008 estimates</p>
+            </div>
+          </div>
+        </td>
+        <td>
+          <div class='addiv'>
+            <div class='image'>
+              <img src='images/82.png' width='200px' class='centered'>
+            </div>
+            
+            <div class='stat'>
+              <p class='focustext'>82%</p>
+              <p class='smaller'>Of users are willing to watch a 30 second pre-game ad</p>
+            </div>
+          </div>
+        </td>
+        <td>
+          <div class='addiv'>
+            <div class='image'>
+              <img src='images/36.png' width='200px' class='centered'>
+            </div>
+            
+            <div class='stat'>
+              <p class='focustext'>36%</p>
+              <p class='smaller'>Percent of all internet users are 30-day active casual gamers</p>
+            </div>
+          </div>
+        </td>
+      </tr>
+  </table>
+  </article>
+
+  <article>
+    <h3>AdSense for games</h3>
+    <div class="hiddenbuild" style='margin-top:7%'>
+      <div class='centered' >
+        <img src='images/videoad.png' class='centered'/>
+        <p>Ads can be shown embedded before/between game plays</p>
+      </div>
+      <div class='centered'>
+        <img src='images/afgload.png' class='centered' height='400px'/>
+        <p>Ads can be shown as a separate SWF during game load</p>
+      </div>
+    </div>
+  </article>
+  
+  <article>
+    <h3>AdSense video ads</h3>
+    <table class='noborder' style='margin-top:7%'>
+      <tr>
+        <td><img src='images/cheeseit.png' class='centered' width='400px'/></td>
+        <td>
+          <ul class='smaller'>
+            <li><span class='blue'>Pre-Roll/Mid-Roll/Post-Roll - </span> You determine where in the game play an ad displays</li>
+            <li><span class='blue'>Ad Length - </span> under 30 seconds</li>
+            <li><span class='blue'>Contextual - </span> based on demographics and geography</li>
+            <li><span class='blue'>CPM model</span></li>
+          </ul>
+        </td>
+      </tr>
+    </table>
+  </article>
+
+  <article>
+    <h3>AdSense Flash ads</h3>
+    <table class='noborder' style='margin-top:7%'>
+      <tr>
+        <td><img src='images/flashad.png' class='centered'/></td>
+        <td>
+          <ul class='smaller'>
+            <li><span class='blue'>Highly relevant - </span>ads are pulled from our large advertising network leading to higher click throughs</li>
+            <li><span class='blue'>Fill up to 100% of unsold inventory</span></li>
+            <li><span class='blue'>CPC & CPM models</span></li>
+          </ul>
+        </td>
+      </tr>
+    </table>
+  </article>
+
+  <article>
+  <h3>Reporting and controls</h3>
+  <table class='noborder'>
+      <tr>
+        <td>
+          <div class='addiv'>
+            <div class='image'>
+              <img src='images/report.png' height='200px' class='centered'>
+            </div>
+            
+            <div class='stat'>
+              <p class='focustext'>Report</p>
+              <p class='smaller'>Use AdSense reports to track your game revenue alongside your page revenue</p>
+            </div>
+          </div>
+        </td>
+        <td>
+          <div class='addiv'>
+            <div class='image'>
+              <img src='images/segment.png' height='200px' class='centered'>
+            </div>
+            
+            <div class='stat'>
+              <p class='focustext'>Segment</p>
+              <p class='smaller'>Use channels to segment meaningful user groups and improve advertiser exposure</p>
+            </div>
+          </div>
+        </td>
+        <td>
+          <div class='addiv'>
+            <div class='image'>
+              <img src='images/filter.png' height='200px' class='centered'>
+            </div>
+            
+            <div class='stat'>
+              <p class='focustext'>Filter</p>
+              <p class='smaller'>Use the Ad Review Center and URL filters to block unwanted advertisers</p>
+            </div>
+          </div>
+        </td>
+      </tr>
+  </table>
+  </article>
+  
+  <article class='black'>
+    <div id='video' class='centered build' style='margin-top:5%;'>
+    </div>
+    <div class='build'>
+      <div style='color:black;'>stuff</div>
+    </div>
+  </article>
+  
+  <article>
+    <h3>Lets integrate - Defining the ad</h3>
+    <p>Import the library</p>
+      <pre>
+import com.google.ads.instream.api.*;
+      </pre>
+    <p>Create an ad request</p>
+    <pre>
+var adsRequest:AdsRequest = new AdsRequest();
+// Required parameters
+adsRequest.adSlotWidth = 640;
+adsRequest.adSlotHeight = 360;
+adsRequest.publisherId= "ca-video-afvtest";
+adsRequest.adType = AdsRequestType.VIDEO;
+adsRequest.contentId = "0aRIlnQzw-A";
+    </pre>
+  </article>
+  
+  <article>
+    <h3>Lets integrate - AdsRequest parameters</h3>
+    <p>Recommended parameters</p>
+    <pre>
+adsRequest.channels = ["sports", "entertainment", "0123456789"];
+adsRequest.descriptionUrl = "http://www.example.com/description.html";
+adsRequest.age = 1002;
+adsRequest.gender = 1;
+    </pre>
+    <p>Optional parameters</p>
+    <pre>
+adsRequest.adTest = "on";
+adsRequest.language = "ja";
+adsRequest.maxTotalAdDuration = 30000;
+adsRequest.minTotalAdDuration = 15000;
+adsRequest.uniqueAds = true;
+adsRequest.adTimePosition = 1;
+    </pre>
+  </article>
+  
+  <article>
+    <h3>Lets integrate - AdsLoader</h3>
+    <p>Prepare the adsLoader</p>
+    <pre>
+var adsLoader:AdsLoader = new AdsLoader();
+stage.addChild(adsLoader);
+
+// ADS_LOADED for when ads are successfully returned
+adsLoader.addEventListener(AdsLoadedEvent.ADS_LOADED, onAdsLoaded);
+
+// AD_ERROR for when no ads were found for the request
+adsLoader.addEventListener(AdErrorEvent.AD_ERROR, onAdError);
+    </pre>
+    <p>Request the ads</p>
+    <pre>
+adsLoader.requestAds(adsRequest);
+    </pre>  
+  </article>
+  
+  <article>
+    <h3>Lets integrate - Ad rendering</h3>
+    <p>Load and render the ad</p>
+    <pre>
+function onAdsLoaded(adsLoadedEvent:AdsLoadedEvent):void {
+   // Get AdsManager
+   _adsManager = adsLoadedEvent.adsManager;
+   _adsManager.addEventListener(AdErrorEvent.AD_ERROR, onAdError);
+
+   // Listen and response to events which require you to 
+   // pause/resume content
+   _adsManager.addEventListener(AdEvent.CONTENT_PAUSE_REQUESTED,
+      onPauseRequested);
+   _adsManager.addEventListener(AdEvent.CONTENT_RESUME_REQUESTED,
+      onResumeRequested);
+}
+    </pre>
+  </article>
+  
+  <article>
+    <h3>Lets integrate - Handling videos</h3>
+    <pre>
+if (_adsManager.type == AdsManagerTypes.VIDEO) {
+   // Create the video ads manager.
+   var videoAdsManager:VideoAdsManager = _adsManager as 
+     VideoAdsManager;
+   // Set a visual element on which clicks should be tracked 
+   // for video ads
+   videoAdsManager.clickTrackingElement = &lt;object&gt;;
+   // Wire important events
+   videoAdsManager.addEventListener(AdEvent.COMPLETE, 
+     onVideoAdComplete);
+   videoAdsManager.addEventListener(AdEvent.CLICK, 
+     onVideoAdClicked);
+   // Play back the ads.
+   _adsManager.load(&lt;flvPlayback&gt;);
+   _adsManager.play(&lt;flvPlayback&gt;);
+}
+    </pre>
+  </article>
+  
+  <article>
+    <h3>Lets integrate - Handling Flash</h3>
+    <pre>
+  else if (_adsManager.type == AdsManagerTypes.FLASH) {
+    // Create the flash ads manager.
+    var flashAdsManager:FlashAdsManager = _adsManager as
+     FlashAdsManager;
+
+    // Play back the ad.
+    flashAdsManager.load(this);
+    flashAdsManager.play(this); 
+  }
+}
+
+function onAdError(adErrorEvent:AdErrorEvent):void
+{
+  log("Ad Error: " + adErrorEvent.error);
+  // Play Content
+}
+    </pre>
+  </article>
+  
+  <article>
+    <h3>Key takeaways</h3>
+    <ul class="build">
+    <li>Distribution and monetization are important aspects of making an game successful</li>
+    <li>Chrome Web Store is an easy way to reach millions of users and distribute your web game however you want</li>
+    <li>It may be more lucrative to charge nothing up front and allow users to pay what they want</li>
+    <li>If you have a popular game, advertising can be an easy way to monetize</li>
+  </ul>
+  </article>
+  
+  <article>
+    <h3>Resources</h3>
+    <ul>
+    <li><a href="http://chrome.google.com/webstore">chrome.google.com/webstore</a> - Chrome Web Store
+      </li>
+      <li><a href="http://google.com/payments">google.com/payments</a> - Payments signup & documentation
+      </li>
+      <li><a href="http://goo.gl/c2ks0">goo.gl/c2ks0</a> - Closure compiler documentation</li>
+      <li><a href="http://goo.gl/sNo4n">goo.gl/sNo4n</a> - AFG documentation
+      </li>
+      <li><a href="http://goo.gl/2QGox">goo.gl/2QGox</a> - Interactive Media Ads SDK
+      </li>
+      <li><a href="http://www.html5rocks.com" target="_blank">html5rocks.com</a> - learn by tutorial</li>
+      <li><a href="http://html5boilerplate.com/" target="_blank">HTML5 Boilerplate</a>  and <a href="http://www.modernizr.com/" target="_blank">Modernizr</a> - foundation</li>
+      <li><a href="http://caniuse.com" target="_blank">caniuse.com</a> - compatibility tables</li>
+      <li>Twitter: <a href="http://twitter.com/ChromiumDev" target="_blank">@GoogCommerceDev</a></li>
+    </ul>
+  </article>
+
+  <article class='biglogo'>
+    <p class='centered' style='padding-top:400px'>Presentation URL<br /> <a href="http://bit.ly/gddmoney">bit.ly/gddmoney</a></p>
+  </article>
+
+  <script src="dnd-lib.js"></script>
+</body>
+</html>
