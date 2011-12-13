@@ -1,0 +1,29 @@
+application: html5hack
+version: 1
+runtime: python
+api_version: 1
+
+handlers:
+- url: /preso
+  static_dir: preso
+
+- url: /gdd
+  static_dir: gdd
+  
+- url: /sdc
+  static_dir: socialdevcamp
+
+- url: /test
+  static_dir: test
+  
+- url: /app
+  static_dir: app
+  
+- url: /gdconline
+  static_dir: gdconline
+  
+- url: /codecamp
+  static_dir: codecamp
+
+- url: .*
+  script: main.py
